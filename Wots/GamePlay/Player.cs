@@ -1,0 +1,435 @@
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using Wots.UI;
+using Wots;
+
+namespace Wots.GamePlay
+{
+    public class Player : Wots.BoundingBox
+    {
+        public static Bar HealthBar;
+        //public static int Health = 100;
+
+        // Gravity
+        public float GravitySpeed = 10.0f;
+        public bool useGravity = true;
+        public static bool noClip = false;
+        public bool d3 = false;
+
+        public struct CollitionDetection
+        {
+            public Tuple<bool, Tile> Up, OldUp;
+            public Tuple<bool, Tile> Down, OldDown;
+            public Tuple<bool, Tile> Left, OldLeft;
+            public Tuple<bool, Tile> Right, OldRight;
+        }
+        CollitionDetection Collitions = new CollitionDetection();
+
+        Keys jumpKey, leftKey, rightKey, upKey, downKey;
+
+        public bool dKeys = false;
+        bool canUp = true, canDown = true, canLeft = true, canRight = true;
+        private KeyboardState OldKeyboardState;
+        // Store all of our player textures in variables
+        public Texture2D CurrentDirection
+        {
+            get
+            {
+                return PlayerSprite.GetTexture();
+            }
+        }
+
+        public Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle((int)this.PlayerSprite.Position.X, (int)this.PlayerSprite.Position.Y, this.PlayerSprite.GetTexture().Width, this.PlayerSprite.GetTexture().Height);
+            }
+        }
+
+        RenderTarget2D TargetForShaders;
+
+        // Store our sprite
+        public Sprite PlayerSprite;
+
+        // Store our direction in a vector2
+        public Vector2 TextureDirection;
+
+        // The movement speed
+        public float Speed = 5.0f;
+
+        /// <summary>
+        /// Intialize this instance.
+        /// </summary>
+        public void Intialize()
+        {
+            TextureDirection = new Vector2(-1, 0);
+
+            PlayerSprite = new Sprite(new Vector2(100, 200), Vector2.One);
+            HealthBar = new Bar(new Vector2(10, 10));
+
+            this.TargetForShaders = new RenderTarget2D(GameManager.Game.Graphics.GraphicsDevice, (int)this.PlayerSprite.Size.X, (int)this.PlayerSprite.Size.Y);
+
+            // Setup the movment keys
+            {
+                if (dKeys)
+                {
+                    jumpKey = Keys.RightShift;
+                    downKey = Keys.Down;
+                    leftKey = Keys.Left;
+                    rightKey = Keys.Right;
+                    upKey = Keys.Up;
+                }
+                else
+                {
+                    if (true)
+                    {
+                        jumpKey = Keys.Space;
+                        upKey = Keys.W;
+                        downKey = Keys.S;
+                        leftKey = Keys.A;
+                        rightKey = Keys.D;
+                    }
+                }
+            }
+
+            // Register our til events
+            RegisterTileEvent("door", s =>
+            {
+                try
+                {
+                    World.LoadWorld(s);
+                    return true;
+                }
+                catch { return false; }
+            });
+        }
+        #region Load content
+        /// <summary>
+        /// Loads the content.
+        /// </summary>
+        /// <param name="content">Content.</param>
+        public void LoadContent(ContentManager content)
+        {
+
+            // load in all our textures
+            if (!dKeys)
+            {
+                AssetManager.AddTexture("down_0", AssetManager.LoadImage("art/player/playerDown/1"));
+                AssetManager.AddTexture("down_1", AssetManager.LoadImage("art/player/playerDown/2"));
+                AssetManager.AddTexture("down_2", AssetManager.LoadImage("art/player/playerDown/3"));
+
+                AssetManager.AddTexture("up_0", AssetManager.LoadImage("art/player/playerUp/1"));
+                AssetManager.AddTexture("up_1", AssetManager.LoadImage("art/player/playerUp/2"));
+                AssetManager.AddTexture("up_2", AssetManager.LoadImage("art/player/playerUp/3"));
+
+                AssetManager.AddTexture("right_0", AssetManager.LoadImage("art/player/playerRight/1"));
+                AssetManager.AddTexture("right_1", AssetManager.LoadImage("art/player/playerRight/2"));
+                AssetManager.AddTexture("right_2", AssetManager.LoadImage("art/player/playerRight/3"));
+
+                AssetManager.AddTexture("left_0", AssetManager.LoadImage("art/player/playerLeft/1"));
+                AssetManager.AddTexture("left_1", AssetManager.LoadImage("art/player/playerLeft/2"));
+                AssetManager.AddTexture("left_2", AssetManager.LoadImage("art/player/playerLeft/3"));
+            }
+
+
+            // Create our animations
+            PlayerSprite.Animations.Add("left", new Animation(
+                new Frame(AssetManager.GetTexture("left_0")),
+                new Frame(AssetManager.GetTexture("left_1")),
+                new Frame(AssetManager.GetTexture("left_2"))
+            ));
+            PlayerSprite.Animations.Add("right", new Animation(
+                new Frame(AssetManager.GetTexture("right_0")),
+                new Frame(AssetManager.GetTexture("right_1")),
+                new Frame(AssetManager.GetTexture("right_2"))
+            ));
+            PlayerSprite.Animations.Add("up", new Animation(
+                new Frame(AssetManager.GetTexture("up_0")),
+                new Frame(AssetManager.GetTexture("up_1")),
+                new Frame(AssetManager.GetTexture("up_2"))
+            ));
+            PlayerSprite.Animations.Add("down", new Animation(
+                new Frame(AssetManager.GetTexture("down_0")),
+                new Frame(AssetManager.GetTexture("down_1")),
+                new Frame(AssetManager.GetTexture("down_2"))
+            ));
+
+            PlayerSprite.CurrentAnimation = "left";
+            PlayerSprite.Position = new Vector2(0, -10);
+
+            // Intialize these to avoid null refrence exceptions
+            Collitions.OldUp = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, -5), null, new Vector2(80, 96));
+            Collitions.OldDown = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, 96), null, new Vector2(83, 96));
+            Collitions.OldLeft = World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(1.5f, -3.5f), null, new Vector2(42, 165));
+            Collitions.OldRight = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(55, 5), null, new Vector2(42, 165));
+        }
+        #endregion
+        public void Update(GameTime gameTime)
+        {
+            ChangeAnimation();
+            MovePlayer(gameTime);
+            PlayerSprite.Update(gameTime);
+        }
+
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            DrawPlayer(spriteBatch);
+        }
+
+        private void UpdateColitions(SpriteBatch spriteBatch)
+        {
+            Collitions.Up = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(11, 0), null, new Vector2(80, 10));
+            Collitions.Down = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(13, 180), null, new Vector2(80, 10));
+            Collitions.Left = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(5, 0), null, new Vector2(10, 170));
+            Collitions.Right = World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(91, 0), null, new Vector2(10, 180));
+
+
+            canUp = Collitions.Up.Item1;
+            canLeft = Collitions.Left.Item1;
+            canRight = Collitions.Right.Item1;
+            canDown = Collitions.Down.Item1;
+
+        }
+
+        /// <summary>
+        /// Draws the player.
+        /// </summary>
+        public void DrawPlayer(SpriteBatch spriteBatch)
+        {
+            string currenttext = "";
+            int x = (int)TextureDirection.X;
+            int y = (int)TextureDirection.Y;
+
+            if (x == 1)
+            {
+                currenttext = "left";
+                PlayerSprite.Animate = true;
+                PlayerSprite.CurrentAnimation = currenttext;
+            }
+            else if (x == -1)
+            {
+                currenttext = "right";
+                PlayerSprite.Animate = true;
+                PlayerSprite.CurrentAnimation = currenttext;
+            }
+
+            if (y == 1)
+            {
+                currenttext = "down";
+                PlayerSprite.Animate = true;
+                PlayerSprite.CurrentAnimation = currenttext;
+            }
+            else if (x == 0 && y == 0)
+                PlayerSprite.Animate = false;
+
+            PlayerSprite.Draw(spriteBatch);
+            UpdateColitions(spriteBatch);
+        }
+
+        Vector2 oldDir = Vector2.Zero;
+        /// <summary>
+        /// Changes the direction.
+        /// </summary>
+        public void ChangeAnimation()
+        {
+            var newDir = PlayerSprite.Position;
+
+            var state = Keyboard.GetState();
+
+            if (jumping)
+                TextureDirection = new Vector2(0, 1);
+            else
+                TextureDirection = Vector2.Zero;
+
+            if (state.IsKeyDown(Keys.A))
+            {
+                TextureDirection = new Vector2(1, 0);
+            }
+            else if (state.IsKeyDown(Keys.D))
+            {
+                TextureDirection = new Vector2(-1, 0);
+            }
+
+            if (!state.IsKeyDown(Keys.A) && !state.IsKeyDown(Keys.D))
+            {
+                PlayerSprite.Animations[PlayerSprite.CurrentAnimation].Frame = 1;
+                PlayerSprite.Animate = false;
+            }
+
+            if (isAI)
+            {
+                if (oldDir.X > newDir.X)
+                {
+                    var currenttext = "left";
+                    PlayerSprite.Animate = true;
+                    PlayerSprite.CurrentAnimation = currenttext;
+                }
+                else
+                {
+                    var currenttext = "right";
+                    PlayerSprite.Animate = true;
+                    PlayerSprite.CurrentAnimation = currenttext;
+                }
+            }
+
+            this.oldDir = newDir;
+
+        }
+        public Player(bool ai)
+        {
+            this.isAI = ai;
+        }
+
+        bool isAI = false;
+        bool jumping = false;
+        double jumpBuildTime = 0;
+        private bool createJump;
+
+        /// <summary>
+        /// Moves the player.
+        /// </summary>
+        public void MovePlayer(GameTime gameTime)
+        {
+            jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+            //if (canDown)
+            //	GravitySpeed = 0.0f;
+            KeyboardState state = Keyboard.GetState();
+
+            HandleMovements(state);
+            //UpdateColitions(null);
+
+            this.Collitions.OldDown = this.Collitions.Down;
+            this.Collitions.OldLeft = this.Collitions.Left;
+            this.Collitions.OldRight = this.Collitions.Right;
+            this.Collitions.OldUp = this.Collitions.Up;
+
+            OldKeyboardState = state;
+
+        }
+
+        private void HandleMovements(KeyboardState state)
+        {
+            if (!isAI)
+            {
+                // Make sure that collitions are enabled.
+                if (!noClip)
+                {
+                    // Check if we pressed jump key and if we can jump
+                    if (state.IsKeyDown(jumpKey) && !canDown && canUp && Collitions.Up.Item2.State != "fast4")
+                    {
+                        jumping = true;
+                        jumpBuildTime = 0;
+                    }
+
+                    // If we created a simulated jump
+                    if (createJump)
+                    {
+                        jumping = true;
+                        jumpBuildTime = 0;
+                    }
+
+                    // Code for jumping
+                    if (jumping && jumpBuildTime < 0.25)
+                    {
+                        useGravity = false;
+
+                        if (canUp)
+                            this.PlayerSprite.Position.Y -= Speed * 3.5f;
+                    }
+                    else
+                    {
+                        useGravity = true;
+                        jumping = false;
+                    }
+
+                    if (state.IsKeyDown(Keys.LeftShift))
+                    {
+                        Speed = 7;
+                    }
+                    else
+                    {
+                        Speed = 5;
+                    }
+
+                    if (Collitions.Down != null)
+                        if (Collitions.Down.Item2.State == "fast4")
+                            GravitySpeed = 5.0f;
+                        else
+                            GravitySpeed = 10.0f;
+
+                    if (Collitions.Right != null && Collitions.Right.Item2.State != null)
+                        CheckLRColliton(Collitions.Right.Item2.State);
+                    else
+                    if (Collitions.Left != null && Collitions.Left.Item2.State != null)
+                        CheckLRColliton(Collitions.Left.Item2.State);
+
+                    bool oldGravityState = useGravity;
+                    try
+                    {
+                        if ((state.IsKeyDown(jumpKey) && canUp && Collitions.Up.Item2.State == "fast4"))
+                        {
+                            this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 1.5f;
+                            useGravity = false;
+                        }
+                        else if (Collitions.Up.Item1 && Collitions.Down.Item2.State == "fast4" && canUp && (state.IsKeyDown(jumpKey)))
+                        {
+                            this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 3f;
+                            useGravity = false;
+                        }
+                        else
+                        {
+                            useGravity = oldGravityState;
+                        }
+                    }
+                    catch { }
+                    // our psuedo gravity
+                    if (useGravity && canDown)
+                        PlayerSprite.Position.Y += GravitySpeed;
+
+                    if ((state.IsKeyDown(leftKey) || GamePad.GetState(0).Triggers.Left > 100) && canLeft)
+                    {
+                        PlayerSprite.Position.X -= Speed * GameManager.GAMESPEED;
+                        //oldPos.X += 3;
+                    }
+                    else if ((state.IsKeyDown(rightKey) || GamePad.GetState(0).Triggers.Right > 100) && canRight)
+                    {
+                        PlayerSprite.Position.X += (Speed * GameManager.GAMESPEED);
+                        //oldPos.X -= 3;
+                    }
+                }
+                else
+                {
+                    if (state.IsKeyDown(upKey))
+                        PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) * 2;
+                    else if (state.IsKeyDown(downKey))
+                        PlayerSprite.Position.Y += (Speed * GameManager.GAMESPEED) * 2;
+
+                    if (state.IsKeyDown(leftKey))
+                        PlayerSprite.Position.X -= (Speed * GameManager.GAMESPEED) * 2;
+                    else if (state.IsKeyDown(rightKey))
+                        PlayerSprite.Position.X += (Speed * GameManager.GAMESPEED) * 2;
+                }
+            }
+        }
+        public Dictionary<string, Func<string, bool>> TileFunctions = new Dictionary<string, Func<string, bool>>();
+
+        public void RegisterTileEvent(string name, Func<string, bool> function)
+        {
+            TileFunctions.Add(name, function);
+        }
+
+        private void CheckLRColliton(string state)
+        {
+            if (TileFunctions.ContainsKey(state.Split(':')[0]))
+                TileFunctions[state.Split(':')[0]](state.Split(':')[1]);
+        }
+
+    }
+}

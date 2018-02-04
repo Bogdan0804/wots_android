@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<textures>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/dialoguebox.png</file>
+    <name>dialog</name>
+  </object>
+   <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/button.bmp</file>
+    <name>button_1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/selected.png</file>
+    <name>selected_ui</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_0.png</file>
+    <name>grass_0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/selected_ui_inv.png</file>
+    <name>selected_ui_inv</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/inv_gui_items.png</file>
+    <name>inv_gui_items</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ladder.png</file>
+    <name>ladder</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_1.png</file>
+    <name>grass_1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_2.png</file>
+    <name>grass_2</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass.png</file>
+    <name>grass</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_3.png</file>
+    <name>grass_3</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_4.png</file>
+    <name>grass_4</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_5.png</file>
+    <name>grass_5</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/bush_0.png</file>
+    <name>bush_0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/bush_1.png</file>
+    <name>bush_1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/cobblestone.png</file>
+    <name>cobble_1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/wood_1.png</file>
+    <name>wood_1</name>
+  </object>
+</textures>
