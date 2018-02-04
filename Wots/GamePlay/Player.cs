@@ -14,6 +14,7 @@ namespace Wots.GamePlay
         public static Bar HealthBar;
         //public static int Health = 100;
 
+
         // Gravity
         public float GravitySpeed = 10.0f;
         public bool useGravity = true;
@@ -68,34 +69,11 @@ namespace Wots.GamePlay
         public void Intialize()
         {
             TextureDirection = new Vector2(-1, 0);
-
             PlayerSprite = new Sprite(new Vector2(100, 200), Vector2.One);
             HealthBar = new Bar(new Vector2(10, 10));
 
             this.TargetForShaders = new RenderTarget2D(GameManager.Game.Graphics.GraphicsDevice, (int)this.PlayerSprite.Size.X, (int)this.PlayerSprite.Size.Y);
 
-            // Setup the movment keys
-            {
-                if (dKeys)
-                {
-                    jumpKey = Keys.RightShift;
-                    downKey = Keys.Down;
-                    leftKey = Keys.Left;
-                    rightKey = Keys.Right;
-                    upKey = Keys.Up;
-                }
-                else
-                {
-                    if (true)
-                    {
-                        jumpKey = Keys.Space;
-                        upKey = Keys.W;
-                        downKey = Keys.S;
-                        leftKey = Keys.A;
-                        rightKey = Keys.D;
-                    }
-                }
-            }
 
             // Register our til events
             RegisterTileEvent("door", s =>
@@ -116,25 +94,22 @@ namespace Wots.GamePlay
         public void LoadContent(ContentManager content)
         {
 
-            // load in all our textures
-            if (!dKeys)
-            {
-                AssetManager.AddTexture("down_0", AssetManager.LoadImage("art/player/playerDown/1"));
-                AssetManager.AddTexture("down_1", AssetManager.LoadImage("art/player/playerDown/2"));
-                AssetManager.AddTexture("down_2", AssetManager.LoadImage("art/player/playerDown/3"));
+            AssetManager.AddTexture("down_0", AssetManager.LoadImage("art/player/playerDown/1"));
+            AssetManager.AddTexture("down_1", AssetManager.LoadImage("art/player/playerDown/2"));
+            AssetManager.AddTexture("down_2", AssetManager.LoadImage("art/player/playerDown/3"));
 
-                AssetManager.AddTexture("up_0", AssetManager.LoadImage("art/player/playerUp/1"));
-                AssetManager.AddTexture("up_1", AssetManager.LoadImage("art/player/playerUp/2"));
-                AssetManager.AddTexture("up_2", AssetManager.LoadImage("art/player/playerUp/3"));
+            AssetManager.AddTexture("up_0", AssetManager.LoadImage("art/player/playerUp/1"));
+            AssetManager.AddTexture("up_1", AssetManager.LoadImage("art/player/playerUp/2"));
+            AssetManager.AddTexture("up_2", AssetManager.LoadImage("art/player/playerUp/3"));
 
-                AssetManager.AddTexture("right_0", AssetManager.LoadImage("art/player/playerRight/1"));
-                AssetManager.AddTexture("right_1", AssetManager.LoadImage("art/player/playerRight/2"));
-                AssetManager.AddTexture("right_2", AssetManager.LoadImage("art/player/playerRight/3"));
+            AssetManager.AddTexture("right_0", AssetManager.LoadImage("art/player/playerRight/1"));
+            AssetManager.AddTexture("right_1", AssetManager.LoadImage("art/player/playerRight/2"));
+            AssetManager.AddTexture("right_2", AssetManager.LoadImage("art/player/playerRight/3"));
 
-                AssetManager.AddTexture("left_0", AssetManager.LoadImage("art/player/playerLeft/1"));
-                AssetManager.AddTexture("left_1", AssetManager.LoadImage("art/player/playerLeft/2"));
-                AssetManager.AddTexture("left_2", AssetManager.LoadImage("art/player/playerLeft/3"));
-            }
+            AssetManager.AddTexture("left_0", AssetManager.LoadImage("art/player/playerLeft/1"));
+            AssetManager.AddTexture("left_1", AssetManager.LoadImage("art/player/playerLeft/2"));
+            AssetManager.AddTexture("left_2", AssetManager.LoadImage("art/player/playerLeft/3"));
+
 
 
             // Create our animations
@@ -240,42 +215,24 @@ namespace Wots.GamePlay
         {
             var newDir = PlayerSprite.Position;
 
-            var state = Keyboard.GetState();
-
             if (jumping)
                 TextureDirection = new Vector2(0, 1);
             else
                 TextureDirection = Vector2.Zero;
 
-            if (state.IsKeyDown(Keys.A))
-            {
-                TextureDirection = new Vector2(1, 0);
-            }
-            else if (state.IsKeyDown(Keys.D))
+            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 1)
             {
                 TextureDirection = new Vector2(-1, 0);
             }
+            else if (UniversalInputManager.Manager.GetAxis("Horizontal") == -1)
+            {
+                TextureDirection = new Vector2(1, 0);
+            }
 
-            if (!state.IsKeyDown(Keys.A) && !state.IsKeyDown(Keys.D))
+            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
                 PlayerSprite.Animations[PlayerSprite.CurrentAnimation].Frame = 1;
                 PlayerSprite.Animate = false;
-            }
-
-            if (isAI)
-            {
-                if (oldDir.X > newDir.X)
-                {
-                    var currenttext = "left";
-                    PlayerSprite.Animate = true;
-                    PlayerSprite.CurrentAnimation = currenttext;
-                }
-                else
-                {
-                    var currenttext = "right";
-                    PlayerSprite.Animate = true;
-                    PlayerSprite.CurrentAnimation = currenttext;
-                }
             }
 
             this.oldDir = newDir;
@@ -316,106 +273,92 @@ namespace Wots.GamePlay
 
         private void HandleMovements(KeyboardState state)
         {
-            if (!isAI)
+            // Make sure that collitions are enabled.
+            if (!noClip)
             {
-                // Make sure that collitions are enabled.
-                if (!noClip)
+                // Check if we pressed jump key and if we can jump
+                if (UniversalInputManager.Manager.GetAxis("Vertical") == 1 && !canDown && canUp && Collitions.Up.Item2.State != "fast4")
                 {
-                    // Check if we pressed jump key and if we can jump
-                    if (state.IsKeyDown(jumpKey) && !canDown && canUp && Collitions.Up.Item2.State != "fast4")
-                    {
-                        jumping = true;
-                        jumpBuildTime = 0;
-                    }
+                    jumping = true;
+                    jumpBuildTime = 0;
+                }
 
-                    // If we created a simulated jump
-                    if (createJump)
-                    {
-                        jumping = true;
-                        jumpBuildTime = 0;
-                    }
+                // If we created a simulated jump
+                if (createJump)
+                {
+                    jumping = true;
+                    jumpBuildTime = 0;
+                }
 
-                    // Code for jumping
-                    if (jumping && jumpBuildTime < 0.25)
-                    {
-                        useGravity = false;
+                // Code for jumping
+                if (jumping && jumpBuildTime < 0.25)
+                {
+                    useGravity = false;
 
-                        if (canUp)
-                            this.PlayerSprite.Position.Y -= Speed * 3.5f;
-                    }
-                    else
-                    {
-                        useGravity = true;
-                        jumping = false;
-                    }
-
-                    if (state.IsKeyDown(Keys.LeftShift))
-                    {
-                        Speed = 7;
-                    }
-                    else
-                    {
-                        Speed = 5;
-                    }
-
-                    if (Collitions.Down != null)
-                        if (Collitions.Down.Item2.State == "fast4")
-                            GravitySpeed = 5.0f;
-                        else
-                            GravitySpeed = 10.0f;
-
-                    if (Collitions.Right != null && Collitions.Right.Item2.State != null)
-                        CheckLRColliton(Collitions.Right.Item2.State);
-                    else
-                    if (Collitions.Left != null && Collitions.Left.Item2.State != null)
-                        CheckLRColliton(Collitions.Left.Item2.State);
-
-                    bool oldGravityState = useGravity;
-                    try
-                    {
-                        if ((state.IsKeyDown(jumpKey) && canUp && Collitions.Up.Item2.State == "fast4"))
-                        {
-                            this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 1.5f;
-                            useGravity = false;
-                        }
-                        else if (Collitions.Up.Item1 && Collitions.Down.Item2.State == "fast4" && canUp && (state.IsKeyDown(jumpKey)))
-                        {
-                            this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 3f;
-                            useGravity = false;
-                        }
-                        else
-                        {
-                            useGravity = oldGravityState;
-                        }
-                    }
-                    catch { }
-                    // our psuedo gravity
-                    if (useGravity && canDown)
-                        PlayerSprite.Position.Y += GravitySpeed;
-
-                    if ((state.IsKeyDown(leftKey) || GamePad.GetState(0).Triggers.Left > 100) && canLeft)
-                    {
-                        PlayerSprite.Position.X -= Speed * GameManager.GAMESPEED;
-                        //oldPos.X += 3;
-                    }
-                    else if ((state.IsKeyDown(rightKey) || GamePad.GetState(0).Triggers.Right > 100) && canRight)
-                    {
-                        PlayerSprite.Position.X += (Speed * GameManager.GAMESPEED);
-                        //oldPos.X -= 3;
-                    }
+                    if (canUp)
+                        this.PlayerSprite.Position.Y -= Speed * 3.5f;
                 }
                 else
                 {
-                    if (state.IsKeyDown(upKey))
-                        PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) * 2;
-                    else if (state.IsKeyDown(downKey))
-                        PlayerSprite.Position.Y += (Speed * GameManager.GAMESPEED) * 2;
-
-                    if (state.IsKeyDown(leftKey))
-                        PlayerSprite.Position.X -= (Speed * GameManager.GAMESPEED) * 2;
-                    else if (state.IsKeyDown(rightKey))
-                        PlayerSprite.Position.X += (Speed * GameManager.GAMESPEED) * 2;
+                    useGravity = true;
+                    jumping = false;
                 }
+
+                if (state.IsKeyDown(Keys.LeftShift))
+                {
+                    Speed = 7;
+                }
+                else
+                {
+                    Speed = 5;
+                }
+
+                if (Collitions.Down != null)
+                    if (Collitions.Down.Item2.State == "fast4")
+                        GravitySpeed = 5.0f;
+                    else
+                        GravitySpeed = 10.0f;
+
+                if (Collitions.Right != null && Collitions.Right.Item2.State != null)
+                    CheckLRColliton(Collitions.Right.Item2.State);
+                else
+                if (Collitions.Left != null && Collitions.Left.Item2.State != null)
+                    CheckLRColliton(Collitions.Left.Item2.State);
+
+                bool oldGravityState = useGravity;
+                try
+                {
+                    if ((state.IsKeyDown(jumpKey) && canUp && Collitions.Up.Item2.State == "fast4"))
+                    {
+                        this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 1.5f;
+                        useGravity = false;
+                    }
+                    else if (Collitions.Up.Item1 && Collitions.Down.Item2.State == "fast4" && canUp && (state.IsKeyDown(jumpKey)))
+                    {
+                        this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 3f;
+                        useGravity = false;
+                    }
+                    else
+                    {
+                        useGravity = oldGravityState;
+                    }
+                }
+                catch { }
+                // our psuedo gravity
+                if (useGravity && canDown)
+                    PlayerSprite.Position.Y += GravitySpeed;
+
+                if ((UniversalInputManager.Manager.GetAxis("Horizontal") == -1 || GamePad.GetState(0).Triggers.Left > 100) && canLeft)
+                {
+                    PlayerSprite.Position.X -= Speed * GameManager.GAMESPEED;
+                    //oldPos.X += 3;
+                }
+                else if ((UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || GamePad.GetState(0).Triggers.Right > 100) && canRight)
+                {
+                    PlayerSprite.Position.X += (Speed * GameManager.GAMESPEED);
+                    //oldPos.X -= 3;
+                }
+
             }
         }
         public Dictionary<string, Func<string, bool>> TileFunctions = new Dictionary<string, Func<string, bool>>();

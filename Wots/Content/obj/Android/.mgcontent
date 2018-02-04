@@ -17,31 +17,6 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/player/playerUp/2.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/player/playerUp/3.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/slides/1.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/1.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/2.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/3.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/monogameLogo.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff1.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff2.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff3.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff4.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff5.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/arrow_selected.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/back_arrow.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/button.bmp</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonExit.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonMultiplayer.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonnOptions.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonOptions.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonPlay.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/cursor1.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/cursor2.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dialoguebox.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/inv_gui_items.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/selected.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/selected_ui_inv.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/toggleButton_0.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/toggleButton_1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/bg1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/bush_0.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/bush_1.png</File>
@@ -64,5 +39,32 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/fonts/24.spritefont</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/fonts/36.spritefont</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/fonts/ConsoleFont.spritefont</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/2.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/tim/3.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/monogameLogo.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff2.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff3.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff4.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff5.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/arrow_selected.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/back_arrow.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/button.bmp</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonExit.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonMultiplayer.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonnOptions.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonOptions.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/buttonPlay.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/cursor1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/cursor2.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dialoguebox.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dpad_key_left.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/inv_gui_items.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/selected.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/selected_ui_inv.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/toggleButton_0.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/toggleButton_1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dpad_key_right.png</File>
   </SourceFiles>
 </SourceFileCollection>

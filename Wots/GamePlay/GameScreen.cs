@@ -26,6 +26,7 @@ namespace Wots.GamePlay
 
         // Our ui things
         UI_Inventory_Menu ui_menu_inventory;
+        DPad pad = new DPad();
 
         //// Networking
         //NetClient netClient;
@@ -54,6 +55,7 @@ namespace Wots.GamePlay
 
         public GameScreen(bool client = false, string ip = "127.0.0.1")
         {
+            pad.Position = new Vector2(1, GameManager.Game.ScreenSize.Y - 265);
             // Setup our player and their views
             original = GameManager.Game.Graphics.GraphicsDevice.Viewport;
             Player = new Player(false);
@@ -113,8 +115,8 @@ namespace Wots.GamePlay
 
             // Draw the player
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-
-            //#region Serverside Stuff
+            
+            #region Serverside Stuff
             //if (useServer)
             //{
             //    if (netClient != null)
@@ -216,7 +218,7 @@ namespace Wots.GamePlay
             //        }
             //    }
             //}
-            //#endregion
+            #endregion
 
             // Draw the world
             World.Draw(gameTime, spriteBatch);
@@ -227,7 +229,6 @@ namespace Wots.GamePlay
             }
 
             Player.Draw(gameTime, spriteBatch);
-
             try
             {
                 spriteBatch.End();
@@ -235,6 +236,7 @@ namespace Wots.GamePlay
                 // Draw the health
                 spriteBatch.Begin(samplerState: SamplerState.PointClamp);
                 Player.HealthBar.Draw(gameTime, spriteBatch);
+                pad.Draw(spriteBatch);
                 spriteBatch.End();
             }
             catch (Exception)
@@ -252,18 +254,9 @@ namespace Wots.GamePlay
 
         public override void Update(GameTime gameTime)
         {
-            var newMouseState = Mouse.GetState();
-            var newState = Keyboard.GetState();
-
-            // Check if we pressed splitscreen
-            if (newState.IsKeyDown(Keys.K) && oldState.IsKeyUp(Keys.K))
-                SplitScreen = !SplitScreen;
-
+            pad.Update(gameTime);
             UpdatePlayerCameras(gameTime);
-
-            // Keyboard & mouse state stuff
-            oldState = newState;
-            oldMouseState = newMouseState;
+            
 
             // Update the world
             World.Update(gameTime);
@@ -280,6 +273,7 @@ namespace Wots.GamePlay
 
         public override void LoadContent(ContentManager content)
         {
+            pad.LoadContent();
             // Load our players content and set an initial state
             Player.LoadContent(content);
             MultiPlayers.Add(new NetworkPlayer("Jeff"));
