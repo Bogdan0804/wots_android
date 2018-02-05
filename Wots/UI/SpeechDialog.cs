@@ -105,7 +105,7 @@ namespace Wots.UI
                 }
             }
         }
-
+        TouchLocation oldT;
         public override void Update(GameTime gameTime)
         {
             var touchCol = TouchPanel.GetState();
@@ -116,39 +116,39 @@ namespace Wots.UI
                 {
                     var touch = touchCol[i];
 
-                    if (touch.State == TouchLocationState.Pressed || touch.State == TouchLocationState.Moved)
-                        continue;
-
-                    if (this.next_button_bounds.Contains(touch.Position) && Index < SpeechFrames.Count - 1)
+                    if (touch.State == TouchLocationState.Pressed && oldT.State == TouchLocationState.Released)
                     {
-                        if (Index < this.SpeechFrames.Count)
-                            Index++;
-                    }
-                    else
-                    {
-                        Rectangle rect_yes = new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height);
-                        if (this.next_button_bounds.Contains(touch.Position))
+                        if (this.next_button_bounds.Contains(touch.Position) && Index < SpeechFrames.Count - 1)
                         {
-                            this.Result = DialogResult.No;
-                            isVisible = false;
-
-                            Closed?.Invoke(this);
+                            if (Index < this.SpeechFrames.Count)
+                                Index++;
                         }
-                        else if (rect_yes.Contains(touch.Position))
+                        else
                         {
-                            this.Result = DialogResult.Yes;
-                            isVisible = false;
+                            Rectangle rect_yes = new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height);
+                            if (this.next_button_bounds.Contains(touch.Position))
+                            {
+                                this.Result = DialogResult.No;
+                                isVisible = false;
 
-                            Closed?.Invoke(this);
+                                Closed?.Invoke(this);
+                            }
+                            else if (rect_yes.Contains(touch.Position))
+                            {
+                                this.Result = DialogResult.Yes;
+                                isVisible = false;
+
+                                Closed?.Invoke(this);
+                            }
                         }
                     }
+                    oldT = touch;
                 }
             }
             catch (Exception)
             {
 
-            }
-            old_mouse_state = touchCol;
+            };
         }
     }
 

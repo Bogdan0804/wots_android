@@ -229,7 +229,7 @@ namespace Wots.GamePlay
                 TextureDirection = new Vector2(1, 0);
             }
 
-            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
+            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 0 || UniversalInputManager.Manager.GetAxis("Vertical") == 1  && UniversalInputManager.Manager.GetAxis("Horizontal") == 0)
             {
                 PlayerSprite.Animations[PlayerSprite.CurrentAnimation].Frame = 1;
                 PlayerSprite.Animate = false;
@@ -328,12 +328,12 @@ namespace Wots.GamePlay
                 bool oldGravityState = useGravity;
                 try
                 {
-                    if ((state.IsKeyDown(jumpKey) && canUp && Collitions.Up.Item2.State == "fast4"))
+                    if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Item2.State == "fast4"))
                     {
                         this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 1.5f;
                         useGravity = false;
                     }
-                    else if (Collitions.Up.Item1 && Collitions.Down.Item2.State == "fast4" && canUp && (state.IsKeyDown(jumpKey)))
+                    else if (Collitions.Up.Item1 && Collitions.Down.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
                     {
                         this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 3f;
                         useGravity = false;

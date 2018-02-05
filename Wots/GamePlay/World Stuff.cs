@@ -73,7 +73,7 @@ namespace Wots.GamePlay
             XmlDocument doc = new XmlDocument();
 
             string xml = "";
-            using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open("main.xml")))
+            using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open($"{name}.xml")))
             {
                 xml = sr.ReadToEnd();
             }

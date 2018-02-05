@@ -127,6 +127,9 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\main.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\test.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

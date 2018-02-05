@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 //
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.UI
 {
@@ -223,19 +224,19 @@ namespace Wots.UI
             uiSpriteBatch.Draw(texture_ui_selected, selected_rect, Color.Gray);
             #endregion
         }
-
+        
         public override void Update(GameTime gameTime)
         {
-            var mouseState = Mouse.GetState();
+            //var mouseState = Mouse.GetState();
             var state = Keyboard.GetState();
 
             #region Mouse Wheel
-            if (mouseState.ScrollWheelValue < oldMouseWheelValue)
-                if (SelectedItemIndex < 7)
-                    SelectedItemIndex++;
-            if (mouseState.ScrollWheelValue > oldMouseWheelValue)
-                if (SelectedItemIndex > 0)
-                    SelectedItemIndex--;
+            //if (mouseState.ScrollWheelValue < oldMouseWheelValue)
+            //    if (SelectedItemIndex < 7)
+            //        SelectedItemIndex++;
+            //if (mouseState.ScrollWheelValue > oldMouseWheelValue)
+            //    if (SelectedItemIndex > 0)
+            //        SelectedItemIndex--;
             #endregion
 
             #region Keyboard Items
@@ -258,13 +259,15 @@ namespace Wots.UI
             #endregion
 
             #region Use items
+            var touches = TouchPanel.GetState();
+
             if (state.IsKeyDown(UseKey) && oldKeyboardState.IsKeyUp(UseKey))
                 if (Inventory[SelectedItemIndex] != null)
                     UseItem(Inventory[SelectedItemIndex]);
             #endregion
 
             oldKeyboardState = state;
-            this.oldMouseWheelValue = mouseState.ScrollWheelValue;
+            //this.oldMouseWheelValue = mouseState.ScrollWheelValue;
         }
 
         /// <summary>
