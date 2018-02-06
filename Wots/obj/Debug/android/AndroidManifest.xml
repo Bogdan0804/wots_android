@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bogz.rpengine_Wots" android:versionCode="1" android:versionName="1.0" android:installLocation="internalOnly">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bogz.rpengine_Wots" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
   <!--suppress UsesMinSdkAttributes-->
-  <uses-sdk android:minSdkVersion="22" />
+  <uses-sdk android:minSdkVersion="21" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <application android:label="Wots" android:icon="@drawable/icon" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true">
-    <activity android:alwaysRetainTaskState="true" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:icon="@drawable/icon" android:label="Wots" android:launchMode="singleInstance" android:screenOrientation="reverseLandscape" android:theme="@style/Theme.Splash" android:name="md5add17aa9da3a764bb9bca010f3691abb.Activity1">
+    <activity android:alwaysRetainTaskState="true" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:icon="@drawable/icon" android:label="Wots" android:launchMode="singleInstance" android:screenOrientation="landscape" android:theme="@style/Theme.Splash" android:name="md5add17aa9da3a764bb9bca010f3691abb.Activity1">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

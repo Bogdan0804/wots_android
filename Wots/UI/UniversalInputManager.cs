@@ -45,5 +45,14 @@ namespace Wots.UI
 
             return 0.0f;
         }
+
+        public GestureSample ReadGesture()
+        {
+            if (TouchPanel.IsGestureAvailable)
+                return TouchPanel.ReadGesture();
+
+            return new GestureSample();
+        }
     }
+
 }

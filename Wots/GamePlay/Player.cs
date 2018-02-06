@@ -28,12 +28,11 @@ namespace Wots.GamePlay
             public Tuple<bool, Tile> Left, OldLeft;
             public Tuple<bool, Tile> Right, OldRight;
         }
-        CollitionDetection Collitions = new CollitionDetection();
+        public CollitionDetection Collitions = new CollitionDetection();
 
 
 
         bool canUp = true, canDown = true, canLeft = true, canRight = true;
-        private KeyboardState OldKeyboardState;
         // Store all of our player textures in variables
         public Texture2D CurrentDirection
         {
@@ -180,6 +179,12 @@ namespace Wots.GamePlay
             int x = (int)TextureDirection.X;
             int y = (int)TextureDirection.Y;
 
+            if (y == 1)
+            {
+                currenttext = "down";
+                PlayerSprite.Animate = true;
+                PlayerSprite.CurrentAnimation = currenttext;
+            }
             if (x == 1)
             {
                 currenttext = "left";
@@ -193,12 +198,6 @@ namespace Wots.GamePlay
                 PlayerSprite.CurrentAnimation = currenttext;
             }
 
-            if (y == 1)
-            {
-                currenttext = "down";
-                PlayerSprite.Animate = true;
-                PlayerSprite.CurrentAnimation = currenttext;
-            }
             else if (x == 0 && y == 0)
                 PlayerSprite.Animate = false;
 
@@ -214,10 +213,6 @@ namespace Wots.GamePlay
         {
             var newDir = PlayerSprite.Position;
 
-            if (jumping)
-                TextureDirection = new Vector2(0, 1);
-            else
-                TextureDirection = Vector2.Zero;
 
             if (UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || UniversalInputManager.Manager.GetAxis("Horizontal") == 1 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
@@ -247,7 +242,7 @@ namespace Wots.GamePlay
         public void MovePlayer(GameTime gameTime)
         {
             jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             HandleMovements();
             //UpdateColitions(null);
 
@@ -263,9 +258,16 @@ namespace Wots.GamePlay
             if (!noClip)
             {
                 // Check if we pressed jump key and if we can jump
-                if (UniversalInputManager.Manager.GetAxis("Vertical") == 1 && !canDown && canUp && Collitions.Up.Item2.State != "fast4")
+                if (UniversalInputManager.Manager.GetAxis("Vertical") == 1 && !canDown && canUp)
                 {
-                    jumping = true;
+                    if (Collitions.Up.Item2.Prefs.usePrefs)
+                    {
+                        Collitions.Up.Item2.Prefs.OnJump(this);
+                    }
+                    else
+                    {
+                        jumping = true;
+                    }
                     jumpBuildTime = 0;
                 }
                 // Code for jumping
@@ -281,21 +283,8 @@ namespace Wots.GamePlay
                     useGravity = true;
                     jumping = false;
                 }
-
-
-
-                if (Collitions.Down != null)
-                    if (Collitions.Down.Item2.State == "fast4")
-                        GravitySpeed = 5.0f;
-                    else
-                        GravitySpeed = 10.0f;
-
-                if (Collitions.Right != null && Collitions.Right.Item2.State != null)
-                    CheckLRColliton(Collitions.Right.Item2.State);
-                else
-                if (Collitions.Left != null && Collitions.Left.Item2.State != null)
-                    CheckLRColliton(Collitions.Left.Item2.State);
-
+               
+                
                 bool oldGravityState = useGravity;
                 try
                 {
@@ -315,6 +304,21 @@ namespace Wots.GamePlay
                     }
                 }
                 catch { }
+
+
+                if (Collitions.Down != null)
+                    if (Collitions.Down.Item2.State == "fast4")
+                        GravitySpeed = 5.0f;
+                    else
+                        GravitySpeed = 10.0f;
+
+                if (Collitions.Right != null && Collitions.Right.Item2.State != null)
+                    CheckLRColliton(Collitions.Right.Item2.State);
+                else
+                if (Collitions.Left != null && Collitions.Left.Item2.State != null)
+                    CheckLRColliton(Collitions.Left.Item2.State);
+                
+
                 // our psuedo gravity
                 if (useGravity && canDown)
                     PlayerSprite.Position.Y += GravitySpeed;

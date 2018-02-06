@@ -33,12 +33,7 @@ namespace Wots
         protected override void Initialize()
         {
             TouchPanel.EnabledGestures =
-           GestureType.Hold |
-           GestureType.Tap |
-           GestureType.DoubleTap |
-           GestureType.FreeDrag |
-           GestureType.Flick |
-           GestureType.Pinch;
+           GestureType.Tap;
             GameManager.Game.Initialize();
         }
         protected override void LoadContent()

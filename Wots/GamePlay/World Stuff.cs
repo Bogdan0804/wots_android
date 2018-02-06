@@ -8,8 +8,16 @@ using System.Collections.Generic;
 
 namespace Wots.GamePlay
 {
+    public class Prefs
+    {
+        public Func<Player, bool> OnJump;
+        public Func<Player, bool> OnUp;
+        public bool usePrefs = false;
+    }
+
     public class Tile
     {
+        public Prefs Prefs = new Prefs();
         public Vector2 Position { get; set; }
         public string Texture { get; set; }
         public Color Color { get; set; }
@@ -82,7 +90,7 @@ namespace Wots.GamePlay
 
             if (load == true)
                 WorldName = name;
-            
+
             var Floor = new Bag<Tile>();
             var Tiles = new Bag<Tile>();
 
@@ -118,6 +126,8 @@ namespace Wots.GamePlay
                 t.Texture = node["texture"].InnerText;
                 t.Collidable = bool.Parse(node.Attributes["collidable"].InnerText);
 
+                t = ProcessPrefs(t);
+
                 if (t.Collidable == false && t.State.ToLower() == "none")
                     Floor.Add(t);
                 else
@@ -131,6 +141,38 @@ namespace Wots.GamePlay
             Worlds.Add(name, p);
             hasWorld = true;
         }
+
+        private static Tile ProcessPrefs(Tile t)
+        {
+            t.Prefs.usePrefs = true;
+
+            if (t.State.ToLower() == "fast4")
+            {
+                t.Prefs.OnJump = new Func<Player, bool>((e) =>
+                {
+                    return false;
+                });
+                t.Prefs.OnUp = new Func<Player, bool>((e) =>
+           {
+               if (e.Collitions.Up.Item1)
+               {
+                   e.PlayerSprite.Position.Y -= (e.Speed * GameManager.GAMESPEED) / 1.5f;
+                   e.useGravity = false;
+               }
+               return false;
+           });
+            }
+            else
+            {
+                t.Prefs.OnJump = new Func<Player, bool>((e) =>
+                {
+                    return true;
+                });
+            }
+
+            return t;
+        }
+
         //internal static void OldLoad(string name)
         //{
         //    string worldText = File.ReadAllText($"Assets/worlds/{name}.ward");

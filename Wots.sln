@@ -5,18 +5,36 @@ VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wots", "Wots\Wots.csproj", "{44C7DDE7-0E50-42B0-A86A-A8F886206589}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WARD_Editor", "..\dev\WARD_Editor\WARD_Editor\WARD_Editor.csproj", "{D439A57E-ADB8-47A9-9912-B196927B0EE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|x64.Build.0 = Debug|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Debug|x64.Deploy.0 = Debug|Any CPU
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|x64.ActiveCfg = Release|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|x64.Build.0 = Release|Any CPU
+		{44C7DDE7-0E50-42B0-A86A-A8F886206589}.Release|x64.Deploy.0 = Release|Any CPU
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Debug|x64.ActiveCfg = Debug|x64
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Debug|x64.Build.0 = Debug|x64
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Release|x64.ActiveCfg = Release|x64
+		{D439A57E-ADB8-47A9-9912-B196927B0EE7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

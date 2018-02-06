@@ -22,7 +22,7 @@ namespace Wots.UI
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                uiSpriteBatch.Draw(Items[i].Texture, Items[i].Hitbox, Color.White);
+                uiSpriteBatch.Draw(Items[i].Texture, Items[i].Hitbox, Items[i].isHover ? Color.Gray : Color.White);
             }
             
         }

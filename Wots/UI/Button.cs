@@ -72,15 +72,24 @@ namespace Wots.UI
         {
             time += gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
 
-            while (TouchPanel.IsGestureAvailable)
+
+            var state = TouchPanel.GetState();
+            foreach (var touch in state)
             {
-                GestureSample gesture = TouchPanel.ReadGesture();
-                
-                if (this.Hitbox.Contains(gesture.Position) && (gesture.GestureType == GestureType.Tap || gesture.GestureType == GestureType.DoubleTap))
-                {
-                    Pressed?.Invoke(this);
-                }
+                if (this.Hitbox.Contains(touch.Position))
+                    isHover = true;
+                else
+                    isHover = false;
             }
+
+
+            GestureSample gesture = UniversalInputManager.Manager.ReadGesture();
+
+            if (this.Hitbox.Contains(gesture.Position) && gesture.GestureType == GestureType.Tap)
+            {
+                Pressed?.Invoke(this);
+            }
+
         }
     }
 }

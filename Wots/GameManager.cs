@@ -106,10 +106,16 @@ namespace Wots
 
                 this.timeUpdateTimer = 0;
             }
-            
+
 
             if (!Paused)
+            {
                 GameScreen.Update(gameTime);
+                foreach (var ui in GameScreen.UI)
+                {
+                    ui.Update(gameTime);
+                }
+            }
             else
                 PauseScreen.Update(gameTime);
             
@@ -134,10 +140,6 @@ namespace Wots
                     GameScreen.UI[i].Draw(gameTime, uiSpriteBatch);
                 }
                 uiSpriteBatch.End();
-                for (int i = 0; i < GameScreen.UI.Count; i++)
-                {
-                    GameScreen.UI[i].Update(gameTime);
-                }
             }
 
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, blendState: BlendState.AlphaBlend);

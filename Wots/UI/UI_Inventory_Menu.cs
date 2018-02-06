@@ -117,104 +117,168 @@ namespace Wots.UI
 
             texture_ui_selector = AssetManager.GetTexture("inv_gui_items");
             texture_ui_selected = AssetManager.GetTexture("selected_ui_inv");
-            rect_gui_selector = new Rectangle((int)GameManager.Game.ScreenSize.X / 2 - texture_ui_selector.Width / 2, (int)GameManager.Game.ScreenSize.Y - texture_ui_selector.Height * 2, texture_ui_selector.Width, texture_ui_selector.Height);
+            rect_gui_selector = new Rectangle((int)GameManager.Game.ScreenSize.X / 2 - texture_ui_selector.Width / 2, (int)GameManager.Game.ScreenSize.Y - texture_ui_selector.Height * 2, texture_ui_selector.Width * 2, texture_ui_selector.Height * 2);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch uiSpriteBatch)
         {
             Rectangle selected_rect = new Rectangle(
-                rect_gui_selector.X + (SelectedItemIndex * 32),
+                rect_gui_selector.X + (SelectedItemIndex * 64),
                 rect_gui_selector.Y,
-                32,
-                32
+                64,
+                64
                 );
 
             #region Draw Items
             if (Inventory.Tile0 != null)
             {
                 Rectangle posRect = new Rectangle(
-                   rect_gui_selector.X + (32 * 0),
+                   rect_gui_selector.X + (64 * 0),
                    rect_gui_selector.Y,
-                   32,
-                   32
+                   64,
+                   64
                    );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 0;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile0.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile0.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile1 != null)
             {
                 Rectangle posRect = new Rectangle(
-                   rect_gui_selector.X + (32 * 1),
+                   rect_gui_selector.X + (64 * 1),
                    rect_gui_selector.Y,
-                   32,
-                   32
+                   64,
+                   64
                    );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 1;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile1.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile1.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile2 != null)
             {
                 Rectangle posRect = new Rectangle(
-                      rect_gui_selector.X + (32 * 2),
+                      rect_gui_selector.X + (64 * 2),
                       rect_gui_selector.Y,
-                      32,
-                      32
+                      64,
+                      64
                       );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 2;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile2.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile2.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile3 != null)
             {
                 Rectangle posRect = new Rectangle(
-                   rect_gui_selector.X + (32 * 3),
+                   rect_gui_selector.X + (64 * 3),
                    rect_gui_selector.Y,
-                   32,
-                   32
+                   64,
+                   64
                    );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 3;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile3.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile3.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile4 != null)
             {
                 Rectangle posRect = new Rectangle(
-                      rect_gui_selector.X + (32 * 4),
+                      rect_gui_selector.X + (64 * 4),
                       rect_gui_selector.Y,
-                      32,
-                      32
+                      64,
+                      64
                       );
-                uiSpriteBatch.Draw(Inventory.Tile4.Texture, posRect, Color.White);
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 4;
+                }
+
+                uiSpriteBatch.Draw(Inventory.Tile4.Texture, posRect, Color.Red);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile4.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile5 != null)
             {
                 Rectangle posRect = new Rectangle(
-                      rect_gui_selector.X + (32 * 5),
+                      rect_gui_selector.X + (64 * 5),
                       rect_gui_selector.Y,
-                      32,
-                      32
+                      64,
+                      64
                       );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 5;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile5.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile5.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile6 != null)
             {
                 Rectangle posRect = new Rectangle(
-                   rect_gui_selector.X + (32 * 6),
+                   rect_gui_selector.X + (64 * 6),
                    rect_gui_selector.Y,
-                   32,
-                   32
+                   64,
+                   64
                    );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 6;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile6.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile6.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }
             if (Inventory.Tile7 != null)
             {
                 Rectangle posRect = new Rectangle(
-                   rect_gui_selector.X + (32 * 7),
+                   rect_gui_selector.X + (64 * 7),
                    rect_gui_selector.Y,
-                   32,
-                   32
+                   64,
+                   64
                    );
+
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.Tap && posRect.Contains(gesture.Position))
+                        SelectedItemIndex = 7;
+                }
+
                 uiSpriteBatch.Draw(Inventory.Tile7.Texture, posRect, Color.White);
                 uiSpriteBatch.DrawString(AssetManager.GetFont("12"), Inventory.Tile7.Amount.ToString(), new Vector2(posRect.X + 4, posRect.Y + 4), Color.White);
             }

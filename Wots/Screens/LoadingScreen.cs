@@ -53,6 +53,11 @@ namespace Wots.Screens
 			name.CurrentAnimation = "default";
             LoadBlocks();
 			background = new Color(102, 57, 49);
+            
+#if DEBUG
+            GameManager.Game.ChangeScreen(new MenuGameScreen());
+#endif
+
             if (GameManager.DEBUG)
                 GameManager.Game.ChangeScreen(new MenuGameScreen());
         }

@@ -57,17 +57,20 @@ namespace Wots.UI
 
         private Vector2 _dialog_dimentions = Vector2.Zero;
         private Vector2 _position = Vector2.Zero;
-        private Rectangle next_button_bounds;
+        private Button nextBtn;
 
         public SpeechDialog()
         {
-            _dialog_dimentions = new Vector2(400, 200);
+            _dialog_dimentions = new Vector2(500, 250);
             _position = new Vector2(GameManager.Game.ScreenSize.X / 2 - this._dialog_dimentions.X / 2, (GameManager.Game.ScreenSize.Y - this._dialog_dimentions.Y) - 70);
 
             if (Arrow_Texture == null)
                 Arrow_Texture = AssetManager.LoadImage("art/ui/arrow_selected");
-
-            next_button_bounds = new Rectangle((_position + _dialog_dimentions - new Vector2(Arrow_Texture.Width + 20, Arrow_Texture.Height + 20)).ToPoint(), new Point(Arrow_Texture.Width, Arrow_Texture.Height));
+            nextBtn = new Button(Arrow_Texture, _position + _dialog_dimentions - new Vector2(Arrow_Texture.Width + 35, Arrow_Texture.Height + 35), new Vector2(Arrow_Texture.Width + 35, Arrow_Texture.Height + 35));
+            nextBtn.Pressed += (e) => {
+                if (Index < SpeechFrames.Count)
+                    Index++;
+            };
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch uiSpriteBatch)
@@ -76,7 +79,7 @@ namespace Wots.UI
             {
                 uiSpriteBatch.Draw(AssetManager.GetTexture("dialog"), new Rectangle(_position.ToPoint(), _dialog_dimentions.ToPoint()), Color.White);
                 string text = _subject + ": " + SpeechFrames[Index].Text;
-                if (AssetManager.GetFont(_fontString).MeasureString(text).X + 50 >= this._dialog_dimentions.X)
+                if (AssetManager.GetFont(_fontString).MeasureString(text).X + 80 >= this._dialog_dimentions.X)
                 {
                     string s = "";
                     for (int i = 0; i < text.ToCharArray().Length; i++)
@@ -92,51 +95,21 @@ namespace Wots.UI
 
                     text = s;
                 }
-                uiSpriteBatch.DrawString(AssetManager.GetFont(_fontString), text, _position + new Vector2(25), Color.White);
+                uiSpriteBatch.DrawString(AssetManager.GetFont(_fontString), text, _position + new Vector2(40), Color.White);
                 if (IsQuestion && Index == SpeechFrames.Count - 1)
                 {
-                    uiSpriteBatch.Draw(Arrow_Texture, new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height), Color.Green);
-                    uiSpriteBatch.Draw(Arrow_Texture, next_button_bounds, Color.Red);
+                    // qiestion
                 }
                 else
                 {
-                    uiSpriteBatch.Draw(Arrow_Texture, next_button_bounds, Color.White);
+                    // normal
+                    nextBtn.Draw(gameTime, uiSpriteBatch);
                 }
             }
         }
-        TouchLocation oldT;
         public override void Update(GameTime gameTime)
         {
-            if (TouchPanel.IsGestureAvailable)
-            {
-                var gesture = TouchPanel.ReadGesture();
-                if (gesture.GestureType == GestureType.Tap)
-                {
-                    if (this.next_button_bounds.Contains(gesture.Position) && Index < SpeechFrames.Count - 1)
-                    {
-                        if (Index < this.SpeechFrames.Count)
-                            Index++;
-                    }
-                    else
-                    {
-                        Rectangle rect_yes = new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height);
-                        if (this.next_button_bounds.Contains(gesture.Position))
-                        {
-                            this.Result = DialogResult.No;
-                            isVisible = false;
-
-                            Closed?.Invoke(this);
-                        }
-                        else if (rect_yes.Contains(gesture.Position))
-                        {
-                            this.Result = DialogResult.Yes;
-                            isVisible = false;
-
-                            Closed?.Invoke(this);
-                        }
-                    }
-                }
-            }
+            nextBtn.Update(gameTime);
         }
     }
 

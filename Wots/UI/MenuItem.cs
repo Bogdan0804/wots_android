@@ -44,24 +44,27 @@ namespace Wots.UI
         {
             throw new CantDrawException("MenuItem");
         }
-
-        MouseState oldState;
+        
         public override void Update(GameTime gameTime)
         {
-            var newState = Mouse.GetState();
-
-            if (Hitbox.Contains(Mouse.GetState().Position))
-                isHover = true;
-            else
-                isHover = false;
-            var touchCol = TouchPanel.GetState();
-
-            foreach (var touch in touchCol)
+            var state = TouchPanel.GetState();
+            foreach (var touch in state)
             {
                 if (this.Hitbox.Contains(touch.Position))
-                    Pressed?.Invoke(this);
+                    isHover = true;
+                else
+                    isHover = false;
             }
-            oldState = newState;
+
+            while (TouchPanel.IsGestureAvailable)
+            {
+                GestureSample gesture = TouchPanel.ReadGesture();
+
+                if (this.Hitbox.Contains(gesture.Position) && gesture.GestureType == GestureType.Tap)
+                {
+                    Pressed?.Invoke(this);
+                }
+            }
         }
     }
 }

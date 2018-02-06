@@ -46,7 +46,7 @@ namespace Wots.GamePlay
             Camera = new Camera2D(GameManager.Game.Graphics.GraphicsDevice);
 
             // pause button
-            pause = new Button(AssetManager.LoadImage("art/ui/pause"), new Vector2(GameManager.Game.ScreenSize.X - 50, 3), new Vector2(48));
+            pause = new Button(AssetManager.LoadImage("art/ui/pause"), new Vector2(GameManager.Game.ScreenSize.X - 69, 3), new Vector2(64));
             pause.Pressed += (e) =>
             {
                 GameManager.Game.Paused = !GameManager.Game.Paused;
@@ -89,7 +89,7 @@ namespace Wots.GamePlay
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            GameManager.Game.Graphics.GraphicsDevice.Clear(new Color(20, 20, 20));
+            GameManager.Game.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // Draw the player
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
@@ -214,6 +214,7 @@ namespace Wots.GamePlay
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             Player.HealthBar.Draw(gameTime, spriteBatch);
             pad.Draw(spriteBatch);
+            
             spriteBatch.End();
 
         }
@@ -228,10 +229,11 @@ namespace Wots.GamePlay
         {
             pad.Update(gameTime);
             UpdatePlayerCameras(gameTime);
-
+            //pause.Update(gameTime);
 
             // Update the world
             World.Update(gameTime);
+
         }
         void UpdatePlayerCameras(GameTime gameTime)
         {
@@ -249,12 +251,6 @@ namespace Wots.GamePlay
             // Load our players content and set an initial state
             Player.LoadContent(content);
             World.Intialize();
-
-
-            ui_menu_inventory = new UI_Inventory_Menu();
-            this.UI.Add(ui_menu_inventory);
-
-            this.UI.Add(new GameIntro());
         }
 
 
@@ -262,6 +258,9 @@ namespace Wots.GamePlay
         {
             // Intialize the players
             Player.Intialize();
+            ui_menu_inventory = new UI_Inventory_Menu();
+            this.UI.Add(ui_menu_inventory);
+           // this.UI.Add(new GameIntro());
         }
 
         public override void Unload()
