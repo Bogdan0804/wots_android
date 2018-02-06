@@ -6,7 +6,7 @@ using Android.Views;
 namespace Wots
 {
     [Activity(Label = "Wots"
-        , ScreenOrientation = ScreenOrientation.Landscape | ScreenOrientation.ReverseLandscape
+        , ScreenOrientation = ScreenOrientation.Landscape
         , MainLauncher = true
         , Icon = "@drawable/icon"
         , Theme = "@style/Theme.Splash"

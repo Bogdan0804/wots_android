@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Wots.GamePlay;
 
 namespace Wots
 {
@@ -39,7 +40,6 @@ namespace Wots
         private FrameCounter _frameCounter = new FrameCounter();
         private IGameScreen GameScreen;
         private double timeUpdateTimer = 0;
-        private KeyboardState oldKeyboardState;
         #endregion
 
         #region Public Variables
@@ -49,7 +49,7 @@ namespace Wots
         public static string sessionID = null;
         public InGameTime CurrentGameTime;
         public GraphicsDeviceManager Graphics;
-        //public PauseScreen PauseScreen;
+        public PauseScreen PauseScreen;
         public Vector2 ScreenSize
         {
             get
@@ -60,7 +60,7 @@ namespace Wots
         #endregion
 
         public static float GAMESPEED = 1;
-        
+
 
         public void Initialize()
         {
@@ -70,6 +70,8 @@ namespace Wots
             CurrentGameTime.Minute = 55;
             GameScreen = new Screens.LoadingScreen();
             GameScreen.Intialize();
+            PauseScreen = new PauseScreen();
+            PauseScreen.Intialize();
         }
         public void LoadContent(ContentManager content)
         {
@@ -78,9 +80,9 @@ namespace Wots
             AssetManager.Fonts.Add("24", GameManager.Game.Content.Load<SpriteFont>("Assets/fonts/24"));
             AssetManager.Fonts.Add("36", GameManager.Game.Content.Load<SpriteFont>("Assets/fonts/36"));
             AssetManager.Fonts.Add("ConsoleFont", GameManager.Game.Content.Load<SpriteFont>("Assets/fonts/ConsoleFont"));
-
-
+            AssetManager.LoadXml();
             GameScreen.LoadContent(content);
+            PauseScreen.LoadContent(content);
         }
         public void Update(GameTime gameTime)
         {
@@ -104,21 +106,13 @@ namespace Wots
 
                 this.timeUpdateTimer = 0;
             }
+            
 
-            var newState = Keyboard.GetState();
-
-
-           // if (GamePlay.GameScreen.useServer || (GamePlay.GameScreen.SingleplayerServer != null && GamePlay.GameScreen.SingleplayerServer.Connections.Count > -1))
+            if (!Paused)
                 GameScreen.Update(gameTime);
-
-            //else if (!isChangingScreen && MainGame.Console != null && !Paused)
-            //{
-            //    if (!MainGame.Console.Opened || RPEngine.GamePlay.GameScreen.useServer)
-            //        GameScreen.Update(gameTime);
-            //}
-
-
-            this.oldKeyboardState = newState;
+            else
+                PauseScreen.Update(gameTime);
+            
         }
 
         public struct InGameTime
@@ -127,7 +121,6 @@ namespace Wots
             public float Minute { get; set; }
             public float Hour { get; set; }
         }
-        private bool pm = false;
         public bool Paused = false;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, SpriteBatch uiSpriteBatch)
@@ -149,27 +142,28 @@ namespace Wots
 
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, blendState: BlendState.AlphaBlend);
 
-            //if (Paused)
-            //{
-            //    PauseScreen.Draw(gameTime, spriteBatch);
-            //    PauseScreen.Update(gameTime);
-            //}
+            if (Paused)
+            {
+                PauseScreen.Draw(gameTime, spriteBatch);
+                PauseScreen.Update(gameTime);
+            }
+            
 
-            var state = Mouse.GetState();
 
-          
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
 
             _frameCounter.Update(deltaTime);
 
-            var fps = string.Format("FPS: {0}", _frameCounter.AverageFramesPerSecond + 1);
-            spriteBatch.DrawString(AssetManager.GetFont("ConsoleFont"), fps, Vector2.One, Color.Black);
-            string minute = "";
-            if (CurrentGameTime.Minute.ToString().Split().Length == 0)
-                minute = "0" + CurrentGameTime.Minute;
-            else
-                minute = CurrentGameTime.Minute.ToString();
-            spriteBatch.DrawString(AssetManager.GetFont("ConsoleFont"), $"Day {CurrentGameTime.Day} [{CurrentGameTime.Hour}:{minute}]", new Vector2(1, 20), Color.Black);
+            var fps = string.Format("FPS: {0}", Math.Round(_frameCounter.AverageFramesPerSecond));
+            spriteBatch.DrawString(AssetManager.GetFont("36"), fps, Vector2.One, Color.Black);
+            #region Date system
+            //string minute = "";
+            //if (CurrentGameTime.Minute.ToString().Split().Length == 0)
+            //    minute = "0" + CurrentGameTime.Minute;
+            //else
+            //    minute = CurrentGameTime.Minute.ToString();
+            //spriteBatch.DrawString(AssetManager.GetFont("ConsoleFont"), $"Day {CurrentGameTime.Day} [{CurrentGameTime.Hour}:{minute}]", new Vector2(1, 20), Color.Black);
+            #endregion
             spriteBatch.End();
         }
 

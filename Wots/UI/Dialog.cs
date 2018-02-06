@@ -46,7 +46,7 @@ namespace Wots.UI
         }
         public void  LoadContent()
         {
-            Texture = AssetManager.GetTexture("dialog");
+            Texture = AssetManager.LoadImage("art/ui/dialoguebox");
 
             okBtn = new Button(AssetManager.GetTexture("button_1"), Vector2.Zero, new Vector2(100, 50));
             okBtn.HoverColor = Color.Gray;

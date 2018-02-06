@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace Wots.GamePlay
 {
@@ -38,11 +39,19 @@ namespace Wots.GamePlay
         }
     }
 
+    public class WorldPrefs
+    {
+        public Bag<Tile> Floor = new Bag<Tile>();
+        public Bag<Tile> Tiles = new Bag<Tile>();
+    }
+
     public static class World
     {
+        public static bool hasWorld = false;
         public static int TileWidth, TileHeight;
-        public static Bag<Tile> Floor = new Bag<Tile>();
-        public static Bag<Tile> Tiles = new Bag<Tile>();
+
+        public static Dictionary<string, WorldPrefs> Worlds = new Dictionary<string, WorldPrefs>();
+
         internal static Vector2 blackWorld = Vector2.Zero;
         private static Texture2D black;
         public static string WorldName;
@@ -52,7 +61,6 @@ namespace Wots.GamePlay
             uint pVal = Color.Black.PackedValue;
 
             black.SetData<uint>(new uint[] { pVal });
-
             {
                 LoadWorld("main");
             }
@@ -62,13 +70,21 @@ namespace Wots.GamePlay
             int rem = num % 96;
             return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
         }
-        public static void LoadWorld(string name)
+        public static void LoadWorld(string name, bool load = true)
         {
             GameScreen.Player.PlayerSprite.Position = Vector2.Zero;
-            WorldName = name;
 
-            Floor = new Bag<Tile>();
-            Tiles = new Bag<Tile>();
+            if (Worlds.ContainsKey(name))
+            {
+                WorldName = name;
+                return;
+            }
+
+            if (load == true)
+                WorldName = name;
+            
+            var Floor = new Bag<Tile>();
+            var Tiles = new Bag<Tile>();
 
             XmlDocument doc = new XmlDocument();
 
@@ -107,6 +123,13 @@ namespace Wots.GamePlay
                 else
                     Tiles.Add(t);
             }
+
+            WorldPrefs p = new WorldPrefs();
+            p.Floor = Floor;
+            p.Tiles = Tiles;
+
+            Worlds.Add(name, p);
+            hasWorld = true;
         }
         //internal static void OldLoad(string name)
         //{
@@ -143,12 +166,15 @@ namespace Wots.GamePlay
         //        }
         //    }
         //}
-        
+
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            var Floor = Worlds[WorldName].Floor;
+            var Tiles = Worlds[WorldName].Tiles;
+
             if (GameManager.DEBUG)
                 spriteBatch.Draw(black, new Rectangle(0, 0, (int)blackWorld.X, (int)blackWorld.Y), Color.Black * 0.1f);
-            
+
             // Loop throug them
             for (int i = 0; i < Floor.Count; i++)
             {
@@ -179,6 +205,12 @@ namespace Wots.GamePlay
 
         public static Tuple<bool, Tile> isSpaceOpen(Vector2 pos, SpriteBatch s, Vector2 size)
         {
+            if (!hasWorld)
+                return new Tuple<bool, Tile>(false, new Tile());
+
+            var Floor = Worlds[WorldName].Floor;
+            var Tiles = Worlds[WorldName].Tiles;
+
             Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
             bool isOpen = true;
             s?.Draw(black, rect, Color.Red);
@@ -197,7 +229,7 @@ namespace Wots.GamePlay
             return new Tuple<bool, Tile>(isOpen, t);
         }
         public static void Update(GameTime gameTime)
-        {  
+        {
         }
     }
 }

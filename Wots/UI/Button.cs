@@ -45,7 +45,6 @@ namespace Wots.UI
             this.Texture = texture;
         }
 
-        MouseState oldState;
         double time = 0;
 
 
@@ -69,16 +68,18 @@ namespace Wots.UI
             }
 
         }
-
         public override void Update(GameTime gameTime)
         {
             time += gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
-            var touchCol = TouchPanel.GetState();
 
-            foreach (var touch in touchCol)
+            while (TouchPanel.IsGestureAvailable)
             {
-                if (this.Hitbox.Contains(touch.Position))
+                GestureSample gesture = TouchPanel.ReadGesture();
+                
+                if (this.Hitbox.Contains(gesture.Position) && (gesture.GestureType == GestureType.Tap || gesture.GestureType == GestureType.DoubleTap))
+                {
                     Pressed?.Invoke(this);
+                }
             }
         }
     }

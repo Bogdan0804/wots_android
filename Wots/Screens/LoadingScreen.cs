@@ -60,7 +60,6 @@ namespace Wots.Screens
         void LoadBlocks()
         {
             // Load in the assets
-            AssetManager.LoadXml();
 
             //GameManager.Game.ChangeScreen(new MenuGameScreen());
         }

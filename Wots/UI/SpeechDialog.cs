@@ -58,7 +58,6 @@ namespace Wots.UI
         private Vector2 _dialog_dimentions = Vector2.Zero;
         private Vector2 _position = Vector2.Zero;
         private Rectangle next_button_bounds;
-        private TouchCollection old_mouse_state;
 
         public SpeechDialog()
         {
@@ -108,47 +107,36 @@ namespace Wots.UI
         TouchLocation oldT;
         public override void Update(GameTime gameTime)
         {
-            var touchCol = TouchPanel.GetState();
-
-            try
+            if (TouchPanel.IsGestureAvailable)
             {
-                for (int i = 0; i < touchCol.Count; i++)
+                var gesture = TouchPanel.ReadGesture();
+                if (gesture.GestureType == GestureType.Tap)
                 {
-                    var touch = touchCol[i];
-
-                    if (touch.State == TouchLocationState.Pressed && oldT.State == TouchLocationState.Released)
+                    if (this.next_button_bounds.Contains(gesture.Position) && Index < SpeechFrames.Count - 1)
                     {
-                        if (this.next_button_bounds.Contains(touch.Position) && Index < SpeechFrames.Count - 1)
+                        if (Index < this.SpeechFrames.Count)
+                            Index++;
+                    }
+                    else
+                    {
+                        Rectangle rect_yes = new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height);
+                        if (this.next_button_bounds.Contains(gesture.Position))
                         {
-                            if (Index < this.SpeechFrames.Count)
-                                Index++;
+                            this.Result = DialogResult.No;
+                            isVisible = false;
+
+                            Closed?.Invoke(this);
                         }
-                        else
+                        else if (rect_yes.Contains(gesture.Position))
                         {
-                            Rectangle rect_yes = new Rectangle((next_button_bounds.X - next_button_bounds.Width) - 10, next_button_bounds.Y, next_button_bounds.Width, next_button_bounds.Height);
-                            if (this.next_button_bounds.Contains(touch.Position))
-                            {
-                                this.Result = DialogResult.No;
-                                isVisible = false;
+                            this.Result = DialogResult.Yes;
+                            isVisible = false;
 
-                                Closed?.Invoke(this);
-                            }
-                            else if (rect_yes.Contains(touch.Position))
-                            {
-                                this.Result = DialogResult.Yes;
-                                isVisible = false;
-
-                                Closed?.Invoke(this);
-                            }
+                            Closed?.Invoke(this);
                         }
                     }
-                    oldT = touch;
                 }
             }
-            catch (Exception)
-            {
-
-            };
         }
     }
 

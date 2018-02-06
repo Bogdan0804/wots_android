@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots
 {
@@ -12,7 +13,7 @@ namespace Wots
         GraphicsDeviceManager Graphics;
         SpriteBatch MainSpriteBatch;
         SpriteBatch UISpriteBatch;
-        
+
 
         public Game1()
         {
@@ -31,6 +32,13 @@ namespace Wots
         }
         protected override void Initialize()
         {
+            TouchPanel.EnabledGestures =
+           GestureType.Hold |
+           GestureType.Tap |
+           GestureType.DoubleTap |
+           GestureType.FreeDrag |
+           GestureType.Flick |
+           GestureType.Pinch;
             GameManager.Game.Initialize();
         }
         protected override void LoadContent()

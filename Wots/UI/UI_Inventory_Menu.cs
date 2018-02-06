@@ -81,7 +81,6 @@ namespace Wots.UI
         public static Texture2D texture_ui_selector;
         public static Texture2D texture_ui_selected;
         private Rectangle rect_gui_selector;
-        private int oldMouseWheelValue = 0;
         public int SelectedItemIndex = 1;
 
         public UI_Inventory_Menu()

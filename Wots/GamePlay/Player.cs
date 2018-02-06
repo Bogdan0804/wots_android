@@ -30,9 +30,8 @@ namespace Wots.GamePlay
         }
         CollitionDetection Collitions = new CollitionDetection();
 
-        Keys jumpKey, leftKey, rightKey, upKey, downKey;
 
-        public bool dKeys = false;
+
         bool canUp = true, canDown = true, canLeft = true, canRight = true;
         private KeyboardState OldKeyboardState;
         // Store all of our player textures in variables
@@ -75,7 +74,7 @@ namespace Wots.GamePlay
             this.TargetForShaders = new RenderTarget2D(GameManager.Game.Graphics.GraphicsDevice, (int)this.PlayerSprite.Size.X, (int)this.PlayerSprite.Size.Y);
 
 
-            // Register our til events
+            // Register our teleport events
             RegisterTileEvent("door", s =>
             {
                 try
@@ -220,16 +219,16 @@ namespace Wots.GamePlay
             else
                 TextureDirection = Vector2.Zero;
 
-            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 1)
+            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || UniversalInputManager.Manager.GetAxis("Horizontal") == 1 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
                 TextureDirection = new Vector2(-1, 0);
             }
-            else if (UniversalInputManager.Manager.GetAxis("Horizontal") == -1)
+            else if (UniversalInputManager.Manager.GetAxis("Horizontal") == -1 || UniversalInputManager.Manager.GetAxis("Horizontal") == -1 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
                 TextureDirection = new Vector2(1, 0);
             }
 
-            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 0 || UniversalInputManager.Manager.GetAxis("Vertical") == 1  && UniversalInputManager.Manager.GetAxis("Horizontal") == 0)
+            if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 0 || UniversalInputManager.Manager.GetAxis("Vertical") == 1 && UniversalInputManager.Manager.GetAxis("Horizontal") == 0)
             {
                 PlayerSprite.Animations[PlayerSprite.CurrentAnimation].Frame = 1;
                 PlayerSprite.Animate = false;
@@ -238,15 +237,9 @@ namespace Wots.GamePlay
             this.oldDir = newDir;
 
         }
-        public Player(bool ai)
-        {
-            this.isAI = ai;
-        }
 
-        bool isAI = false;
         bool jumping = false;
         double jumpBuildTime = 0;
-        private bool createJump;
 
         /// <summary>
         /// Moves the player.
@@ -254,24 +247,17 @@ namespace Wots.GamePlay
         public void MovePlayer(GameTime gameTime)
         {
             jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
-
-            //if (canDown)
-            //	GravitySpeed = 0.0f;
-            KeyboardState state = Keyboard.GetState();
-
-            HandleMovements(state);
+            
+            HandleMovements();
             //UpdateColitions(null);
 
             this.Collitions.OldDown = this.Collitions.Down;
             this.Collitions.OldLeft = this.Collitions.Left;
             this.Collitions.OldRight = this.Collitions.Right;
             this.Collitions.OldUp = this.Collitions.Up;
-
-            OldKeyboardState = state;
-
         }
 
-        private void HandleMovements(KeyboardState state)
+        private void HandleMovements()
         {
             // Make sure that collitions are enabled.
             if (!noClip)
@@ -282,14 +268,6 @@ namespace Wots.GamePlay
                     jumping = true;
                     jumpBuildTime = 0;
                 }
-
-                // If we created a simulated jump
-                if (createJump)
-                {
-                    jumping = true;
-                    jumpBuildTime = 0;
-                }
-
                 // Code for jumping
                 if (jumping && jumpBuildTime < 0.25)
                 {
@@ -304,14 +282,7 @@ namespace Wots.GamePlay
                     jumping = false;
                 }
 
-                if (state.IsKeyDown(Keys.LeftShift))
-                {
-                    Speed = 7;
-                }
-                else
-                {
-                    Speed = 5;
-                }
+
 
                 if (Collitions.Down != null)
                     if (Collitions.Down.Item2.State == "fast4")

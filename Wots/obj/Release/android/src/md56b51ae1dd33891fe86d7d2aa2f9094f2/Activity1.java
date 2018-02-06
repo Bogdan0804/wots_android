@@ -1,4 +1,4 @@
-package md59a96c27be1fbce9c59019c25b5cc2159;
+package md56b51ae1dd33891fe86d7d2aa2f9094f2;
 
 
 public class Activity1
@@ -12,7 +12,7 @@ public class Activity1
 		__md_methods = 
 			"n_onCreate:(Landroid/os/Bundle;)V:GetOnCreate_Landroid_os_Bundle_Handler\n" +
 			"";
-		mono.android.Runtime.register ("ColonySimulator_Android.Activity1, ColonySimulator_Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", Activity1.class, __md_methods);
+		mono.android.Runtime.register ("Wots.Activity1, Wots, Version=0.0.1.0, Culture=neutral, PublicKeyToken=null", Activity1.class, __md_methods);
 	}
 
 
@@ -20,7 +20,7 @@ public class Activity1
 	{
 		super ();
 		if (getClass () == Activity1.class)
-			mono.android.TypeManager.Activate ("ColonySimulator_Android.Activity1, ColonySimulator_Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
+			mono.android.TypeManager.Activate ("Wots.Activity1, Wots, Version=0.0.1.0, Culture=neutral, PublicKeyToken=null", "", this, new java.lang.Object[] {  });
 	}
 
 

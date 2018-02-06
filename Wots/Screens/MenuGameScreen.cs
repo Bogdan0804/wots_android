@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Wots.UI;
 using Wots.GamePlay;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.Screens
 {
@@ -34,7 +35,11 @@ namespace Wots.Screens
 
 
             // This ofset is a asmall value that can be added to a objects posotion to give it mouse feedback
-            Vector2 offset = Mouse.GetState().Position.ToVector2() / 100;
+            Vector2 offset = new Vector2(0);
+            foreach (var touch in TouchPanel.GetState())
+            {
+                offset = touch.Position / 100;
+            }
 
             // Draw the background and the first slide
             {

@@ -9,9 +9,9 @@ using Android.App;
 [assembly: AssemblyTitle("Wots")]
 [assembly: AssemblyProduct("Wots")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyDescription("WOTS: Warrior Of The Sun")]
+[assembly: AssemblyCompany("BogZ")]
+[assembly: AssemblyCopyright("Copyright 2018 BogZ©  ")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

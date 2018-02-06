@@ -4,6 +4,7 @@ C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Mono.Android.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\MonoGame.Extended.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\MonoGame.Framework.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\mscorlib.dll
+C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Newtonsoft.Json.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\OpenTK-1.0.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Core.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.dll
@@ -25,10 +26,10 @@ C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.ServiceModel.In
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Resources.ResourceManager.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Runtime.Serialization.Primitives.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.IO.dll
-C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Newtonsoft.Json.dll
+C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Globalization.dll
+C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.ComponentModel.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Threading.Tasks.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Xml.XDocument.dll
-C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Globalization.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Linq.Expressions.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Dynamic.Runtime.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.ObjectModel.dll
@@ -37,6 +38,5 @@ C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Xml.ReaderWrite
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Text.Encoding.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.Text.Encoding.Extensions.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Microsoft.CSharp.dll
-C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.ComponentModel.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Mono.Security.dll
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\System.ComponentModel.Composition.dll

@@ -27,48 +27,31 @@ namespace Wots.GamePlay
         // Our ui things
         UI_Inventory_Menu ui_menu_inventory;
         DPad pad = new DPad();
-
-        //// Networking
-        //NetClient netClient;
-        //public static NetServer SingleplayerServer;
-        //public static string Name;
+        Button pause;
 
         // Player cameras
         public static Camera2D Camera;
-        Camera2D Camera2;
-
-        // keyboard stuff
-        KeyboardState oldState;
-
-        // The player view ports
-        Viewport v;
-        Viewport v1;
-        public static Viewport original;
 
         // Splitscreen
         public bool SplitScreen = false;
-        private bool useTile = false;
         //pyblic  string name = "";
-        private MouseState oldMouseState;
-        private bool useTileCollition = true;
         private Texture2D textureBlank;
 
-        public GameScreen(bool client = false, string ip = "127.0.0.1")
+        public GameScreen()
         {
             pad.Position = new Vector2(1, GameManager.Game.ScreenSize.Y - 265);
-            // Setup our player and their views
-            original = GameManager.Game.Graphics.GraphicsDevice.Viewport;
-            Player = new Player(false);
+            // Setup our player and the world
+            Player = new Player();
+            // main camera
             Camera = new Camera2D(GameManager.Game.Graphics.GraphicsDevice);
-            Camera2 = new Camera2D(GameManager.Game.Graphics.GraphicsDevice);
-            v = new Viewport(GameManager.Game.Graphics.PreferredBackBufferWidth / 2, 0, GameManager.Game.Graphics.PreferredBackBufferWidth / 2, GameManager.Game.Graphics.PreferredBackBufferHeight);
-            v1 = new Viewport(0, 0, GameManager.Game.Graphics.PreferredBackBufferWidth - (GameManager.Game.Graphics.PreferredBackBufferWidth / 2), GameManager.Game.Graphics.PreferredBackBufferHeight);
 
-
-            //MainGame.Console.AddCommand("set", a =>
-            //{
-            //    return "Set";
-            //}, "Sets game states. Ie. set DEBUG true");
+            // pause button
+            pause = new Button(AssetManager.LoadImage("art/ui/pause"), new Vector2(GameManager.Game.ScreenSize.X - 50, 3), new Vector2(48));
+            pause.Pressed += (e) =>
+            {
+                GameManager.Game.Paused = !GameManager.Game.Paused;
+            };
+            this.UI.Add(pause);
 
             textureBlank = new Texture2D(GameManager.Game.Graphics.GraphicsDevice, 4, 4);
 
@@ -77,7 +60,7 @@ namespace Wots.GamePlay
                 red[i] = (new Color(255, 0, 0) * 100).PackedValue;
             textureBlank.SetData<uint>(red);
 
-            //#region Serverside Stuff
+            #region Serverside Stuff
             //if (client)
             //{
             //    var config = new NetPeerConfiguration("wots" + RPEngine.Program.major.ToString());
@@ -96,26 +79,21 @@ namespace Wots.GamePlay
             //    SingleplayerServer = new NetServer(config);
             //    SingleplayerServer.Start();
             //}
-            //#endregion
+            #endregion
 
         }
 
         SpeechDialog sp = new SpeechDialog();
 
-        public static bool useServer = false;
-        bool hasClient = false;
-        bool hasServer = false;
         #region IGameScreen implementation
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            GameManager.Game.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            GameManager.Game.Graphics.GraphicsDevice.Viewport = original;
+            GameManager.Game.Graphics.GraphicsDevice.Clear(new Color(20, 20, 20));
 
             // Draw the player
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-            
+
             #region Serverside Stuff
             //if (useServer)
             //{
@@ -228,21 +206,15 @@ namespace Wots.GamePlay
                 MultiPlayers[i].Draw(gameTime, spriteBatch);
             }
 
-            Player.Draw(gameTime, spriteBatch);
-            try
-            {
-                spriteBatch.End();
-                //}
-                // Draw the health
-                spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                Player.HealthBar.Draw(gameTime, spriteBatch);
-                pad.Draw(spriteBatch);
-                spriteBatch.End();
-            }
-            catch (Exception)
-            {
-
-            }
+            if (World.hasWorld)
+                Player.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
+            //}
+            // Draw the health
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            Player.HealthBar.Draw(gameTime, spriteBatch);
+            pad.Draw(spriteBatch);
+            spriteBatch.End();
 
         }
 
@@ -256,7 +228,7 @@ namespace Wots.GamePlay
         {
             pad.Update(gameTime);
             UpdatePlayerCameras(gameTime);
-            
+
 
             // Update the world
             World.Update(gameTime);
@@ -267,8 +239,8 @@ namespace Wots.GamePlay
 
             Camera.Position = (playerPos - (new Vector2((int)GameManager.Game.ScreenSize.X / 2, (int)GameManager.Game.ScreenSize.Y / 2))).Round(1);
             // Run our players update command
-            Player.Update(gameTime);
-
+            if (World.hasWorld)
+                Player.Update(gameTime);
         }
 
         public override void LoadContent(ContentManager content)
@@ -276,9 +248,8 @@ namespace Wots.GamePlay
             pad.LoadContent();
             // Load our players content and set an initial state
             Player.LoadContent(content);
-            MultiPlayers.Add(new NetworkPlayer("Jeff"));
-            
             World.Intialize();
+
 
             ui_menu_inventory = new UI_Inventory_Menu();
             this.UI.Add(ui_menu_inventory);
