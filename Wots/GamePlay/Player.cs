@@ -185,12 +185,12 @@ namespace Wots.GamePlay
                 World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(80, 192), null, new Vector2(15, 10))
                 );
             Collitions.Left = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, 0f), null, new Vector2(10, 80)),
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, -100f), null, new Vector2(10, 80))
+                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, -8f), spriteBatch, new Vector2(10, 80)),
+                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, -100f), spriteBatch, new Vector2(10, 80))
                 );
             Collitions.Right = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 0), null, new Vector2(10, 80)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 100), null, new Vector2(10, 80))
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 8), spriteBatch, new Vector2(10, 80)),
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 100), spriteBatch, new Vector2(10, 80))
                 );
 
             canUp    = Collitions.Up.Point1.Item1    & Collitions.Up.Point2.Item1;

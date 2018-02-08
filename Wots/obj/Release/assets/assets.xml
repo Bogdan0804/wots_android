@@ -90,4 +90,19 @@
     <file>art/staires.png</file>
     <name>staires</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/dpad_key_up.png</file>
+    <name>dpad_key_up</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/dpad_key_left.png</file>
+    <name>dpad_key_left</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/dpad_key_right.png</file>
+    <name>dpad_key_right</name>
+  </object>
 </textures>
