@@ -1664,4 +1664,68 @@
     <state>none</state>
     <texture>cobble_1</texture>
   </tile>
+  <tile collidable="True">
+    <position>
+      <x>10</x>
+      <y>4</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>10</x>
+      <y>5</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>35</x>
+      <y>8</y>
+    </position>
+    <state>staires</state>
+    <texture>staires</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>34</x>
+      <y>7</y>
+    </position>
+    <state>staires</state>
+    <texture>staires</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>33</x>
+      <y>6</y>
+    </position>
+    <state>staires</state>
+    <texture>staires</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>32</x>
+      <y>5</y>
+    </position>
+    <state>staires</state>
+    <texture>staires</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>40</x>
+      <y>8</y>
+    </position>
+    <state>door:test</state>
+    <texture>grass</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>40</x>
+      <y>7</y>
+    </position>
+    <state>door:test</state>
+    <texture>grass</texture>
+  </tile>
 </world>

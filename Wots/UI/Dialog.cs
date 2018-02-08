@@ -32,8 +32,8 @@ namespace Wots.UI
             if (Enabled)
             {
                 spriteBatch.Draw(Texture, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.White);
-                spriteBatch.DrawString(AssetManager.GetFont("24"), Title, Position + new Vector2(Size.X / 2 - AssetManager.GetFont("24").MeasureString(Title).X / 2, 20), Color.Black);
-                spriteBatch.DrawString(AssetManager.GetFont("12"), Message, Position + new Vector2(20, 60), Color.Black);
+                spriteBatch.DrawString(AssetManager.GetFont("24"), Title, Position + new Vector2(Size.X / 2 - AssetManager.GetFont("24").MeasureString(Title).X / 2, 20), Color.White);
+                spriteBatch.DrawString(AssetManager.GetFont("12"), Message, Position + new Vector2(20, 60), Color.White);
                 okBtn.Draw(gameTime, spriteBatch);
 
                 okBtn.Position = this.Position + (this.Size - okBtn.Dimentions) - (new Vector2(20, 30));

@@ -12,7 +12,15 @@ namespace Wots.GamePlay
     {
         public Func<Player, bool> OnJump;
         public Func<Player, bool> OnUp;
-        public bool usePrefs = false;
+        public Func<Player, bool> OnDown;
+        public Func<Player, bool> OnLeft;
+        public Func<Player, bool> OnRight;
+
+        public bool usePrefJump = false;
+        public bool usePrefUp = false;
+        public bool usePrefDown = false;
+        public bool usePrefLeft = false;
+        public bool usePrefRight = false;
     }
 
     public class Tile
@@ -144,29 +152,23 @@ namespace Wots.GamePlay
 
         private static Tile ProcessPrefs(Tile t)
         {
-            t.Prefs.usePrefs = true;
-
             if (t.State.ToLower() == "fast4")
             {
+                t.Prefs.usePrefJump = true;
+                t.Prefs.usePrefUp = true;
+
                 t.Prefs.OnJump = new Func<Player, bool>((e) =>
                 {
                     return false;
                 });
                 t.Prefs.OnUp = new Func<Player, bool>((e) =>
-           {
-               if (e.Collitions.Up.Item1)
-               {
-                   e.PlayerSprite.Position.Y -= (e.Speed * GameManager.GAMESPEED) / 1.5f;
-                   e.useGravity = false;
-               }
-               return false;
-           });
-            }
-            else
-            {
-                t.Prefs.OnJump = new Func<Player, bool>((e) =>
                 {
-                    return true;
+                    if (e.Collitions.Up.Point1.Item1)
+                    {
+                        e.PlayerSprite.Position.Y -= (e.Speed * GameManager.GAMESPEED) / 1.5f;
+                        e.useGravity = false;
+                    }
+                    return false;
                 });
             }
 

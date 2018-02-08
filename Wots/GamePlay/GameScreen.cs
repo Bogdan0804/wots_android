@@ -213,8 +213,8 @@ namespace Wots.GamePlay
             // Draw the health
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             Player.HealthBar.Draw(gameTime, spriteBatch);
-            pad.Draw(spriteBatch);
-            
+            pad.Draw(gameTime, spriteBatch);
+            ui_menu_inventory.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
         }
@@ -230,7 +230,7 @@ namespace Wots.GamePlay
             pad.Update(gameTime);
             UpdatePlayerCameras(gameTime);
             //pause.Update(gameTime);
-
+            ui_menu_inventory.Update(gameTime);
             // Update the world
             World.Update(gameTime);
 
@@ -259,7 +259,7 @@ namespace Wots.GamePlay
             // Intialize the players
             Player.Intialize();
             ui_menu_inventory = new UI_Inventory_Menu();
-            this.UI.Add(ui_menu_inventory);
+            //this.UI.Add(ui_menu_inventory);
            // this.UI.Add(new GameIntro());
         }
 

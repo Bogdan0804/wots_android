@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.UI
 {
-    public class DPad
+    public class DPad : UIComponent
     {
         public Vector2 Position;
         public Texture2D keyL, keyR, keyJ;
@@ -24,11 +24,11 @@ namespace Wots.UI
 
         public void LoadContent()
         {
-            keyL = AssetManager.LoadImage("art/ui/dpad_key_left");
-            keyR = AssetManager.LoadImage("art/ui/dpad_key_right");
-            keyJ = AssetManager.LoadImage("art/ui/dpad_key_right");
+            keyL = AssetManager.GetTexture("dpad_key_left");
+            keyR = AssetManager.GetTexture("dpad_key_right");
+            keyJ = AssetManager.GetTexture("dpad_key_up");
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             Vector2 leftKey, rightKey, jumpKey;
             leftKey = Position;
@@ -43,7 +43,7 @@ namespace Wots.UI
             right = new Rectangle(rightKey.ToPoint(), new Point(256));
             jump = new Rectangle(jumpKey.ToPoint(), new Point(256));
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var touches = TouchPanel.GetState();
             foreach (var touch in touches)

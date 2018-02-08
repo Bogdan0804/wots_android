@@ -24,6 +24,7 @@ namespace Wots.GamePlay
             msgDialog = new Dialog(new Vector2(450,300));
             msgDialog.Position = new Vector2(100,100);
             msgDialog.Title = "Paused";
+            
             msgDialog.Message = "The game has been paused.";
             msgDialog.StateChanged += MsgDialog_StateChanged;
 
