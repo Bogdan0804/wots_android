@@ -64,9 +64,7 @@ namespace Wots.GamePlay
 
         // Store our direction in a vector2
         public Vector2 TextureDirection;
-
-        // The movement speed
-        public float Speed = 5.0f;
+        
 
         /// <summary>
         /// Intialize this instance.
@@ -177,20 +175,20 @@ namespace Wots.GamePlay
         private void UpdateColitions(SpriteBatch spriteBatch)
         {
             Collitions.Up = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(12, -5), null, new Vector2(15, 10)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(76, -5), null, new Vector2(15, 10))
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(12, 1), null, new Vector2(15, 10)),
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(76, 1), null, new Vector2(15, 10))
                 );
             Collitions.Down = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, 192), null, new Vector2(15, 10)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(80, 192), null, new Vector2(15, 10))
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(6, 192), null, new Vector2(15, 10)),
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(72, 192), null, new Vector2(15, 10))
                 );
             Collitions.Left = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, -8f), spriteBatch, new Vector2(10, 80)),
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(-1, -100f), spriteBatch, new Vector2(10, 80))
+                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(10, -8f), null, new Vector2(10, 80)),
+                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(10, -100f), null, new Vector2(10, 80))
                 );
             Collitions.Right = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 8), spriteBatch, new Vector2(10, 80)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 100), spriteBatch, new Vector2(10, 80))
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 8), null, new Vector2(10, 80)),
+                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 100), null, new Vector2(10, 80))
                 );
 
             canUp    = Collitions.Up.Point1.Item1    & Collitions.Up.Point2.Item1;
@@ -306,7 +304,7 @@ namespace Wots.GamePlay
                     useGravity = false;
 
                     if (canUp)
-                        this.PlayerSprite.Position.Y -= Speed * 3.5f;
+                        this.PlayerSprite.Position.Y -= UniversalInputManager.Manager.Speed* 3.5f;
                 }
                 else
                 {
@@ -314,18 +312,18 @@ namespace Wots.GamePlay
                     jumping = false;
                 }
 
-
+                
                 bool oldGravityState = useGravity;
                 try
                 {
                     if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "fast4"))
                     {
-                        this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 1.5f;
+                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed* GameManager.GAMESPEED) / 1.5f;
                         useGravity = false;
                     }
                     else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
                     {
-                        this.PlayerSprite.Position.Y -= (Speed * GameManager.GAMESPEED) / 3f;
+                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed* GameManager.GAMESPEED) / 3f;
                         useGravity = false;
                     }
                     else
@@ -338,9 +336,9 @@ namespace Wots.GamePlay
 
                 if (Collitions.Down != null)
                     if (Collitions.Down.Point1.Item2.State == "fast4")
-                        GravitySpeed = 5.0f;
+                        GravitySpeed= 5.0f;
                     else
-                        GravitySpeed = 10.0f;
+                        GravitySpeed= 10.0f;
 
                 if (Collitions.Right != null && Collitions.Right.Point1.Item2.State != null)
                     CheckLRColliton(Collitions.Right.Point1.Item2.State);
@@ -358,7 +356,7 @@ namespace Wots.GamePlay
                     if (Collitions.Left.Point1.Item2.Prefs.usePrefLeft)
                         Collitions.Left.Point1.Item2.Prefs.OnLeft(this);
                     else
-                        PlayerSprite.Position.X -= Speed * GameManager.GAMESPEED;
+                        PlayerSprite.Position.X -= UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
                     //oldPos.X += 3;
                 }
                 else if ((UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || GamePad.GetState(0).Triggers.Right > 100) && canRight)
@@ -366,7 +364,7 @@ namespace Wots.GamePlay
                     if (Collitions.Left.Point1.Item2.Prefs.usePrefRight)
                         Collitions.Left.Point1.Item2.Prefs.OnRight(this);
                     else
-                        PlayerSprite.Position.X += Speed * GameManager.GAMESPEED;
+                        PlayerSprite.Position.X += UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
                     //oldPos.X -= 3;
                 }
 

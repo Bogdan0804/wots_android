@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
+using Wots.UI;
 
 namespace Wots.GamePlay
 {
@@ -165,7 +166,7 @@ namespace Wots.GamePlay
                 {
                     if (e.Collitions.Up.Point1.Item1)
                     {
-                        e.PlayerSprite.Position.Y -= (e.Speed * GameManager.GAMESPEED) / 1.5f;
+                        e.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
                         e.useGravity = false;
                     }
                     return false;

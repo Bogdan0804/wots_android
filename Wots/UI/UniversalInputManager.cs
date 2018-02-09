@@ -30,6 +30,7 @@ namespace Wots.UI
                 return inputs;
             }
         }
+        public float Speed = 5;
         public Vector2 MoveVector;
 
         public float GetAxis(string name)

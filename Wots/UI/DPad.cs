@@ -55,6 +55,14 @@ namespace Wots.UI
                     continue;
                 }
 
+                while (TouchPanel.IsGestureAvailable)
+                {
+                    var gesture = TouchPanel.ReadGesture();
+                    if (gesture.GestureType == GestureType.DoubleTap && right.Contains(gesture.Position))
+                        UniversalInputManager.Manager.Speed = 7;
+                    else
+                        UniversalInputManager.Manager.Speed = 5;
+                }
                 if (left.Contains(touch.Position))
                     UniversalInputManager.Manager.MoveVector.X = -1;
                 else if (right.Contains(touch.Position))
