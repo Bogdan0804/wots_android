@@ -449,18 +449,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/art/ui/copy/tim/3.png
 
-#begin Assets/art/ui/copy/monogameLogo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/art/ui/copy/monogameLogo.png
-
 #begin Assets/art/ui/copy/thejeff1.png
 /importer:TextureImporter
 /processor:TextureProcessor

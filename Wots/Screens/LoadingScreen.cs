@@ -46,10 +46,11 @@ namespace Wots.Screens
 				new Frame(AssetManager.LoadImage("art/ui/copy/tim/1")),
 				new Frame(AssetManager.LoadImage("art/ui/copy/tim/2")),
 				new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/monogameLogo")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/monogameLogo")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/monogameLogo"))
-			));
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3"))
+
+            ));
 			name.CurrentAnimation = "default";
             LoadBlocks();
 			background = new Color(102, 57, 49);

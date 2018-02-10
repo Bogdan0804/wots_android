@@ -172,6 +172,16 @@ namespace Wots.GamePlay
                     return false;
                 });
             }
+            else if (t.State.ToLower() == "staires")
+            {
+                t.Prefs.usePrefLeft = true;
+                t.Collidable = false;
+                t.Prefs.OnLeft = new Func<Player, bool>((p) => {
+                    p.PlayerSprite.Position.X -= 96;
+                    p.PlayerSprite.Position.Y -= 96;
+                    return true;
+                });
+            }
 
             return t;
         }

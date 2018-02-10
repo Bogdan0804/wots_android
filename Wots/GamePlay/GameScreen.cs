@@ -35,7 +35,7 @@ namespace Wots.GamePlay
         // Splitscreen
         public bool SplitScreen = false;
         //pyblic  string name = "";
-        private Texture2D textureBlank;
+        public static Texture2D textureBlank;
 
         public GameScreen()
         {

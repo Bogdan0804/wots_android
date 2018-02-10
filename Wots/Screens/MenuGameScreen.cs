@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Audio;
 using Wots.UI;
 using Wots.GamePlay;
 using Microsoft.Xna.Framework.Input.Touch;
+using Microsoft.Devices.Sensors;
 
 namespace Wots.Screens
 {
@@ -24,7 +25,6 @@ namespace Wots.Screens
         private float sunTime = 0.0f;
         private float moutainsDarkness = 1f;
         private Vector2 cloudPos;
-
         // Set us a fixed size
         Vector2 size = new Vector2(550, 320);
 
@@ -33,14 +33,10 @@ namespace Wots.Screens
             // Enable pixely graphics
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, blendState: BlendState.AlphaBlend, sortMode: SpriteSortMode.Immediate);
 
-
+            
             // This ofset is a asmall value that can be added to a objects posotion to give it mouse feedback
             Vector2 offset = new Vector2(0);
-            foreach (var touch in TouchPanel.GetState())
-            {
-                offset = touch.Position / 100;
-            }
-
+            offset = new Vector2(UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Y * 50, UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Z * 25);
             // Draw the background and the first slide
             {
                 Rectangle sky = new Rectangle((int)offset.X - 30, (int)offset.Y - 30, (int)GameManager.Game.ScreenSize.X * 20, (int)GameManager.Game.ScreenSize.Y + 120);
@@ -56,7 +52,7 @@ namespace Wots.Screens
             {
 
                 // Create a dynamicly chaging position for our title, using our ofset variable
-                Vector2 position = new Vector2(((GameManager.Game.ScreenSize.X / 2) - size.X / 2) - offset.X, -offset.Y);
+                Vector2 position = new Vector2(((GameManager.Game.ScreenSize.X / 2) - size.X / 2) + offset.X , -offset.Y + 50);
 
                 // Draw it
                 //glow.Parameters["ScreenTexture"].SetValue(titleTexture);
@@ -127,6 +123,7 @@ namespace Wots.Screens
         }
         public override void LoadContent(ContentManager content)
         {
+
            // click_select = content.Load<SoundEffect>("audio/click2");
             //  this.glow = content.Load<Effect>("glow");
             background = AssetManager.LoadImage("art/bg1");

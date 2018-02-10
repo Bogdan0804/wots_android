@@ -355,14 +355,18 @@ namespace Wots.GamePlay
                 {
                     if (Collitions.Left.Point1.Item2.Prefs.usePrefLeft)
                         Collitions.Left.Point1.Item2.Prefs.OnLeft(this);
+                    else if (Collitions.Left.Point2.Item2.Prefs.usePrefLeft)
+                        Collitions.Left.Point2.Item2.Prefs.OnLeft(this);
                     else
                         PlayerSprite.Position.X -= UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
                     //oldPos.X += 3;
                 }
                 else if ((UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || GamePad.GetState(0).Triggers.Right > 100) && canRight)
                 {
-                    if (Collitions.Left.Point1.Item2.Prefs.usePrefRight)
-                        Collitions.Left.Point1.Item2.Prefs.OnRight(this);
+                    if (Collitions.Right.Point1.Item2.Prefs.usePrefRight)
+                        Collitions.Right.Point1.Item2.Prefs.OnRight(this);
+                    else if (Collitions.Right.Point2.Item2.Prefs.usePrefRight)
+                        Collitions.Right.Point2.Item2.Prefs.OnRight(this);
                     else
                         PlayerSprite.Position.X += UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
                     //oldPos.X -= 3;

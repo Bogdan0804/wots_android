@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Microsoft.Devices.Sensors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input.Touch;
 
@@ -16,6 +17,7 @@ namespace Wots.UI
 {
     public class UniversalInputManager
     {
+        public Accelerometer Accelerometer { get; set; }
         private static UniversalInputManager inputs;
         public static UniversalInputManager Manager
         {
@@ -30,6 +32,14 @@ namespace Wots.UI
                 return inputs;
             }
         }
+        public Vector2 AccelerometerMovement { get; set; }
+
+        public UniversalInputManager()
+        {
+            Accelerometer = new Accelerometer();
+            Accelerometer.Start();
+        }
+        
         public float Speed = 5;
         public Vector2 MoveVector;
 

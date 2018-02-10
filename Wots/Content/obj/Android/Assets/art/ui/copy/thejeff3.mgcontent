@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/copy/thejeff3.png</SourceFile>
-  <SourceTime>2018-02-05T18:13:56.9047721-06:00</SourceTime>
+  <SourceTime>2018-02-09T18:00:52.9831698-06:00</SourceTime>
   <DestFile>C:/Users/bogda/Desktop/Wots/Wots/Content/bin/Android/Assets/art/ui/copy/thejeff3.xnb</DestFile>
-  <DestTime>2018-02-05T18:14:45.7940915-06:00</DestTime>
+  <DestTime>2018-02-09T18:01:55.884068-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T09:05:36-06:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
