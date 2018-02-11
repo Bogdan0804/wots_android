@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Devices.Sensors;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.UI
@@ -32,6 +33,29 @@ namespace Wots.UI
                 return inputs;
             }
         }
+
+        public void Update(GameTime gameTime)
+        {
+            //var state = Keyboard.GetState();
+            //if (state.IsKeyDown(Keys.A))
+            //{
+            //    MoveVector.X = -1;
+            //}
+            //else if (state.IsKeyDown(Keys.D))
+            //{
+            //    MoveVector.X = 1;
+            //}
+            //else if (state.IsKeyDown(Keys.Space))
+            //{
+            //    MoveVector.Y = 1;
+            //}
+            //else
+            //{
+            //    MoveVector.X = 0;
+            //    MoveVector.Y = 0;
+            //}
+        }
+
         public Vector2 AccelerometerMovement { get; set; }
 
         public UniversalInputManager()

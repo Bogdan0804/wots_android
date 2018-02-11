@@ -73,6 +73,8 @@
     <Compile Include="Activity1.cs" />
     <Compile Include="AssetManager.cs" />
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="Entities\AI.cs" />
+    <Compile Include="Entities\SlimeAI.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game1.cs" />

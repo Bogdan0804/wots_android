@@ -13,11 +13,18 @@ using Wots.GamePlay;
 
 namespace Wots.UI
 {
+    public enum Type
+    {
+        Item,
+        Weapon
+    }
+
     public class Item
     {
         public string Name { get; set; }
         public string Type { get; set; }
         public int Amount { get; set; }
+        public Type ItemType { get; set; }
         public Func<int> OnUse { get; set; }
     }
 
@@ -40,9 +47,17 @@ namespace Wots.UI
             for (int i = 0; i < HotbarItems.Count; i++)
             {
                 var item = HotbarItems[i];
-                Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
-                spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
+                if (item.ItemType == Type.Weapon)
+                {
+                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y +5);
+                    spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
+                }
+                else
+                {
+                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                    spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
+                    spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
+                }
             }
             spriteBatch.Draw(AssetManager.GetTexture("inv_gui_items"), new Rectangle(Position.ToPoint(), new Point(AssetManager.GetTexture("inv_gui_items").Width * 2, AssetManager.GetTexture("inv_gui_items").Height * 2)), Color.White);
             int x = (SelectedIndex * 64) + (int)Position.X;
@@ -58,12 +73,15 @@ namespace Wots.UI
                     for (int i = 0; i < HotbarItems.Count; i++)
                     {
                         var item = HotbarItems[i];
+
                         Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
                         Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
                         if (itemRect.Contains(gesture.Position))
                         {
                             SelectedIndex = i;
+
                         }
+
                     }
                 }
                 else if (gesture.GestureType == GestureType.Flick)
@@ -71,7 +89,7 @@ namespace Wots.UI
                     if (UseArea.Contains(gesture.Position2))
                     {
                         //if (gesture.Delta.X > 0)
-                            HotbarItems[SelectedIndex].Amount = HotbarItems[SelectedIndex].OnUse();
+                        HotbarItems[SelectedIndex].Amount = HotbarItems[SelectedIndex].OnUse();
                     }
                 }
 
@@ -109,6 +127,13 @@ namespace Wots.UI
                 Amount = 14,
                 Name = "Grass",
                 Type = "grass"
+            });
+            Bar.HotbarItems.Add(new Item
+            {
+                Amount = 14,
+                Name = "Sword",
+                Type = "wooden_sword1",
+                ItemType = Type.Weapon
             });
         }
 

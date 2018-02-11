@@ -105,4 +105,14 @@
     <file>art/ui/dpad_key_right.png</file>
     <name>dpad_key_right</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/weapons/wooden_sword1.png</file>
+    <name>wooden_sword1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/weapons/wooden_sword2png</file>
+    <name>wooden_sword2</name>
+  </object>
 </textures>

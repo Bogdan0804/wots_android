@@ -12,6 +12,7 @@ using MonoGame.Extended.Collections;
 using Wots.Screens;
 using Wots.UI;
 using Wots.GamePlay.Intro;
+using Wots.Entities;
 
 namespace Wots.GamePlay
 {

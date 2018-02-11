@@ -43,12 +43,13 @@ namespace Wots.Screens
 				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff5"))
 			));
 			name.Animations.Add("names", new Animation(
-				new Frame(AssetManager.LoadImage("art/ui/copy/tim/1")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan1")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan2")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan3")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan4")),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/1")),
 				new Frame(AssetManager.LoadImage("art/ui/copy/tim/2")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3"))
+				new Frame(AssetManager.LoadImage("art/ui/copy/tim/3"))
 
             ));
 			name.CurrentAnimation = "default";
@@ -100,7 +101,7 @@ namespace Wots.Screens
 			}
 
 			// CHeck if 10 seconds past
-			if (timeBeforeMenu > 10)
+			if (timeBeforeMenu > 11.2f)
 				GameManager.Game.ChangeScreen(new MenuGameScreen());
 		}
     }

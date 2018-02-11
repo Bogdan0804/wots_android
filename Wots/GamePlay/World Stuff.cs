@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using Wots.UI;
+using Wots.Entities;
 
 namespace Wots.GamePlay
 {
@@ -60,6 +61,7 @@ namespace Wots.GamePlay
     {
         public Bag<Tile> Floor = new Bag<Tile>();
         public Bag<Tile> Tiles = new Bag<Tile>();
+        public Bag<AI> Entities = new Bag<AI>();
     }
 
     public static class World
@@ -78,9 +80,10 @@ namespace Wots.GamePlay
             uint pVal = Color.Black.PackedValue;
 
             black.SetData<uint>(new uint[] { pVal });
-            {
-                LoadWorld("main");
-            }
+
+            LoadWorld("main");
+
+            World.Worlds[World.WorldName].Entities.Add(new SlimeAI());
         }
         public static int RoundNum(int num)
         {
@@ -176,7 +179,8 @@ namespace Wots.GamePlay
             {
                 t.Prefs.usePrefLeft = true;
                 t.Collidable = false;
-                t.Prefs.OnLeft = new Func<Player, bool>((p) => {
+                t.Prefs.OnLeft = new Func<Player, bool>((p) =>
+                {
                     p.PlayerSprite.Position.X -= 96;
                     p.PlayerSprite.Position.Y -= 96;
                     return true;
@@ -221,7 +225,6 @@ namespace Wots.GamePlay
         //        }
         //    }
         //}
-
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var Floor = Worlds[WorldName].Floor;
@@ -252,10 +255,12 @@ namespace Wots.GamePlay
                 var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
                 if (item.ColitionBox.Intersects(rect))
                     spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
-
-
             }
 
+            foreach (var entity in Worlds[WorldName].Entities)
+            {
+                entity.Sprite.Draw(spriteBatch);
+            }
         }
 
         public static Tuple<bool, Tile> isSpaceOpen(Vector2 pos, SpriteBatch s, Vector2 size)
@@ -285,6 +290,10 @@ namespace Wots.GamePlay
         }
         public static void Update(GameTime gameTime)
         {
+            foreach (var entity in Worlds[WorldName].Entities)
+            {
+                entity.Update(gameTime);
+            }
         }
     }
 }

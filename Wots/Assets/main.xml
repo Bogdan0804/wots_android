@@ -594,174 +594,6 @@
   </tile>
   <tile collidable="False">
     <position>
-      <x>3</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>3</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>3</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>4</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>4</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>4</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>5</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>5</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>5</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>6</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>6</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>6</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>7</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>7</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>7</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>8</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>8</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>8</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>9</x>
-      <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>9</x>
-      <y>2</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>9</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
       <x>9</x>
       <y>5</y>
     </position>
@@ -1372,86 +1204,6 @@
     <position>
       <x>24</x>
       <y>1</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>0</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>1</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>2</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>3</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>4</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>5</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>6</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>7</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>8</x>
-      <y>0</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>9</x>
-      <y>0</y>
     </position>
     <state>none</state>
     <texture>cobble_1</texture>
@@ -1727,5 +1479,45 @@
     </position>
     <state>door:test</state>
     <texture>grass</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>3</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>3</x>
+      <y>3</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>4</x>
+      <y>3</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>1</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>0</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>cobble_1</texture>
   </tile>
 </world>

@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wots.GamePlay;
+using Wots.UI;
 
 namespace Wots
 {
@@ -86,6 +87,8 @@ namespace Wots
         }
         public void Update(GameTime gameTime)
         {
+            UniversalInputManager.Manager.Update(gameTime);
+
             this.timeUpdateTimer += gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
 
             if (this.timeUpdateTimer >= 0.3)
