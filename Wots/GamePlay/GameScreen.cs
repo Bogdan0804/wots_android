@@ -29,6 +29,7 @@ namespace Wots.GamePlay
         UI_Inventory_Menu ui_menu_inventory;
         DPad pad = new DPad();
         Button pause;
+        public static BasicStats Stats;
 
         // Player cameras
         public static Camera2D Camera;
@@ -37,6 +38,7 @@ namespace Wots.GamePlay
         public bool SplitScreen = false;
         //pyblic  string name = "";
         public static Texture2D textureBlank;
+        public static Texture2D white;
 
         public GameScreen()
         {
@@ -53,6 +55,13 @@ namespace Wots.GamePlay
                 GameManager.Game.Paused = !GameManager.Game.Paused;
             };
             this.UI.Add(pause);
+
+            white = new Texture2D(GameManager.Game.Graphics.GraphicsDevice, 4, 4);
+
+            uint[] whiteU = new uint[4 * 4];
+            for (int i = 0; i < 4 * 4; i++)
+                whiteU[i] = (new Color(255, 255, 255) * 100).PackedValue;
+            white.SetData<uint>(whiteU);
 
             textureBlank = new Texture2D(GameManager.Game.Graphics.GraphicsDevice, 4, 4);
 
@@ -211,9 +220,8 @@ namespace Wots.GamePlay
                 Player.Draw(gameTime, spriteBatch);
             spriteBatch.End();
             //}
-            // Draw the health
+            // Draw the health, ect
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            Player.HealthBar.Draw(gameTime, spriteBatch);
             pad.Draw(gameTime, spriteBatch);
             ui_menu_inventory.Draw(gameTime, spriteBatch);
             spriteBatch.End();
@@ -230,7 +238,7 @@ namespace Wots.GamePlay
         {
             pad.Update(gameTime);
             UpdatePlayerCameras(gameTime);
-            //pause.Update(gameTime);
+            pause.Update(gameTime);
             ui_menu_inventory.Update(gameTime);
             // Update the world
             World.Update(gameTime);
@@ -252,6 +260,8 @@ namespace Wots.GamePlay
             // Load our players content and set an initial state
             Player.LoadContent(content);
             World.Intialize();
+            Stats = new BasicStats();
+            this.UI.Add(Stats);
         }
 
 
@@ -261,7 +271,7 @@ namespace Wots.GamePlay
             Player.Intialize();
             ui_menu_inventory = new UI_Inventory_Menu();
             //this.UI.Add(ui_menu_inventory);
-           // this.UI.Add(new GameIntro());
+            // this.UI.Add(new GameIntro());
         }
 
         public override void Unload()

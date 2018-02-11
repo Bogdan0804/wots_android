@@ -10,19 +10,26 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Wots.Entities
 {
     public abstract class AI
     {
+        public Rectangle HitBox
+        {
+            get
+            {
+                return new Rectangle(Sprite.Size.ToPoint(), Sprite.Position.ToPoint());
+            }
+        }
         public Sprite Sprite { get; set; }
-        
 
         public AI(Vector2 size, Vector2 position)
         {
             Sprite = new Sprite(size, position);
         }
 
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update(GameTime gameTime, SpriteBatch  sp);
     }
 }

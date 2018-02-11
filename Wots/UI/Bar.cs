@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Wots.GamePlay;
 
 namespace Wots.UI
 {
@@ -26,6 +27,8 @@ namespace Wots.UI
         // Its positions
         public Vector2 Position;
 
+        // some spice (coloring)
+        public Color Color = Color.White;
 
         public Bar(Vector2 pos)
         {
@@ -34,7 +37,7 @@ namespace Wots.UI
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetManager.GetTexture("sunset"), new Rectangle(Position.ToPoint(), new Point((int)Extentions.Map(Value, 1, 100, 5, MaxWidth), (int)Height)), new Color(255, Extentions.Map(Value, 1, 100, 0, 255), 255));
+            spriteBatch.Draw(GameScreen.white, new Rectangle(Position.ToPoint(), new Point((int)Extentions.Map(Value, 0, 100, 0, MaxWidth + 2), (int)Height)), Color);
         }
     }
 }

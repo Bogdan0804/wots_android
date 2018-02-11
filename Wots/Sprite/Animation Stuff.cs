@@ -60,6 +60,7 @@ namespace Wots
 	/// A basic class the can store a texture and a point of origin
 	public class Frame
 	{
+        public float FrameTime { get; set; }
 		public Texture2D Texture { get; set;}
 		public Vector2 Origin
 		{ 
@@ -69,9 +70,10 @@ namespace Wots
 			}
 		}
 
-		public Frame(Texture2D texture)
+		public Frame(Texture2D texture, float frameTime = 0.100f)
 		{
 			this.Texture = texture;
+            this.FrameTime = frameTime;
 		}
 	}
 }

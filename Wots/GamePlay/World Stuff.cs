@@ -257,6 +257,10 @@ namespace Wots.GamePlay
                     spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
             }
 
+            if (!GameManager.Game.Paused)
+                foreach (var entity in Worlds[WorldName].Entities)
+                    entity.Update(gameTime, spriteBatch);
+
             foreach (var entity in Worlds[WorldName].Entities)
             {
                 entity.Sprite.Draw(spriteBatch);
@@ -290,10 +294,6 @@ namespace Wots.GamePlay
         }
         public static void Update(GameTime gameTime)
         {
-            foreach (var entity in Worlds[WorldName].Entities)
-            {
-                entity.Update(gameTime);
-            }
         }
     }
 }

@@ -10,8 +10,7 @@ namespace Wots
 		public Vector2 Size { get; set; }
 
 		public Vector2 Position;
-
-		public float FrameTime = 0.100f;
+        
 		public float Alpha = 255;
 
 		public Dictionary<string, Animation> Animations = new Dictionary<string, Animation>();
@@ -58,7 +57,7 @@ namespace Wots
 			try
 			{
 				if (Animate)
-					Animations[CurrentAnimation].Update(gameTime, FrameTime);
+					Animations[CurrentAnimation].Update(gameTime, CurrentAnimationFrame.FrameTime);
 			}
 			catch
 			{

@@ -11,7 +11,7 @@ namespace Wots
     public class Game1 : Game
     {
         GraphicsDeviceManager Graphics;
-        SpriteBatch MainSpriteBatch;
+        public static SpriteBatch MainSpriteBatch;
         SpriteBatch UISpriteBatch;
 
 

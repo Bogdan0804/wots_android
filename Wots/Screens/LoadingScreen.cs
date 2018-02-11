@@ -7,13 +7,9 @@ namespace Wots.Screens
 {
 	public class LoadingScreen : IGameScreen
 	{
-		private double timeBeforeMenu = 0;
-		private double timeBeforeCopy = 0;
-		private double timeBeforeNames = 0;
-
+        double timeBeforeDone = 0.0;
 		Sprite name;
 		public Color background;
-		bool stage1,stage2;
 
 
 		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -34,25 +30,22 @@ namespace Wots.Screens
             Texture2D WOTS = AssetManager.LoadImage("art/title_l");
 
 			name = new Sprite(new Vector2(500, 300), GameManager.Game.ScreenSize / 2 - (new Vector2((int)WOTS.Width, (int)WOTS.Height) / 2));
-			name.Animations.Add("default", new Animation(new Frame(WOTS)));
-			name.Animations.Add("copywrite", new Animation(
-				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff1")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff2")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff3")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff4")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/thejeff5"))
-			));
-			name.Animations.Add("names", new Animation(
-                new Frame(AssetManager.LoadImage("art/ui/copy/aidan1")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/aidan2")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/aidan3")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/aidan4")),
-                new Frame(AssetManager.LoadImage("art/ui/copy/tim/1")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/tim/2")),
-				new Frame(AssetManager.LoadImage("art/ui/copy/tim/3"))
-
+            name.Animations.Add("copywrite", new Animation(
+                new Frame(WOTS, 2f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/thejeff1"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/thejeff2"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/thejeff3"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/thejeff4"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/thejeff5"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan1"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan2"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan3"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/aidan4"), 0.75f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/1"), 0.85f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/2"), 0.85f),
+                new Frame(AssetManager.LoadImage("art/ui/copy/tim/3"), 0.85f)
             ));
-			name.CurrentAnimation = "default";
+			name.CurrentAnimation = "copywrite";
             LoadBlocks();
 			background = new Color(102, 57, 49);
             
@@ -77,31 +70,16 @@ namespace Wots.Screens
 
 		public override void Update(GameTime gameTime)
 		{
+            timeBeforeDone += gameTime.ElapsedGameTime.TotalSeconds;
+
 			if (name != null)
 				name.Update(gameTime);
 
-			// Add every second to this
-			timeBeforeMenu += gameTime.ElapsedGameTime.TotalSeconds  * GameManager.GAMESPEED;
-			timeBeforeCopy += gameTime.ElapsedGameTime.TotalSeconds  * GameManager.GAMESPEED;
-			timeBeforeNames += gameTime.ElapsedGameTime.TotalSeconds  * GameManager.GAMESPEED;
-
-			if (timeBeforeCopy > 3 && !stage1)
-			{
-				background = Color.Black;
-				stage1 = true;
-				name.FrameTime = 0.6f;
-				name.CurrentAnimation = "copywrite";
-			}
-
-			if (timeBeforeNames > 6 && !stage2)
-			{
-				stage2 = true;
-				name.FrameTime = 0.8f;
-				name.CurrentAnimation = "names";
-			}
+            if (timeBeforeDone > 2.3)
+                background = Color.Black;
 
 			// CHeck if 10 seconds past
-			if (timeBeforeMenu > 11.2f)
+			if (timeBeforeDone > 11.2f)
 				GameManager.Game.ChangeScreen(new MenuGameScreen());
 		}
     }

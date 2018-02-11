@@ -96,6 +96,7 @@
     <Compile Include="Sprite\Sprite.cs" />
     <Compile Include="Sprite\Spritesheet.cs" />
     <Compile Include="UI\Bar.cs" />
+    <Compile Include="UI\BasicStats.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Dialog.cs" />
     <Compile Include="UI\DPad.cs" />

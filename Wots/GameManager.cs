@@ -152,23 +152,6 @@ namespace Wots
                 PauseScreen.Draw(gameTime, spriteBatch);
                 PauseScreen.Update(gameTime);
             }
-            
-
-
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
-
-            _frameCounter.Update(deltaTime);
-
-            var fps = string.Format("FPS: {0}", Math.Round(_frameCounter.AverageFramesPerSecond));
-            spriteBatch.DrawString(AssetManager.GetFont("36"), fps, Vector2.One, Color.Black);
-            #region Date system
-            //string minute = "";
-            //if (CurrentGameTime.Minute.ToString().Split().Length == 0)
-            //    minute = "0" + CurrentGameTime.Minute;
-            //else
-            //    minute = CurrentGameTime.Minute.ToString();
-            //spriteBatch.DrawString(AssetManager.GetFont("ConsoleFont"), $"Day {CurrentGameTime.Day} [{CurrentGameTime.Hour}:{minute}]", new Vector2(1, 20), Color.Black);
-            #endregion
             spriteBatch.End();
         }
 
