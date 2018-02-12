@@ -9,7 +9,7 @@ using Wots;
 
 namespace Wots.GamePlay
 {
-    public class Player : Wots.BoundingBox
+    public class Player
     {
         public static Bar HealthBar;
         //public static int Health = 100;

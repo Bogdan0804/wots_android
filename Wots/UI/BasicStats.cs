@@ -50,7 +50,7 @@ namespace Wots.UI
             }
         }
 
-        Bar Mana, Health, EXP;
+        public Bar Mana, Health, EXP;
 
         public Texture2D MainTexture;
         public Rectangle Overview;

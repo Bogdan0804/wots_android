@@ -79,10 +79,10 @@ namespace Wots.Entities
                 jumping = false;
             }
 
-            if (this.HitBox.Intersects(GameScreen.Player.Bounds) && attackTimer > 0.1)
+            if (GameScreen.Player.Bounds.Contains(this.Sprite.Position) && attackTimer > 0.1)
             {
                 attackTimer = 0;
-                GameScreen.Stats.HealthValue--;
+                GameScreen.Stats.Health.Value--;
             }
 
             Sprite.Update(gameTime);
