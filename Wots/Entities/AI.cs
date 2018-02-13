@@ -32,6 +32,7 @@ namespace Wots.Entities
             Sprite = new Sprite(size, position);
         }
 
+        public abstract void Damage(int damage);
         public abstract void Update(GameTime gameTime, SpriteBatch  sp);
     }
 }

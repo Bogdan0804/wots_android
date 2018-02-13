@@ -11,9 +11,18 @@ namespace Wots.GamePlay
 {
     public class Player
     {
+        public enum Direction
+        {
+            Left,
+            Right,
+            Up,
+            Down
+        }
+
         public static Bar HealthBar;
         //public static int Health = 100;
 
+        public static Direction FacingDirection;
         public class CollitionPoint
         {
             public Tuple<bool, Tile> Point1, Point2;
@@ -32,10 +41,10 @@ namespace Wots.GamePlay
 
         public struct CollitionDetection
         {
-            public CollitionPoint Up, OldUp;
-            public CollitionPoint Down, OldDown;
-            public CollitionPoint Left, OldLeft;
-            public CollitionPoint Right, OldRight;
+            public CollitionPoint Up;
+            public CollitionPoint Down;
+            public CollitionPoint Left;
+            public CollitionPoint Right;
         }
         public CollitionDetection Collitions = new CollitionDetection();
 
@@ -139,24 +148,7 @@ namespace Wots.GamePlay
 
             PlayerSprite.CurrentAnimation = "left";
             PlayerSprite.Position = new Vector2(0, -10);
-
-            // Intialize these to avoid null refrence exceptions
-            Collitions.OldUp = new CollitionPoint(
-                 World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, -5), null, new Vector2(80, 96)),
-                  World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, -5), null, new Vector2(80, 96))
-                );
-            Collitions.OldDown = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, 96), null, new Vector2(83, 96)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(4, 96), null, new Vector2(83, 96))
-                );
-            Collitions.OldLeft = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(1.5f, -3.5f), null, new Vector2(42, 165)),
-                World.isSpaceOpen(this.PlayerSprite.Position - new Vector2(1.5f, -3.5f), null, new Vector2(42, 165))
-                );
-            Collitions.OldRight = new CollitionPoint(
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(55, 5), null, new Vector2(42, 165)),
-                World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(55, 5), null, new Vector2(42, 165))
-                );
+            
         }
         #endregion
         public void Update(GameTime gameTime)
@@ -245,10 +237,12 @@ namespace Wots.GamePlay
             if (UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || UniversalInputManager.Manager.GetAxis("Horizontal") == 1 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
                 TextureDirection = new Vector2(-1, 0);
+                FacingDirection = Direction.Left;
             }
             else if (UniversalInputManager.Manager.GetAxis("Horizontal") == -1 || UniversalInputManager.Manager.GetAxis("Horizontal") == -1 && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
             {
                 TextureDirection = new Vector2(1, 0);
+                FacingDirection = Direction.Right;
             }
 
             if (UniversalInputManager.Manager.GetAxis("Horizontal") == 0 && UniversalInputManager.Manager.GetAxis("Vertical") == 0 || UniversalInputManager.Manager.GetAxis("Vertical") == 1 && UniversalInputManager.Manager.GetAxis("Horizontal") == 0)
@@ -273,11 +267,7 @@ namespace Wots.GamePlay
 
             HandleMovements();
             //UpdateColitions(null);
-
-            this.Collitions.OldDown = this.Collitions.Down;
-            this.Collitions.OldLeft = this.Collitions.Left;
-            this.Collitions.OldRight = this.Collitions.Right;
-            this.Collitions.OldUp = this.Collitions.Up;
+            
         }
 
         private void HandleMovements()

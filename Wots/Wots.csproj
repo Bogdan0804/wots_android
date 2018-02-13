@@ -86,6 +86,7 @@
     <Compile Include="GamePlay\Intro\StoryItem.cs" />
     <Compile Include="GamePlay\NetworkPlayer.cs" />
     <Compile Include="GamePlay\PauseScreen.cs" />
+    <Compile Include="GamePlay\Physics.cs" />
     <Compile Include="GamePlay\Player.cs" />
     <Compile Include="GamePlay\World Stuff.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

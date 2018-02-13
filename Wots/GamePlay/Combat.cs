@@ -34,7 +34,7 @@ namespace Wots.GamePlay
                     foreach (var entity in World.Worlds[World.WorldName].Entities)
                     {
                         if (this.HitArea.Contains(entity.Sprite.Position))
-                            entity.Health -= 10;
+                            entity.Damage(10);
                     }
                 }
 

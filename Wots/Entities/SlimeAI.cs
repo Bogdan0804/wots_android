@@ -18,6 +18,7 @@ namespace Wots.Entities
 {
     public class SlimeAI : AI
     {
+        Physics coli = new Physics();
         private bool useGravity = true;
 
         public SlimeAI()
@@ -31,36 +32,34 @@ namespace Wots.Entities
                 ));
 
             Sprite.CurrentAnimation = "move";
+            coli.GeneratePoints(Sprite);
         }
 
 
         bool jumping = false;
         double jumpBuildTime = 0;
         double attackTimer = 0;
-
+        bool canDown, canUp, canLeft, canRight;
         public override void Update(GameTime gameTime, SpriteBatch sp)
         {
             attackTimer += gameTime.ElapsedGameTime.TotalSeconds;
             jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            bool canDown = World.isSpaceOpen(this.Sprite.Position + new Vector2(0, this.Sprite.Size.Y), null, new Vector2(64, 1)).Item1;
-            bool canUp = World.isSpaceOpen(this.Sprite.Position, null, new Vector2(66, 1)).Item1;
-            bool canLeft = World.isSpaceOpen(Sprite.Position + new Vector2(-1, 8), null, new Vector2(16, 32)).Item1;
+            coli.UpdateCollitions(Sprite, sp);
+
+            canDown = coli.CanDown;
+            canUp = coli.CanUp;
+            canLeft = coli.CanLeft;
+            canRight = coli.CanRight;
 
             if (this.Sprite.Position.X > GameScreen.Player.PlayerSprite.Position.X
                 && canLeft)
                 this.Sprite.Position.X -= 3;
             else if (this.Sprite.Position.X < GameScreen.Player.PlayerSprite.Position.X
-                && World.isSpaceOpen(Sprite.Position + new Vector2(this.Sprite.Size.X, 8), null, new Vector2(16, 32)).Item1)
+                && canRight)
                 this.Sprite.Position.X += 3;
-            if (canDown && useGravity)
-                this.Sprite.Position.Y += (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED);
 
-            if (canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y && !canDown)
-            {
-                jumping = true;
-                jumpBuildTime = 0;
-            }
             // Code for jumping
             if (jumping && jumpBuildTime < 0.25)
             {
@@ -69,7 +68,7 @@ namespace Wots.Entities
                 if (canUp)
                 {
                     Sprite.CurrentAnimation = "jump";
-                    this.Sprite.Position.Y -= UniversalInputManager.Manager.Speed * 3.5f;
+                    this.Sprite.Position.Y -= UniversalInputManager.Manager.Speed * 2;
                 }
             }
             else
@@ -79,6 +78,45 @@ namespace Wots.Entities
                 jumping = false;
             }
 
+            if (canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y && !canDown && this.coli.Collitions.Up.Point1.Item2.State != "fast4")
+            {
+                jumping = true;
+                jumpBuildTime = 0;
+            }
+            else if (canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y && this.coli.Collitions.Up.Point1.Item2.State == "fast4")
+            {
+                this.Sprite.Position.Y -= GameManager.GAMESPEED ;
+                useGravity = false;
+            }
+            else if (coli.Collitions.Up.Point1.Item1 && coli.Collitions.Down.Point1.Item2.State == "fast4" && canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y)
+            {
+                jumping = true;
+                jumpBuildTime = 0;
+                useGravity = false;
+            }
+
+            bool oldState = useGravity;
+            // Code for jumping
+            if (jumping && jumpBuildTime < 0.25)
+            {
+                useGravity = false;
+
+                if (canUp)
+                {
+                    Sprite.CurrentAnimation = "jump";
+                    this.Sprite.Position.Y -= UniversalInputManager.Manager.Speed * 2;
+                }
+            }
+            else
+            {
+                Sprite.CurrentAnimation = "move";
+                useGravity = oldState;
+                jumping = false;
+            }
+
+            if (canDown && useGravity)
+                this.Sprite.Position.Y += (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED);
+
             if (GameScreen.Player.Bounds.Contains(this.Sprite.Position) && attackTimer > 0.1)
             {
                 attackTimer = 0;
@@ -86,6 +124,21 @@ namespace Wots.Entities
             }
 
             Sprite.Update(gameTime);
+        }
+        double timer = 0;
+        public override void Damage(int damage)
+        {
+            this.Health -= damage;
+            if (Player.FacingDirection == Player.Direction.Left)
+            {
+                this.Sprite.Position.Y -= 100;
+                this.Sprite.Position.X += 100;
+            }
+            else if (Player.FacingDirection == Player.Direction.Right)
+            {
+                this.Sprite.Position.Y -= 100;
+                this.Sprite.Position.X -= 100;
+            }
         }
     }
 }
