@@ -111,6 +111,10 @@ namespace Wots.UI
         {
             nextBtn.Update(gameTime);
         }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+        }
     }
 
 

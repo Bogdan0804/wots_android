@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.UI
 {
@@ -32,6 +33,14 @@ namespace Wots.UI
             foreach (var item in Items)
             {
                 item.Update(gameTime);
+            }
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            foreach (var item in Items)
+            {
+                item.UpdateGestures(touches, gesture);
             }
         }
     }

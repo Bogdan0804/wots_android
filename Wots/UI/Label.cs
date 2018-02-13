@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 //
 
 namespace Wots.UI
@@ -24,6 +25,10 @@ namespace Wots.UI
         public override void Update(GameTime gameTime)
         {
 
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
         }
     }
 }

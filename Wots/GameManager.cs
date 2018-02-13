@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wots.GamePlay;
 using Wots.UI;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots
 {
@@ -89,26 +90,44 @@ namespace Wots
         {
             UniversalInputManager.Manager.Update(gameTime);
 
-            this.timeUpdateTimer += gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
 
-            if (this.timeUpdateTimer >= 0.3)
+            var touches = TouchPanel.GetState();
+            var gestures = default(GestureSample);
+
+
+            while (TouchPanel.IsGestureAvailable)
             {
-                if (CurrentGameTime.Minute < 60)
-                    CurrentGameTime.Minute++;
-                else if (CurrentGameTime.Hour < 23 && CurrentGameTime.Minute >= 58)
+                gestures = TouchPanel.ReadGesture();
+                if (!Paused)
                 {
-                    CurrentGameTime.Minute = 0;
-                    CurrentGameTime.Hour++;
+                    GameScreen.UpdateGestures(touches, gestures);
+                    foreach (var ui in GameScreen.UI)
+                    {
+                        ui.UpdateGestures(touches, gestures);
+                    }
                 }
                 else
-                {
-                    CurrentGameTime.Minute = 0;
-                    CurrentGameTime.Hour = 0;
-                    CurrentGameTime.Day++;
-                }
-
-                this.timeUpdateTimer = 0;
+                    PauseScreen.UpdateGestures(touches, gestures);
             }
+
+            if (!TouchPanel.IsGestureAvailable)
+            {
+                if (!Paused)
+                {
+                    GameScreen.UpdateGestures(touches, gestures);
+                    foreach (var ui in GameScreen.UI)
+                    {
+                        ui.UpdateGestures(touches, gestures);
+                    }
+                }
+                else
+                    PauseScreen.UpdateGestures(touches, gestures);
+            }
+
+
+
+
+
 
 
             if (!Paused)
@@ -121,7 +140,7 @@ namespace Wots
             }
             else
                 PauseScreen.Update(gameTime);
-            
+
         }
 
         public struct InGameTime

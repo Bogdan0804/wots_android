@@ -49,7 +49,7 @@ namespace Wots.UI
                 var item = HotbarItems[i];
                 if (item.ItemType == Type.Weapon)
                 {
-                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y +5);
+                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y + 5);
                     spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
                 }
                 else
@@ -63,38 +63,27 @@ namespace Wots.UI
             int x = (SelectedIndex * 64) + (int)Position.X;
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(new Point(x, (int)Position.Y), new Point(64)), Color.Gray);
         }
-        public void Update(GameTime gameTime)
+        public void UpdateGestures(GestureSample gesture)
         {
-            while (TouchPanel.IsGestureAvailable)
+            if (gesture.GestureType == GestureType.Tap)
             {
-                var gesture = TouchPanel.ReadGesture();
-                if (gesture.GestureType == GestureType.Tap)
+                for (int i = 0; i < HotbarItems.Count; i++)
                 {
-                    for (int i = 0; i < HotbarItems.Count; i++)
+                    var item = HotbarItems[i];
+
+                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                    Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
+                    if (itemRect.Contains(gesture.Position))
                     {
-                        var item = HotbarItems[i];
-
-                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                        Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
-                        if (itemRect.Contains(gesture.Position))
-                        {
-                            SelectedIndex = i;
-
-                        }
+                        SelectedIndex = i;
 
                     }
-                }
-                else if (gesture.GestureType == GestureType.Flick)
-                {
-                    if (UseArea.Contains(gesture.Position2))
-                    {
-                        //if (gesture.Delta.X > 0)
-                        HotbarItems[SelectedIndex].Amount = HotbarItems[SelectedIndex].OnUse();
-                    }
-                }
 
+                }
             }
+
         }
+
 
     }
 
@@ -144,7 +133,12 @@ namespace Wots.UI
 
         public override void Update(GameTime gameTime)
         {
-            Bar.Update(gameTime);
+
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            Bar.UpdateGestures(gesture);
         }
     }
 }

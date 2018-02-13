@@ -44,11 +44,9 @@ namespace Wots.UI
         {
             throw new CantDrawException("MenuItem");
         }
-        
-        public override void Update(GameTime gameTime)
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
-            var state = TouchPanel.GetState();
-            foreach (var touch in state)
+            foreach (var touch in touches)
             {
                 if (this.Hitbox.Contains(touch.Position))
                     isHover = true;
@@ -56,15 +54,17 @@ namespace Wots.UI
                     isHover = false;
             }
 
-            while (TouchPanel.IsGestureAvailable)
-            {
-                GestureSample gesture = TouchPanel.ReadGesture();
 
-                if (this.Hitbox.Contains(gesture.Position) && gesture.GestureType == GestureType.Tap)
-                {
-                    Pressed?.Invoke(this);
-                }
+            if (this.Hitbox.Contains(gesture.Position) && gesture.GestureType == GestureType.Tap)
+            {
+                Pressed?.Invoke(this);
             }
+
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+
         }
     }
 }

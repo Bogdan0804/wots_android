@@ -259,7 +259,10 @@ namespace Wots.GamePlay
 
             if (!GameManager.Game.Paused)
                 foreach (var entity in Worlds[WorldName].Entities)
-                    entity.Update(gameTime, spriteBatch);
+                    if (entity.Health <= 0)
+                        Worlds[WorldName].Entities.Remove(entity);
+                    else
+                        entity.Update(gameTime, spriteBatch);
 
             foreach (var entity in Worlds[WorldName].Entities)
             {

@@ -16,6 +16,8 @@ namespace Wots.Entities
 {
     public abstract class AI
     {
+        public int Health=100;
+
         public Rectangle HitBox
         {
             get

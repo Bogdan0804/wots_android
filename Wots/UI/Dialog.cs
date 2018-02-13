@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.UI
 {
@@ -63,6 +64,11 @@ namespace Wots.UI
             Enabled = false;
 
             StateChanged(Enabled);
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            okBtn.UpdateGestures(touches, gesture);
         }
     }
 }

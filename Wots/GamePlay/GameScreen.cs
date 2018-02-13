@@ -13,6 +13,7 @@ using Wots.Screens;
 using Wots.UI;
 using Wots.GamePlay.Intro;
 using Wots.Entities;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.GamePlay
 {
@@ -26,7 +27,7 @@ namespace Wots.GamePlay
         public Bag<NetworkPlayer> MultiPlayers = new Bag<NetworkPlayer>(16);
 
         // Our ui things
-        UI_Inventory_Menu ui_menu_inventory;
+        public static UI_Inventory_Menu ui_menu_inventory;
         DPad pad = new DPad();
         Button pause;
         public static BasicStats Stats;
@@ -40,6 +41,9 @@ namespace Wots.GamePlay
         public static Texture2D textureBlank;
         public static Texture2D white;
 
+        // More game mechanics
+        Combat combat;
+
         public GameScreen()
         {
             pad.Position = new Vector2(1, GameManager.Game.ScreenSize.Y - 265);
@@ -47,6 +51,9 @@ namespace Wots.GamePlay
             Player = new Player();
             // main camera
             Camera = new Camera2D(GameManager.Game.Graphics.GraphicsDevice);
+
+            // mechanics
+            combat = new Combat();
 
             // pause button
             pause = new Button(AssetManager.LoadImage("art/ui/pause"), new Vector2(GameManager.Game.ScreenSize.X - 69, 3), new Vector2(64));
@@ -218,12 +225,14 @@ namespace Wots.GamePlay
 
             if (World.hasWorld)
                 Player.Draw(gameTime, spriteBatch);
+            combat.Draw(gameTime, spriteBatch);
             spriteBatch.End();
             //}
             // Draw the health, ect
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             pad.Draw(gameTime, spriteBatch);
             ui_menu_inventory.Draw(gameTime, spriteBatch);
+            Stats.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
         }
@@ -236,12 +245,14 @@ namespace Wots.GamePlay
 
         public override void Update(GameTime gameTime)
         {
-            pad.Update(gameTime);
-            UpdatePlayerCameras(gameTime);
-            pause.Update(gameTime);
+            Stats.Update(gameTime);
             ui_menu_inventory.Update(gameTime);
+            pad.Update(gameTime);
+            
+            
             // Update the world
             World.Update(gameTime);
+            UpdatePlayerCameras(gameTime);
 
         }
         void UpdatePlayerCameras(GameTime gameTime)
@@ -261,7 +272,6 @@ namespace Wots.GamePlay
             Player.LoadContent(content);
             World.Intialize();
             Stats = new BasicStats();
-            this.UI.Add(Stats);
         }
 
 
@@ -276,6 +286,14 @@ namespace Wots.GamePlay
 
         public override void Unload()
         {
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gestures)
+        {
+            ui_menu_inventory.UpdateGestures(touches, gestures);
+            pad.UpdateGestures(touches, gestures);
+            combat.UpdateGestures(touches, gestures);
+            Stats.UpdateGestures(touches, gestures);
         }
 
         #endregion

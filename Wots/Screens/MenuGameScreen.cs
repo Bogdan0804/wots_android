@@ -202,6 +202,11 @@ namespace Wots.Screens
         {
             //click_select.Play();
         }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+
+        }
     }
 
     internal class xButton

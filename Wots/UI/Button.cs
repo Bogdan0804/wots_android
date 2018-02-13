@@ -45,8 +45,6 @@ namespace Wots.UI
             this.Texture = texture;
         }
 
-        double time = 0;
-
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -70,11 +68,11 @@ namespace Wots.UI
         }
         public override void Update(GameTime gameTime)
         {
-            time += gameTime.ElapsedGameTime.TotalSeconds * GameManager.GAMESPEED;
+        }
 
-
-            var state = TouchPanel.GetState();
-            foreach (var touch in state)
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            foreach (var touch in touches)
             {
                 if (this.Hitbox.Contains(touch.Position))
                     isHover = true;
@@ -83,13 +81,10 @@ namespace Wots.UI
             }
 
 
-            GestureSample gesture = UniversalInputManager.Manager.ReadGesture();
-
             if (this.Hitbox.Contains(gesture.Position) && gesture.GestureType == GestureType.Tap)
             {
                 Pressed?.Invoke(this);
             }
-
         }
     }
 }

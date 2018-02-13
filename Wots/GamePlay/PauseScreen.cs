@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 using Wots.Screens;
 using Wots.UI;
 
@@ -52,5 +53,10 @@ namespace Wots.GamePlay
 		{
             msgDialog.Update(gameTime);
         }
-	}
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            msgDialog.UpdateGestures(touches, gesture);
+        }
+    }
 }
