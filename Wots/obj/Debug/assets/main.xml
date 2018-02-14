@@ -2584,4 +2584,12 @@
     <state>none</state>
     <texture>grass</texture>
   </tile>
+  <tile collidable="True">
+    <position>
+      <x>21</x>
+      <y>4</y>
+    </position>
+    <state>crate</state>
+    <texture>crate_0</texture>
+  </tile>
 </world>

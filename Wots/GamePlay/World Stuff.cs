@@ -190,41 +190,7 @@ namespace Wots.GamePlay
             return t;
         }
 
-        //internal static void OldLoad(string name)
-        //{
-        //    string worldText = File.ReadAllText($"Assets/worlds/{name}.ward");
-        //    string[] worldLines = worldText.Split('\n');
-
-        //    foreach (string item in worldLines)
-        //    {
-        //        try
-        //        {
-        //            string innerText = item.Split('[', ']')[1];
-        //            string texture = innerText.Split(',')[0];
-        //            int x = int.Parse(innerText.Split(',')[1]) * 96;
-        //            int y = int.Parse(innerText.Split(',')[2]) * 96;
-        //            string type = (innerText.Split(',')[3]);
-        //            bool colidable = bool.Parse(innerText.Split(',')[4]);
-
-        //            Tile t = new Tile();
-        //            t.Position = new Vector2(x, y);
-        //            t.State = type;
-        //            t.Texture = texture;
-        //            t.Color = Color.White;
-
-        //            Console.WriteLine($"Creating tile @ {t.Position.ToString()}, collidable = {t.Collidable}");
-
-        //            if (type.Contains("p_spawn"))
-        //                GameScreen.Player.PlayerSprite.Position = t.Position - new Vector2(0, 200);
-        //            else
-        //                Tiles.Add(t);
-        //        }
-        //        catch
-        //        {
-        //            // Leave this alone
-        //        }
-        //    }
-        //}
+      
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var Floor = Worlds[WorldName].Floor;

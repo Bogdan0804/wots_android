@@ -125,4 +125,9 @@
     <file>art/mobs/monsters/slime/slime2.png</file>
     <name>slime1</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/crate_0.png</file>
+    <name>crate_0</name>
+  </object>
 </textures>

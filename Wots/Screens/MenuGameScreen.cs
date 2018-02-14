@@ -8,6 +8,7 @@ using Wots.UI;
 using Wots.GamePlay;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Devices.Sensors;
+using Android.App;
 
 namespace Wots.Screens
 {
@@ -145,30 +146,13 @@ namespace Wots.Screens
             // Create a button
             {
                 Vector2 size = new Vector2(200, 75);
-                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonMultiplayer"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 85)), size);
-
-                exitBtn.Pressed += multiplayer_Pressed;
-
-                this.menu.AddItem(exitBtn);
-            }
-            // Create a button
-            {
-                Vector2 size = new Vector2(200, 75);
-                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonOptions"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 165)), size);
-
-                exitBtn.Pressed += Options_Pressed;
-
-                this.menu.AddItem(exitBtn);
-            }
-            // Create a button
-            {
-                Vector2 size = new Vector2(200, 75);
-                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonExit"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 240)), size);
+                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonExit"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 85)), size);
 
                 exitBtn.Pressed += ExitBtn_Pressed;
 
                 this.menu.AddItem(exitBtn);
             }
+       
             titleTexture = AssetManager.LoadImage("art/title_1");
             this.UI.Add(menu);
         }
@@ -200,7 +184,7 @@ namespace Wots.Screens
 
         void ExitBtn_Pressed(object sender)
         {
-            //click_select.Play();
+            Game1.Activity.FinishAffinity();
         }
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gesture)

@@ -313,7 +313,8 @@ namespace Wots.GamePlay
                     }
                     else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
                     {
-                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed* GameManager.GAMESPEED) / 3f;
+                        jumpBuildTime = 0;
+                        jumping = true;
                         useGravity = false;
                     }
                     else

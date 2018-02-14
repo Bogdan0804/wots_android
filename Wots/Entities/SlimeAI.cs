@@ -85,7 +85,7 @@ namespace Wots.Entities
             }
             else if (canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y && this.coli.Collitions.Up.Point1.Item2.State == "fast4")
             {
-                this.Sprite.Position.Y -= GameManager.GAMESPEED ;
+                this.Sprite.Position.Y -= GameManager.GAMESPEED;
                 useGravity = false;
             }
             else if (coli.Collitions.Up.Point1.Item1 && coli.Collitions.Down.Point1.Item2.State == "fast4" && canUp && this.Sprite.Position.Y > GameScreen.Player.PlayerSprite.Position.Y)
@@ -96,23 +96,7 @@ namespace Wots.Entities
             }
 
             bool oldState = useGravity;
-            // Code for jumping
-            if (jumping && jumpBuildTime < 0.25)
-            {
-                useGravity = false;
-
-                if (canUp)
-                {
-                    Sprite.CurrentAnimation = "jump";
-                    this.Sprite.Position.Y -= UniversalInputManager.Manager.Speed * 2;
-                }
-            }
-            else
-            {
-                Sprite.CurrentAnimation = "move";
-                useGravity = oldState;
-                jumping = false;
-            }
+            
 
             if (canDown && useGravity)
                 this.Sprite.Position.Y += (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED);
