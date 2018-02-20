@@ -33,17 +33,17 @@ namespace Wots.UI
         public int SelectedIndex = 0;
         public Vector2 Position = Vector2.Zero;
         public Bag<Item> HotbarItems = new Bag<Item>(7);
-        public Rectangle UseArea;
+       // public Rectangle UseArea;
 
         public InventoryUI()
         {
-            UseArea = new Rectangle((int)GameManager.Game.ScreenSize.X / 2, 64, (int)GameManager.Game.ScreenSize.X / 2, (int)GameManager.Game.ScreenSize.Y - 296);
+           // UseArea = new Rectangle((int)GameManager.Game.ScreenSize.X / 2, 64, (int)GameManager.Game.ScreenSize.X / 2, (int)GameManager.Game.ScreenSize.Y - 296);
             Position = new Vector2(GameManager.Game.ScreenSize.X / 2 - AssetManager.GetTexture("inv_gui_items").Width / 2, 10);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(GameScreen.textureBlank, UseArea, new Color(Color.Black, 20));
+            //spriteBatch.Draw(GameScreen.textureBlank, UseArea, new Color(Color.Black, 20));
             for (int i = 0; i < HotbarItems.Count; i++)
             {
                 var item = HotbarItems[i];

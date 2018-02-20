@@ -62,8 +62,8 @@ namespace Wots.Screens
                 spriteBatch.Draw(titleTexture, new Rectangle(position.ToPoint(), (size).ToPoint()), Color.White * 0.8f);
             }
 
-            string copyText = "Copyright 2017 Bogz & Tim ";
-            spriteBatch.DrawString(AssetManager.GetFont("ConsoleFont"), copyText, GameManager.Game.ScreenSize - AssetManager.GetFont("ConsoleFont").MeasureString(copyText), Color.White);
+            string copyText = "Copyright 2017 Bogz, Tim & Aidan";
+            spriteBatch.DrawString(AssetManager.GetFont("24"), copyText, GameManager.Game.ScreenSize - AssetManager.GetFont("24").MeasureString(copyText) - new Vector2(1), Color.White);
             // End the spritebatch (sends all date to the graphics card to be rendered).
             spriteBatch.End();
         }
@@ -137,7 +137,7 @@ namespace Wots.Screens
             // Create a button
             {
                 Vector2 size = new Vector2(200, 75);
-                var startBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonPlay"), ((GameManager.Game.ScreenSize / 2) - (size / 2)), size);
+                var startBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonPlay"), ((GameManager.Game.ScreenSize / 2) - (size / 2)) + new Vector2(0, 100), size);
 
                 startBtn.Pressed += startBtn_Pressed;
 
@@ -146,7 +146,7 @@ namespace Wots.Screens
             // Create a button
             {
                 Vector2 size = new Vector2(200, 75);
-                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonExit"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 85)), size);
+                var exitBtn = new MenuItem(AssetManager.LoadImage("art/ui/buttonExit"), ((GameManager.Game.ScreenSize / 2) - (size / 2) + new Vector2(6, 185)), size);
 
                 exitBtn.Pressed += ExitBtn_Pressed;
 

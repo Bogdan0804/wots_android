@@ -130,4 +130,14 @@
     <file>art/crate_0.png</file>
     <name>crate_0</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/door1.png</file>
+    <name>door0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/door2.png</file>
+    <name>door1</name>
+  </object>
 </textures>

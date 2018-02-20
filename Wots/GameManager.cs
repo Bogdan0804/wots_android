@@ -123,12 +123,7 @@ namespace Wots
                 else
                     PauseScreen.UpdateGestures(touches, gestures);
             }
-
-
-
-
-
-
+            
 
             if (!Paused)
             {
@@ -171,6 +166,9 @@ namespace Wots
                 PauseScreen.Draw(gameTime, spriteBatch);
                 PauseScreen.Update(gameTime);
             }
+#if DEBUG
+            spriteBatch.DrawString(AssetManager.GetFont("24"), "DEVELOPMENT BUILD", Vector2.Zero, Color.Red);
+#endif
             spriteBatch.End();
         }
 

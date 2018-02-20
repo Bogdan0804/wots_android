@@ -96,7 +96,7 @@ namespace Wots.Entities
             }
 
             bool oldState = useGravity;
-            
+
 
             if (canDown && useGravity)
                 this.Sprite.Position.Y += (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED);
@@ -113,15 +113,21 @@ namespace Wots.Entities
         public override void Damage(int damage)
         {
             this.Health -= damage;
+
+            GameScreen.Stats.EXPValue += 5;
             if (Player.FacingDirection == Player.Direction.Left)
             {
-                this.Sprite.Position.Y -= 100;
-                this.Sprite.Position.X += 100;
+                if (canUp)
+                    this.Sprite.Position.Y -= 100;
+                if (canLeft)
+                    this.Sprite.Position.X += 100;
             }
             else if (Player.FacingDirection == Player.Direction.Right)
             {
-                this.Sprite.Position.Y -= 100;
-                this.Sprite.Position.X -= 100;
+                if (canUp)
+                    this.Sprite.Position.Y -= 100;
+                if (canRight)
+                    this.Sprite.Position.X -= 100;
             }
         }
     }

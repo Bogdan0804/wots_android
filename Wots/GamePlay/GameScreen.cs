@@ -294,6 +294,7 @@ namespace Wots.GamePlay
             pad.UpdateGestures(touches, gestures);
             combat.UpdateGestures(touches, gestures);
             Stats.UpdateGestures(touches, gestures);
+            World.UpdateGestures(touches, gestures);
         }
 
         #endregion

@@ -7,6 +7,7 @@ using System.Xml;
 using System.Collections.Generic;
 using Wots.UI;
 using Wots.Entities;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Wots.GamePlay
 {
@@ -17,12 +18,14 @@ namespace Wots.GamePlay
         public Func<Player, bool> OnDown;
         public Func<Player, bool> OnLeft;
         public Func<Player, bool> OnRight;
+        public Func<Player, bool> OnClick;
 
         public bool usePrefJump = false;
         public bool usePrefUp = false;
         public bool usePrefDown = false;
         public bool usePrefLeft = false;
         public bool usePrefRight = false;
+        public bool usePrefClick = false;
     }
 
     public class Tile
@@ -140,6 +143,7 @@ namespace Wots.GamePlay
 
                 t = ProcessPrefs(t);
 
+
                 if (t.Collidable == false && t.State.ToLower() == "none")
                     Floor.Add(t);
                 else
@@ -158,6 +162,7 @@ namespace Wots.GamePlay
         {
             if (t.State.ToLower() == "fast4")
             {
+                t.Collidable = false;
                 t.Prefs.usePrefJump = true;
                 t.Prefs.usePrefUp = true;
 
@@ -186,11 +191,53 @@ namespace Wots.GamePlay
                     return true;
                 });
             }
+            else if (t.State.ToLower() == "crate")
+            {
+                t.Prefs.usePrefClick = true;
+                t.Collidable = false;
+                t.Prefs.OnClick = new Func<Player, bool>((e) =>
+                {
+                    XmlDocument doc = new XmlDocument();
+
+                    string xml = "";
+                    using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open($"containers.xml")))
+                    {
+                        xml = sr.ReadToEnd();
+                    }
+
+                    doc.LoadXml(xml);
+                    foreach (XmlNode container in doc["containers"])
+                    {
+                        int x = int.Parse(container["position"]["x"].Value);
+                        int y = int.Parse(container["position"]["y"].Value);
+
+                        if (t.Position.X == x && t.Position.Y == y)
+                        {
+                            throw new Exception("fuccckkkk");
+                        }
+                    }
+
+                    return true;
+                });
+            }
 
             return t;
         }
 
-      
+        public static void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            if (gesture.GestureType == GestureType.Tap)
+            {
+                var Tiles = Worlds[WorldName].Tiles;
+                foreach (var tile in Tiles)
+                {
+                    if (tile.BoundingBox.Contains(gesture.Position) && tile.Prefs.usePrefClick)
+                        throw new Exception("fuccckkkk");
+                }
+            }
+        }
+
+
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var Floor = Worlds[WorldName].Floor;
