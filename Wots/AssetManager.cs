@@ -28,7 +28,7 @@ namespace Wots
         
         public static Texture2D LoadImage(string name)
         {
-            return GameManager.Game.Content.Load<Texture2D>("Assets/"+name);
+            return GameManager.Game.Content.Load<Texture2D>("Assets/" + name);
         }
         public static void LoadXml()
         {

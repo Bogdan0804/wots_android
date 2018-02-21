@@ -74,7 +74,9 @@
     <Compile Include="AssetManager.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="Entities\AI.cs" />
+    <Compile Include="Entities\GameObject.cs" />
     <Compile Include="Entities\SlimeAI.cs" />
+    <Compile Include="Entities\TreeGO.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="FrameCounter.cs" />
     <Compile Include="Game1.cs" />

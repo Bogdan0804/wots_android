@@ -104,7 +104,8 @@ namespace Wots.Entities
             if (GameScreen.Player.Bounds.Contains(this.Sprite.Position) && attackTimer > 0.1)
             {
                 attackTimer = 0;
-                GameScreen.Stats.Health.Value--;
+                if (GameScreen.Stats.Health.Value > 0)
+                    GameScreen.Stats.Health.Value--;
             }
 
             Sprite.Update(gameTime);

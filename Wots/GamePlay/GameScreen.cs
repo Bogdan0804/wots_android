@@ -43,6 +43,7 @@ namespace Wots.GamePlay
 
         // More game mechanics
         Combat combat;
+        Texture2D Backdrop;
 
         public GameScreen()
         {
@@ -108,9 +109,13 @@ namespace Wots.GamePlay
         {
             GameManager.Game.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin(samplerState:SamplerState.PointWrap);
+            spriteBatch.Draw(Backdrop, new Rectangle(0, 0, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y), Color.White);
+            spriteBatch.End();
+
             // Draw the player
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-
+           
             #region Serverside Stuff
             //if (useServer)
             //{
@@ -248,8 +253,8 @@ namespace Wots.GamePlay
             Stats.Update(gameTime);
             ui_menu_inventory.Update(gameTime);
             pad.Update(gameTime);
-            
-            
+
+
             // Update the world
             World.Update(gameTime);
             UpdatePlayerCameras(gameTime);
@@ -270,8 +275,9 @@ namespace Wots.GamePlay
             pad.LoadContent();
             // Load our players content and set an initial state
             Player.LoadContent(content);
-            World.Intialize();
             Stats = new BasicStats();
+            World.Intialize();
+            Backdrop = AssetManager.LoadImage("art/BG");
         }
 
 

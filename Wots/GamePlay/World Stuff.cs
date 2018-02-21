@@ -65,6 +65,7 @@ namespace Wots.GamePlay
         public Bag<Tile> Floor = new Bag<Tile>();
         public Bag<Tile> Tiles = new Bag<Tile>();
         public Bag<AI> Entities = new Bag<AI>();
+        public Bag<GameObject> GameObjects = new Bag<GameObject>();
     }
 
     public static class World
@@ -93,6 +94,9 @@ namespace Wots.GamePlay
             int rem = num % 96;
             return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
         }
+
+        public static Bag<GameObject> GOQue = new Bag<GameObject>();
+
         public static void LoadWorld(string name, bool load = true)
         {
             GameScreen.Player.PlayerSprite.Position = Vector2.Zero;
@@ -140,9 +144,10 @@ namespace Wots.GamePlay
                 t.Color = Color.White;
                 t.Texture = node["texture"].InnerText;
                 t.Collidable = bool.Parse(node.Attributes["collidable"].InnerText);
-
                 t = ProcessPrefs(t);
 
+                if (t == null)
+                    continue;
 
                 if (t.Collidable == false && t.State.ToLower() == "none")
                     Floor.Add(t);
@@ -155,6 +160,7 @@ namespace Wots.GamePlay
             p.Tiles = Tiles;
 
             Worlds.Add(name, p);
+            Worlds[WorldName].GameObjects = GOQue;
             hasWorld = true;
         }
 
@@ -191,6 +197,14 @@ namespace Wots.GamePlay
                     return true;
                 });
             }
+            else if (t.State.ToLower() == "water")
+            {
+                t.Collidable = false;
+                t.Prefs.usePrefJump = true;
+                t.Prefs.OnJump = new Func<Player, bool>((e) => {
+                    return false;
+                });
+            }
             else if (t.State.ToLower() == "crate")
             {
                 t.Prefs.usePrefClick = true;
@@ -220,21 +234,33 @@ namespace Wots.GamePlay
                     return true;
                 });
             }
+            else if (t.State.ToLower().StartsWith("go:"))
+            {
+                string type = t.State.Split(':')[1];
+                if (type == "tree")
+                {
+                    GOQue.Add(new TreeGO {
+                        Position = t.Position
+                    });
+                }
 
-            return t;
+                t = null;
+            }
+
+                return t;
         }
 
         public static void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
-            if (gesture.GestureType == GestureType.Tap)
-            {
-                var Tiles = Worlds[WorldName].Tiles;
-                foreach (var tile in Tiles)
-                {
-                    if (tile.BoundingBox.Contains(gesture.Position) && tile.Prefs.usePrefClick)
-                        throw new Exception("fuccckkkk");
-                }
-            }
+            //if (gesture.GestureType == GestureType.Tap)
+            //{
+            //    var Tiles = Worlds[WorldName].Tiles;
+            //    foreach (var tile in Tiles)
+            //    {
+            //        if (tile.BoundingBox.Contains(gesture.Position) && tile.Prefs.usePrefClick)
+            //            throw new Exception("fuccckkkk");
+            //    }
+            //}
         }
 
 
@@ -277,9 +303,17 @@ namespace Wots.GamePlay
                     else
                         entity.Update(gameTime, spriteBatch);
 
+            if (!GameManager.Game.Paused)
+                foreach (var go in Worlds[WorldName].GameObjects)
+                    go.Update(gameTime);
+
             foreach (var entity in Worlds[WorldName].Entities)
             {
                 entity.Sprite.Draw(spriteBatch);
+            }
+            foreach (var go in Worlds[WorldName].GameObjects)
+            {
+                go.Draw(gameTime, spriteBatch);
             }
         }
 

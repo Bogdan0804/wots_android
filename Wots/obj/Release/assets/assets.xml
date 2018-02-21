@@ -67,6 +67,41 @@
   </object>
   <object xnb="false">
     <type>Texture</type>
+    <file>art/grass_6.png</file>
+    <name>grass_6</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_7.png</file>
+    <name>grass_7</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_8.png</file>
+    <name>grass_8</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_9.png</file>
+    <name>grass_9</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/grass_10.png</file>
+    <name>grass_10</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/water_0.png</file>
+    <name>water_0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/water_1.png</file>
+    <name>water_1</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
     <file>art/bush_0.png</file>
     <name>bush_0</name>
   </object>

@@ -73,7 +73,7 @@ namespace Wots.GamePlay
 
         // Store our direction in a vector2
         public Vector2 TextureDirection;
-        
+
 
         /// <summary>
         /// Intialize this instance.
@@ -148,7 +148,7 @@ namespace Wots.GamePlay
 
             PlayerSprite.CurrentAnimation = "left";
             PlayerSprite.Position = new Vector2(0, -10);
-            
+
         }
         #endregion
         public void Update(GameTime gameTime)
@@ -183,10 +183,10 @@ namespace Wots.GamePlay
                 World.isSpaceOpen(this.PlayerSprite.Position + new Vector2(90, 100), null, new Vector2(10, 80))
                 );
 
-            canUp    = Collitions.Up.Point1.Item1    & Collitions.Up.Point2.Item1;
-            canLeft  = Collitions.Left.Point1.Item1  & Collitions.Left.Point2.Item1;
+            canUp = Collitions.Up.Point1.Item1 & Collitions.Up.Point2.Item1;
+            canLeft = Collitions.Left.Point1.Item1 & Collitions.Left.Point2.Item1;
             canRight = Collitions.Right.Point1.Item1 & Collitions.Right.Point2.Item1;
-            canDown  = Collitions.Down.Point1.Item1  & Collitions.Down.Point2.Item1;
+            canDown = Collitions.Down.Point1.Item1 & Collitions.Down.Point2.Item1;
 
         }
 
@@ -267,7 +267,7 @@ namespace Wots.GamePlay
 
             HandleMovements();
             //UpdateColitions(null);
-            
+
         }
 
         private void HandleMovements()
@@ -278,14 +278,15 @@ namespace Wots.GamePlay
                 // Check if we pressed jump key and if we can jump
                 if (UniversalInputManager.Manager.GetAxis("Vertical") == 1 && !canDown && canUp)
                 {
-                    if (Collitions.Up.Point1.Item2.Prefs.usePrefJump)
-                    {
-                        jumping = Collitions.Up.Point1.Item2.Prefs.OnJump(this);
-                    }
-                    else
-                    {
-                        jumping = true;
-                    }
+                    if (Collitions.Left.Point2.Item2.State != "water" || Collitions.Right.Point2.Item2.State != "water")
+                        if (Collitions.Up.Point1.Item2.Prefs.usePrefJump)
+                        {
+                            jumping = Collitions.Up.Point1.Item2.Prefs.OnJump(this);
+                        }
+                        else
+                        {
+                            jumping = true;
+                        }
                     jumpBuildTime = 0;
                 }
                 // Code for jumping
@@ -294,7 +295,7 @@ namespace Wots.GamePlay
                     useGravity = false;
 
                     if (canUp)
-                        this.PlayerSprite.Position.Y -= UniversalInputManager.Manager.Speed* 3.5f;
+                        this.PlayerSprite.Position.Y -= UniversalInputManager.Manager.Speed * 3.5f;
                 }
                 else
                 {
@@ -302,13 +303,13 @@ namespace Wots.GamePlay
                     jumping = false;
                 }
 
-                
+
                 bool oldGravityState = useGravity;
                 try
                 {
                     if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "fast4"))
                     {
-                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed* GameManager.GAMESPEED) / 1.5f;
+                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
                         useGravity = false;
                     }
                     else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
@@ -323,13 +324,31 @@ namespace Wots.GamePlay
                     }
                 }
                 catch { }
+                try
+                {
+                    if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "water"))
+                    {
+                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
+                        useGravity = false;
+                    }
+                    else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "water" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
+                    {
+                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 3f;
+                        useGravity = false;
+                    }
+                    else
+                    {
+                        useGravity = oldGravityState;
+                    }
+                }
+                catch { }
 
 
                 if (Collitions.Down != null)
                     if (Collitions.Down.Point1.Item2.State == "fast4")
-                        GravitySpeed= 5.0f;
+                        GravitySpeed = 5.0f;
                     else
-                        GravitySpeed= 10.0f;
+                        GravitySpeed = 10.0f;
 
                 if (Collitions.Right != null && Collitions.Right.Point1.Item2.State != null)
                     CheckLRColliton(Collitions.Right.Point1.Item2.State);
@@ -349,7 +368,7 @@ namespace Wots.GamePlay
                     else if (Collitions.Left.Point2.Item2.Prefs.usePrefLeft)
                         Collitions.Left.Point2.Item2.Prefs.OnLeft(this);
                     else
-                        PlayerSprite.Position.X -= UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
+                        PlayerSprite.Position.X -= UniversalInputManager.Manager.Speed * GameManager.GAMESPEED;
                     //oldPos.X += 3;
                 }
                 else if ((UniversalInputManager.Manager.GetAxis("Horizontal") == 1 || GamePad.GetState(0).Triggers.Right > 100) && canRight)
@@ -359,7 +378,7 @@ namespace Wots.GamePlay
                     else if (Collitions.Right.Point2.Item2.Prefs.usePrefRight)
                         Collitions.Right.Point2.Item2.Prefs.OnRight(this);
                     else
-                        PlayerSprite.Position.X += UniversalInputManager.Manager.Speed* GameManager.GAMESPEED;
+                        PlayerSprite.Position.X += UniversalInputManager.Manager.Speed * GameManager.GAMESPEED;
                     //oldPos.X -= 3;
                 }
 
