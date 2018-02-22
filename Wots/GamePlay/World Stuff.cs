@@ -151,6 +151,7 @@ namespace Wots.GamePlay
 
                 if (t.Collidable == false && t.State.ToLower() == "none")
                     Floor.Add(t);
+
                 else
                     Tiles.Add(t);
             }
@@ -160,7 +161,8 @@ namespace Wots.GamePlay
             p.Tiles = Tiles;
 
             Worlds.Add(name, p);
-            Worlds[WorldName].GameObjects = GOQue;
+            Worlds[WorldName].GameObjects.AddRange(GOQue);
+            GOQue.Clear();
             hasWorld = true;
         }
 
@@ -201,37 +203,9 @@ namespace Wots.GamePlay
             {
                 t.Collidable = false;
                 t.Prefs.usePrefJump = true;
-                t.Prefs.OnJump = new Func<Player, bool>((e) => {
-                    return false;
-                });
-            }
-            else if (t.State.ToLower() == "crate")
-            {
-                t.Prefs.usePrefClick = true;
-                t.Collidable = false;
-                t.Prefs.OnClick = new Func<Player, bool>((e) =>
+                t.Prefs.OnJump = new Func<Player, bool>((e) =>
                 {
-                    XmlDocument doc = new XmlDocument();
-
-                    string xml = "";
-                    using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open($"containers.xml")))
-                    {
-                        xml = sr.ReadToEnd();
-                    }
-
-                    doc.LoadXml(xml);
-                    foreach (XmlNode container in doc["containers"])
-                    {
-                        int x = int.Parse(container["position"]["x"].Value);
-                        int y = int.Parse(container["position"]["y"].Value);
-
-                        if (t.Position.X == x && t.Position.Y == y)
-                        {
-                            throw new Exception("fuccckkkk");
-                        }
-                    }
-
-                    return true;
+                    return false;
                 });
             }
             else if (t.State.ToLower().StartsWith("go:"))
@@ -239,7 +213,8 @@ namespace Wots.GamePlay
                 string type = t.State.Split(':')[1];
                 if (type == "tree")
                 {
-                    GOQue.Add(new TreeGO {
+                    GOQue.Add(new TreeGO
+                    {
                         Position = t.Position
                     });
                 }
@@ -247,7 +222,7 @@ namespace Wots.GamePlay
                 t = null;
             }
 
-                return t;
+            return t;
         }
 
         public static void UpdateGestures(TouchCollection touches, GestureSample gesture)

@@ -167,7 +167,7 @@ namespace Wots
                 PauseScreen.Update(gameTime);
             }
 #if DEBUG
-            spriteBatch.DrawString(AssetManager.GetFont("24"), "DEVELOPMENT BUILD", Vector2.Zero, Color.Red);
+            spriteBatch.DrawString(AssetManager.GetFont("24"), "DEVELOPMENT BUILD", Vector2.Zero, Color.Black);
 #endif
             spriteBatch.End();
         }

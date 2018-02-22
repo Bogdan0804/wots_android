@@ -110,7 +110,7 @@ namespace Wots.GamePlay
             GameManager.Game.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(samplerState:SamplerState.PointWrap);
-            spriteBatch.Draw(Backdrop, new Rectangle(0, 0, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y), Color.White);
+            spriteBatch.Draw(Backdrop, new Rectangle(0, (-(int)Player.PlayerSprite.Position.Y / 10) - 100, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y * 2), Color.White);
             spriteBatch.End();
 
             // Draw the player

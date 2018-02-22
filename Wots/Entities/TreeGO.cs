@@ -24,7 +24,7 @@ namespace Wots.Entities
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, new Rectangle(((Position - Size) + new Vector2(96)).ToPoint(), Size.ToPoint()), Color.White);
+            spriteBatch.Draw(Texture, new Rectangle(((Position - Size) + new Vector2(192, 96)).ToPoint(), Size.ToPoint()), Color.White);
         }
 
         public override void Update(GameTime gameTime)

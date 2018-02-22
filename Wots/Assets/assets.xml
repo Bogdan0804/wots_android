@@ -92,6 +92,11 @@
   </object>
   <object xnb="false">
     <type>Texture</type>
+    <file>art/luna_soil_1.png</file>
+    <name>luna_soil_0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
     <file>art/water_0.png</file>
     <name>water_0</name>
   </object>

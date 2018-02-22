@@ -2,70 +2,6 @@
 <world tileWidth="96" tileHeight="96" width="10" height="10">
   <tile collidable="True">
     <position>
-      <x>0</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>2</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>4</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>6</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>8</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>10</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>12</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>13</x>
-      <y>9</y>
-    </position>
-    <state>none</state>
-    <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
       <x>14</x>
       <y>9</y>
     </position>
@@ -287,5 +223,69 @@
     </position>
     <state>door:test</state>
     <texture>grass</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>0</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>2</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>4</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>6</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>8</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>10</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>12</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>13</x>
+      <y>9</y>
+    </position>
+    <state>none</state>
+    <texture>luna_soil_0</texture>
   </tile>
 </world>

@@ -305,6 +305,7 @@ namespace Wots.GamePlay
 
 
                 bool oldGravityState = useGravity;
+
                 try
                 {
                     if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "fast4"))
@@ -314,34 +315,34 @@ namespace Wots.GamePlay
                     }
                     else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
                     {
+                        useGravity = false;
                         jumpBuildTime = 0;
                         jumping = true;
-                        useGravity = false;
                     }
-                    else
-                    {
-                        useGravity = oldGravityState;
-                    }
-                }
-                catch { }
-                try
-                {
-                    if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "water"))
+                    else if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "water"))
                     {
                         this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
                         useGravity = false;
                     }
-                    else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "water" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
-                    {
-                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 3f;
-                        useGravity = false;
-                    }
                     else
                     {
                         useGravity = oldGravityState;
                     }
                 }
                 catch { }
+                //
+                //{
+                //    
+                //}
+                //else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "water" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
+                //{
+                //    this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 3f;
+                //    useGravity = false;
+                //}
+                //else
+                //{
+                //    useGravity = oldGravityState;
+                //}
 
 
                 if (Collitions.Down != null)
