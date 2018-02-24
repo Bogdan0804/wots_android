@@ -34,10 +34,10 @@ namespace Wots
 
 		public Texture2D GetSprite(int xPos, int yPos)
 		{
-			var img = AssetManager.LoadImage(GameManager.Game.Content.RootDirectory + "/" + this.Path);
+			var img = AssetManager.LoadImage(this.Path);
 
             /// Get the data from the original texture and place it in an array
-            Bitmap o = Bitmap.CreateBitmap((int)img.Width, (int)img.Height, Bitmap.Config.Argb4444);
+            Bitmap o = Bitmap.CreateBitmap((int)img.Width, (int)img.Height, Bitmap.Config.Argb8888);
             Color[] colorData = new Color[img.Width * img.Height];
             img.GetData<Color>(colorData);
             for (int x = 0; x < o.Width; x++)
@@ -49,7 +49,7 @@ namespace Wots
             }
             
 
-            Bitmap g = Bitmap.CreateBitmap((int)TileSize.X, (int)TileSize.Y, Bitmap.Config.Argb4444);
+            Bitmap g = Bitmap.CreateBitmap((int)TileSize.X, (int)TileSize.Y, Bitmap.Config.Argb8888);
             for (int x = xPos; x < (int)TileSize.X - xPos; x++)
         	{
         		for (int y = yPos; y < (int)TileSize.Y - yPos; y++)

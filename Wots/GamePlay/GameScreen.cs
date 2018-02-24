@@ -43,8 +43,7 @@ namespace Wots.GamePlay
 
         // More game mechanics
         Combat combat;
-        Texture2D Backdrop;
-
+        public static string BackdropName = "null";
         public GameScreen()
         {
             pad.Position = new Vector2(1, GameManager.Game.ScreenSize.Y - 265);
@@ -108,14 +107,15 @@ namespace Wots.GamePlay
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             GameManager.Game.Graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin(samplerState:SamplerState.PointWrap);
-            spriteBatch.Draw(Backdrop, new Rectangle(0, (-(int)Player.PlayerSprite.Position.Y / 10) - 100, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y * 2), Color.White);
-            spriteBatch.End();
-
+            if (BackdropName != "null")
+            {
+                spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+                spriteBatch.Draw(AssetManager.LoadImage(BackdropName), new Rectangle(0, (-(int)Player.PlayerSprite.Position.Y / 10) - 100, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y * 2), Color.White);
+                spriteBatch.End();
+            }
             // Draw the player
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-           
+
             #region Serverside Stuff
             //if (useServer)
             //{
@@ -277,7 +277,6 @@ namespace Wots.GamePlay
             Player.LoadContent(content);
             Stats = new BasicStats();
             World.Intialize();
-            Backdrop = AssetManager.LoadImage("art/BG");
         }
 
 

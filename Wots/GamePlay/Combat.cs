@@ -17,7 +17,7 @@ namespace Wots.GamePlay
 {
     public class Combat
     {
-        public Rectangle HitArea
+        public static Rectangle HitArea
         {
             get
             {
@@ -33,8 +33,8 @@ namespace Wots.GamePlay
                 {
                     foreach (var entity in World.Worlds[World.WorldName].Entities)
                     {
-                        if (this.HitArea.Contains(entity.Sprite.Position))
-                            entity.Damage(10);
+                        if (HitArea.Intersects(entity.HitBox))
+                            entity.Damage(10, gesture.Position - gesture.Position2);
                     }
                 }
 

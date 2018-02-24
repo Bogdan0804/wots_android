@@ -23,6 +23,7 @@ C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Debug\Newtonsoft.Json.xml
 C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Debug\Wots.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\MonoGame.Extended.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Wots.dll.mdb
+C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Debug\Wots.dll
 bin\Android\AnyCPU\Debug\Mono.Android.pdb
 bin\Android\AnyCPU\Debug\mscorlib.pdb
 bin\Android\AnyCPU\Debug\OpenTK-1.0.pdb

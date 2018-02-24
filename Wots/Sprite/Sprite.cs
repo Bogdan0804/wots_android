@@ -36,7 +36,7 @@ namespace Wots
 
 		public Rectangle GetRectangle()
 		{
-			return new Rectangle((int)Position.X, (int)Position.Y, CurrentAnimationFrame.Texture.Width, CurrentAnimationFrame.Texture.Height);
+			return new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y);
 		}
 
 		public Texture2D GetTexture()

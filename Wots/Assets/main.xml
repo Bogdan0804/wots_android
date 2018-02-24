@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<world tileWidth="96" tileHeight="96" width="10" height="10">
+<world tileWidth="96" tileHeight="96" width="10" height="10" backdrop="art/BG">
   <tile collidable="True">
     <position>
       <x>0</x>
@@ -171,22 +171,6 @@
   <tile collidable="True">
     <position>
       <x>28</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>29</x>
-      <y>3</y>
-    </position>
-    <state>none</state>
-    <texture>grass_1</texture>
-  </tile>
-  <tile collidable="True">
-    <position>
-      <x>30</x>
       <y>3</y>
     </position>
     <state>none</state>
@@ -439,54 +423,6 @@
     </position>
     <state>none</state>
     <texture>cobble_1</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>41</x>
-      <y>12</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>42</x>
-      <y>13</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>43</x>
-      <y>14</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>44</x>
-      <y>15</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>45</x>
-      <y>16</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
-  </tile>
-  <tile collidable="False">
-    <position>
-      <x>46</x>
-      <y>17</y>
-    </position>
-    <state>staires</state>
-    <texture>staires</texture>
   </tile>
   <tile collidable="True">
     <position>
@@ -1550,6 +1486,486 @@
       <y>2</y>
     </position>
     <state>go:tree</state>
+    <texture>grass</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>24</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>24</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>24</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>26</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>27</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>25</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>28</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>29</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>30</x>
+      <y>-2</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>30</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>30</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>29</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>28</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>28</x>
+      <y>-4</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>27</x>
+      <y>-4</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>27</x>
+      <y>-5</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>27</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>26</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>26</x>
+      <y>-4</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>25</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>wood_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>24</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>staires_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>25</x>
+      <y>-4</y>
+    </position>
+    <state>none</state>
+    <texture>staires_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>26</x>
+      <y>-5</y>
+    </position>
+    <state>none</state>
+    <texture>staires_1</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>30</x>
+      <y>-3</y>
+    </position>
+    <state>none</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>29</x>
+      <y>-4</y>
+    </position>
+    <state>none</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>28</x>
+      <y>-5</y>
+    </position>
+    <state>none</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>46</x>
+      <y>17</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>45</x>
+      <y>16</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>44</x>
+      <y>15</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>43</x>
+      <y>14</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>42</x>
+      <y>13</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>41</x>
+      <y>12</y>
+    </position>
+    <state>stairesLeft</state>
+    <texture>staires_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>25</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>25</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>26</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>26</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>26</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>27</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>27</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>27</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>27</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>26</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>25</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>25</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>24</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>24</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>28</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>28</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>29</x>
+      <y>-1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>30</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>29</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>29</x>
+      <y>0</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>28</x>
+      <y>1</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>28</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>29</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="False">
+    <position>
+      <x>30</x>
+      <y>2</y>
+    </position>
+    <state>none</state>
+    <texture>wall_wood_0</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>29</x>
+      <y>3</y>
+    </position>
+    <state>none</state>
+    <texture>grass_9</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>30</x>
+      <y>3</y>
+    </position>
+    <state>none</state>
+    <texture>grass_9</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>10</x>
+      <y>2</y>
+    </position>
+    <state>entity:woodwatcher0</state>
+    <texture>grass</texture>
+  </tile>
+  <tile collidable="True">
+    <position>
+      <x>7</x>
+      <y>2</y>
+    </position>
+    <state>entity:slime0</state>
     <texture>grass</texture>
   </tile>
 </world>

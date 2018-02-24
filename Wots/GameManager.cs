@@ -86,6 +86,8 @@ namespace Wots
             GameScreen.LoadContent(content);
             PauseScreen.LoadContent(content);
         }
+        
+
         public void Update(GameTime gameTime)
         {
             UniversalInputManager.Manager.Update(gameTime);

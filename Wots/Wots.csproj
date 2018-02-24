@@ -75,6 +75,7 @@
     <Compile Include="BoundingBox.cs" />
     <Compile Include="Entities\AI.cs" />
     <Compile Include="Entities\GameObject.cs" />
+    <Compile Include="Entities\WoodWatcherAI.cs" />
     <Compile Include="Entities\SlimeAI.cs" />
     <Compile Include="Entities\TreeGO.cs" />
     <Compile Include="Extentions.cs" />

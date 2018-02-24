@@ -66,7 +66,6 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/toggleButton_1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dpad_key_right.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/pause.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/staires.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/dpad_key_up.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/weapons/wooden_sword1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/weapons/wooden_sword2.png</File>
@@ -90,5 +89,15 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/tree_1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/BG.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/luna_soil_1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/BG_dark.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/staires_0.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/staires_1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/walls/wall_wood_0.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_left1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_left2.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_left3.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right2.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right3.png</File>
   </SourceFiles>
 </SourceFileCollection>

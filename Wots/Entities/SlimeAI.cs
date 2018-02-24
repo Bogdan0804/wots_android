@@ -21,8 +21,8 @@ namespace Wots.Entities
         Physics coli = new Physics();
         private bool useGravity = true;
 
-        public SlimeAI()
-            : base(new Vector2(64), new Vector2(96 * 5, 96 * 2))
+        public SlimeAI(Vector2 pos)
+            : base(new Vector2(64), pos)
         {
             Sprite.Animations.Add("jump", new Animation(
                 new Frame(AssetManager.GetTexture("slime1"))
@@ -111,19 +111,19 @@ namespace Wots.Entities
             Sprite.Update(gameTime);
         }
         double timer = 0;
-        public override void Damage(int damage)
+        public override void Damage(int damage, Vector2 gestureDelta)
         {
             this.Health -= damage;
 
             GameScreen.Stats.EXPValue += 5;
-            if (Player.FacingDirection == Player.Direction.Left)
+            if (gestureDelta.X < 0)
             {
                 if (canUp)
                     this.Sprite.Position.Y -= 100;
                 if (canLeft)
                     this.Sprite.Position.X += 100;
             }
-            else if (Player.FacingDirection == Player.Direction.Right)
+            else if (gestureDelta.X <= 0)
             {
                 if (canUp)
                     this.Sprite.Position.Y -= 100;

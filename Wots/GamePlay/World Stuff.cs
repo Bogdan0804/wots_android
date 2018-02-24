@@ -87,7 +87,6 @@ namespace Wots.GamePlay
 
             LoadWorld("main");
 
-            World.Worlds[World.WorldName].Entities.Add(new SlimeAI());
         }
         public static int RoundNum(int num)
         {
@@ -96,6 +95,7 @@ namespace Wots.GamePlay
         }
 
         public static Bag<GameObject> GOQue = new Bag<GameObject>();
+        public static Bag<AI> EQue = new Bag<AI>();
 
         public static void LoadWorld(string name, bool load = true)
         {
@@ -104,6 +104,15 @@ namespace Wots.GamePlay
             if (Worlds.ContainsKey(name))
             {
                 WorldName = name;
+                XmlDocument docl = new XmlDocument();
+
+                string xmll = "";
+                using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open($"{name}.xml")))
+                {
+                    xmll = sr.ReadToEnd();
+                }
+
+                GameScreen.BackdropName = docl["world"].Attributes["backdrop"].InnerText;
                 return;
             }
 
@@ -128,6 +137,7 @@ namespace Wots.GamePlay
 
             blackWorld.X = float.Parse(doc["world"].Attributes["width"].InnerText) * 96;
             blackWorld.Y = float.Parse(doc["world"].Attributes["height"].InnerText) * 96;
+            GameScreen.BackdropName = doc["world"].Attributes["backdrop"].InnerText;
 
             foreach (XmlNode node in doc["world"].ChildNodes)
             {
@@ -162,6 +172,8 @@ namespace Wots.GamePlay
 
             Worlds.Add(name, p);
             Worlds[WorldName].GameObjects.AddRange(GOQue);
+            Worlds[WorldName].Entities.AddRange(EQue);
+            EQue.Clear();
             GOQue.Clear();
             hasWorld = true;
         }
@@ -188,13 +200,24 @@ namespace Wots.GamePlay
                     return false;
                 });
             }
-            else if (t.State.ToLower() == "staires")
+            else if (t.State.ToLower() == "stairesleft")
             {
                 t.Prefs.usePrefLeft = true;
                 t.Collidable = false;
                 t.Prefs.OnLeft = new Func<Player, bool>((p) =>
                 {
                     p.PlayerSprite.Position.X -= 96;
+                    p.PlayerSprite.Position.Y -= 96;
+                    return true;
+                });
+            }
+            else if (t.State.ToLower() == "stairesright")
+            {
+                t.Prefs.usePrefRight = true;
+                t.Collidable = false;
+                t.Prefs.OnRight = new Func<Player, bool>((p) =>
+                {
+                    p.PlayerSprite.Position.X += 96;
                     p.PlayerSprite.Position.Y -= 96;
                     return true;
                 });
@@ -217,6 +240,20 @@ namespace Wots.GamePlay
                     {
                         Position = t.Position
                     });
+                }
+
+                t = null;
+            }
+            else if (t.State.ToLower().StartsWith("entity:"))
+            {
+                string type = t.State.Split(':')[1];
+                if (type == "woodwatcher0")
+                {
+                    EQue.Add(new WoodWatcherAI(t.Position));
+                }
+                else if (type == "slime0")
+                {
+                    EQue.Add(new SlimeAI(t.Position));
                 }
 
                 t = null;
