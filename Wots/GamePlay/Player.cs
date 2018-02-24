@@ -90,9 +90,41 @@ namespace Wots.GamePlay
             // Register our teleport events
             RegisterTileEvent("door", s =>
             {
+                string worldName = s.Split(',')[0];
+
+
+                World.LoadWorld(worldName);
+
                 try
                 {
-                    World.LoadWorld(s);
+                    string pos = s.Split(',')[1];
+                    if (FacingDirection == Direction.Left)
+                        GameScreen.Player.PlayerSprite.Position = new Vector2((int.Parse(pos.Split('.')[0]) * 96) + 10, int.Parse(pos.Split('.')[1]) * 96);
+                    else if (FacingDirection == Direction.Right)
+                        GameScreen.Player.PlayerSprite.Position = new Vector2((int.Parse(pos.Split('.')[0]) * 96) - 10, int.Parse(pos.Split('.')[1]) * 96);
+                }
+                catch
+                {
+                    if (FacingDirection == Direction.Left)
+                    {
+                        World.Worlds[World.WorldName].Position = GameScreen.Player.PlayerSprite.Position - new Vector2(10, 0);
+                    }
+                    else if (FacingDirection == Direction.Right)
+                    {
+                        World.Worlds[World.WorldName].Position = GameScreen.Player.PlayerSprite.Position + new Vector2(10, 0);
+                    }
+                    GameScreen.Player.PlayerSprite.Position = World.Worlds[World.WorldName].Position;
+                }
+                return true;
+
+            });
+            RegisterTileEvent("tp", s =>
+            {
+                try
+                {
+                    int x = int.Parse(s.Split(',')[0]);
+                    int y = int.Parse(s.Split(',')[1]);
+                    PlayerSprite.Position = new Vector2(x * 96, y * 96);
                     return true;
                 }
                 catch { return false; }

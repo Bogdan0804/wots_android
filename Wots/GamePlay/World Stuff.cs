@@ -66,6 +66,7 @@ namespace Wots.GamePlay
         public Bag<Tile> Tiles = new Bag<Tile>();
         public Bag<AI> Entities = new Bag<AI>();
         public Bag<GameObject> GameObjects = new Bag<GameObject>();
+        public Vector2 Position;
     }
 
     public static class World
@@ -94,13 +95,12 @@ namespace Wots.GamePlay
             return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
         }
 
+        public static Dictionary<string, Vector2> Spawns = new Dictionary<string, Vector2>();
         public static Bag<GameObject> GOQue = new Bag<GameObject>();
         public static Bag<AI> EQue = new Bag<AI>();
-
+        public static Vector2 TempSpawn;
         public static void LoadWorld(string name, bool load = true)
         {
-            GameScreen.Player.PlayerSprite.Position = Vector2.Zero;
-
             if (Worlds.ContainsKey(name))
             {
                 WorldName = name;
@@ -111,8 +111,15 @@ namespace Wots.GamePlay
                 {
                     xmll = sr.ReadToEnd();
                 }
+                try
+                {
+                    GameScreen.BackdropName = docl["world"].Attributes["backdrop"].InnerText;
+                }
+                catch
+                {
 
-                GameScreen.BackdropName = docl["world"].Attributes["backdrop"].InnerText;
+                    GameScreen.BackdropName = "art/BG";
+                }
                 return;
             }
 
@@ -169,13 +176,15 @@ namespace Wots.GamePlay
             WorldPrefs p = new WorldPrefs();
             p.Floor = Floor;
             p.Tiles = Tiles;
-
+            p.Position = TempSpawn;
             Worlds.Add(name, p);
             Worlds[WorldName].GameObjects.AddRange(GOQue);
             Worlds[WorldName].Entities.AddRange(EQue);
             EQue.Clear();
             GOQue.Clear();
             hasWorld = true;
+            Spawns.Add(WorldName, TempSpawn);
+            //GameScreen.Player.PlayerSprite.Position = TempSpawn;
         }
 
         private static Tile ProcessPrefs(Tile t)
@@ -256,6 +265,12 @@ namespace Wots.GamePlay
                     EQue.Add(new SlimeAI(t.Position));
                 }
 
+                t = null;
+            }
+            else if (t.State.ToLower() == "spawn")
+            {
+                TempSpawn = t.Position;
+                GameScreen.Player.PlayerSprite.Position = t.Position;
                 t = null;
             }
 
