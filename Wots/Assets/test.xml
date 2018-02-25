@@ -440,4 +440,12 @@
     <state>door:main</state>
     <texture>water_1</texture>
   </tile>
+  <tile collidable="True">
+    <position>
+      <x>0</x>
+      <y>8</y>
+    </position>
+    <state>spawn</state>
+    <texture>grass</texture>
+  </tile>
 </world>

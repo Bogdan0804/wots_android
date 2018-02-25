@@ -57,20 +57,20 @@ namespace Wots.Entities
             canLeft = coli.CanLeft;
             canRight = coli.CanRight;
             bool changeAnimation = true;
-            
+
 
             if (this.Sprite.Position.X > GameScreen.Player.PlayerSprite.Position.X
                 && canLeft)
             {
-            //    if (changeAnimation)
-                    this.Sprite.CurrentAnimation = "moveLeft";
+                //    if (changeAnimation)
+                this.Sprite.CurrentAnimation = "moveLeft";
                 this.Sprite.Position.X -= 1;
             }
             else if (this.Sprite.Position.X < GameScreen.Player.PlayerSprite.Position.X
             && canRight)
             {
-              //  if (changeAnimation)
-                    this.Sprite.CurrentAnimation = "moveRight";
+                //  if (changeAnimation)
+                this.Sprite.CurrentAnimation = "moveRight";
                 this.Sprite.Position.X += 1;
             }
             // Code for jumping

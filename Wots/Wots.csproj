@@ -91,6 +91,12 @@
     <Compile Include="GamePlay\PauseScreen.cs" />
     <Compile Include="GamePlay\Physics.cs" />
     <Compile Include="GamePlay\Player.cs" />
+    <Compile Include="GamePlay\Tiles\Air.cs" />
+    <Compile Include="GamePlay\Tiles\Cobble.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GamePlay\Tiles\Grass.cs" />
+    <Compile Include="GamePlay\Tiles\Tile.cs" />
     <Compile Include="GamePlay\World Stuff.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,7 +151,9 @@
     </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\main.xml" />
+    <AndroidAsset Include="Assets\main.xml">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\test.xml" />

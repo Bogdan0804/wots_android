@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Wots.UI;
 using Wots;
+using Wots.GamePlay.Tiles;
 
 namespace Wots.GamePlay
 {

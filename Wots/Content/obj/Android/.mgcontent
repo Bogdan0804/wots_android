@@ -77,8 +77,6 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/slime/slime2.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/gameui/bars.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/open_crate.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/door1.png</File>
-    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/door2.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/grass_6.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/grass_7.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/grass_8.png</File>
@@ -99,5 +97,7 @@
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right1.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right2.png</File>
     <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/mobs/monsters/woodwatcher/woodwatcher_right3.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/door_1.png</File>
+    <File>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/door_2.png</File>
   </SourceFiles>
 </SourceFileCollection>

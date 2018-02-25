@@ -177,13 +177,13 @@
   </object>
   <object xnb="false">
     <type>Texture</type>
-    <file>art/door1.png</file>
-    <name>door0</name>
+    <file>art/door_1.png</file>
+    <name>door_0</name>
   </object>
   <object xnb="false">
     <type>Texture</type>
-    <file>art/door2.png</file>
-    <name>door1</name>
+    <file>art/door_2.png</file>
+    <name>door_1</name>
   </object>
   <object xnb="false">
     <type>Texture</type>

@@ -8,58 +8,10 @@ using System.Collections.Generic;
 using Wots.UI;
 using Wots.Entities;
 using Microsoft.Xna.Framework.Input.Touch;
+using Wots.GamePlay.Tiles;
 
 namespace Wots.GamePlay
 {
-    public class Prefs
-    {
-        public Func<Player, bool> OnJump;
-        public Func<Player, bool> OnUp;
-        public Func<Player, bool> OnDown;
-        public Func<Player, bool> OnLeft;
-        public Func<Player, bool> OnRight;
-        public Func<Player, bool> OnClick;
-
-        public bool usePrefJump = false;
-        public bool usePrefUp = false;
-        public bool usePrefDown = false;
-        public bool usePrefLeft = false;
-        public bool usePrefRight = false;
-        public bool usePrefClick = false;
-    }
-
-    public class Tile
-    {
-        public Prefs Prefs = new Prefs();
-        public Vector2 Position { get; set; }
-        public string Texture { get; set; }
-        public Color Color { get; set; }
-        public float Rotation = 0;
-        public string State { get; set; }
-        public bool Collidable = true;
-
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                return new Rectangle((int)Position.X - 5, (int)Position.Y - 5, 101, 101);
-            }
-        }
-        public Rectangle ColitionBox
-        {
-            get
-            {
-                return new Rectangle(RoundNum((int)Position.X), RoundNum((int)Position.Y), 96, 96);
-            }
-        }
-
-        private int RoundNum(int num)
-        {
-            int rem = num % 96;
-            return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
-        }
-    }
-
     public class WorldPrefs
     {
         public Bag<Tile> Floor = new Bag<Tile>();
@@ -128,6 +80,7 @@ namespace Wots.GamePlay
 
             var Floor = new Bag<Tile>();
             var Tiles = new Bag<Tile>();
+            WorldPrefs p = new WorldPrefs();
 
             XmlDocument doc = new XmlDocument();
 
@@ -138,55 +91,51 @@ namespace Wots.GamePlay
             }
 
             doc.LoadXml(xml);
-
-            TileWidth = int.Parse(doc["world"].Attributes["tileWidth"].InnerText);
-            TileHeight = int.Parse(doc["world"].Attributes["tileHeight"].InnerText);
-
-            blackWorld.X = float.Parse(doc["world"].Attributes["width"].InnerText) * 96;
-            blackWorld.Y = float.Parse(doc["world"].Attributes["height"].InnerText) * 96;
             GameScreen.BackdropName = doc["world"].Attributes["backdrop"].InnerText;
-
-            foreach (XmlNode node in doc["world"].ChildNodes)
             {
-                Tile t = new Tile();
+                int spawnX = int.Parse(doc["world"]["prefs"]["spawn"]["x"].InnerText) * 96;
+                int spawnY = int.Parse(doc["world"]["prefs"]["spawn"]["y"].InnerText) * 96;
+                p.Position = new Vector2(spawnX, spawnY);
+                GameScreen.Player.PlayerSprite.Position = p.Position;
+                Spawns.Add(WorldName, p.Position);
+            }
+            foreach (XmlNode tile in doc["world"]["tiles"])
+            {
+                Tile t = default(Tile);
 
-                // The state
-                t.State = (node["state"].InnerText);
+                string type    = tile["type"].InnerText.ToLower();
+                string state   = tile["state"].InnerText;
+                string texture = tile["texture"].InnerText;
 
-                // The position
-                t.Position = new Vector2(
-                    float.Parse(node["position"]["x"].InnerText) * 96,
-                    float.Parse(node["position"]["y"].InnerText) * 96
-                );
-                t.Color = Color.White;
-                t.Texture = node["texture"].InnerText;
-                t.Collidable = bool.Parse(node.Attributes["collidable"].InnerText);
-                t = ProcessPrefs(t);
+                int x = int.Parse(tile["position"]["x"].InnerText) * 96;
+                int y = int.Parse(tile["position"]["y"].InnerText) * 96;
 
-                if (t == null)
-                    continue;
-
-                if (t.Collidable == false && t.State.ToLower() == "none")
-                    Floor.Add(t);
-
-                else
-                    Tiles.Add(t);
+                switch (type)
+                {
+                    case "grass":
+                        t = new Grass();
+                        break;
+                    case "cobble":
+                        t = new Cobble();
+                        break;
+                }
+                t.Texture = texture;
+                t.Initialize( new Vector2(x, y), state);
+                Tiles.Add(t);
             }
 
-            WorldPrefs p = new WorldPrefs();
             p.Floor = Floor;
             p.Tiles = Tiles;
-            p.Position = TempSpawn;
+            p.GameObjects.AddRange(GOQue);
+            p.Entities.AddRange(EQue);
             Worlds.Add(name, p);
-            Worlds[WorldName].GameObjects.AddRange(GOQue);
-            Worlds[WorldName].Entities.AddRange(EQue);
+
             EQue.Clear();
             GOQue.Clear();
-            hasWorld = true;
-            Spawns.Add(WorldName, TempSpawn);
-            //GameScreen.Player.PlayerSprite.Position = TempSpawn;
-        }
 
+            hasWorld = true;
+        }
+        /*
         private static Tile ProcessPrefs(Tile t)
         {
             if (t.State.ToLower() == "fast4")
@@ -276,7 +225,7 @@ namespace Wots.GamePlay
 
             return t;
         }
-
+        */
         public static void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
             //if (gesture.GestureType == GestureType.Tap)
@@ -308,8 +257,8 @@ namespace Wots.GamePlay
                 var origin = new Vector2(96);
                 // Draw the tile
                 var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
-                if (item.ColitionBox.Intersects(rect))
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
+                if (item.BoundingBox.Intersects(rect))
+                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
             }
             // Loop throug them
             for (int i = 0; i < Tiles.Count; i++)
@@ -319,8 +268,8 @@ namespace Wots.GamePlay
                 // The center of the tile (32, 32)
                 var origin = new Vector2(96);
                 var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
-                if (item.ColitionBox.Intersects(rect))
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
+                if (item.BoundingBox.Intersects(rect))
+                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
             }
 
             if (!GameManager.Game.Paused)
@@ -347,7 +296,7 @@ namespace Wots.GamePlay
         public static Tuple<bool, Tile> isSpaceOpen(Vector2 pos, SpriteBatch s, Vector2 size)
         {
             if (!hasWorld)
-                return new Tuple<bool, Tile>(false, new Tile());
+                return new Tuple<bool, Tile>(false, new Air());
 
             var Floor = Worlds[WorldName].Floor;
             var Tiles = Worlds[WorldName].Tiles;
@@ -355,10 +304,10 @@ namespace Wots.GamePlay
             Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
             bool isOpen = true;
             s?.Draw(black, rect, Color.Red);
-            Tile t = new Tile();
+            Tile t = new Air();
             for (int i = 0; i < Tiles.Count; i++)
             {
-                if (Tiles[i].ColitionBox.Intersects(rect))
+                if (Tiles[i].BoundingBox.Intersects(rect))
                 {
                     t = Tiles[i];
                     if (Tiles[i].Collidable)
