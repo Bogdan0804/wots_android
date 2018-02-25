@@ -14,9 +14,9 @@ namespace Wots.GamePlay
 {
     public class WorldPrefs
     {
-        public Bag<Tile> Floor = new Bag<Tile>();
         public Bag<Tile> Tiles = new Bag<Tile>();
         public Bag<AI> Entities = new Bag<AI>();
+        public string Background;
         public Bag<GameObject> GameObjects = new Bag<GameObject>();
         public Vector2 Position;
     }
@@ -46,8 +46,7 @@ namespace Wots.GamePlay
             int rem = num % 96;
             return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
         }
-
-        public static Dictionary<string, Vector2> Spawns = new Dictionary<string, Vector2>();
+        
         public static Bag<GameObject> GOQue = new Bag<GameObject>();
         public static Bag<AI> EQue = new Bag<AI>();
         public static Vector2 TempSpawn;
@@ -56,29 +55,11 @@ namespace Wots.GamePlay
             if (Worlds.ContainsKey(name))
             {
                 WorldName = name;
-                XmlDocument docl = new XmlDocument();
-
-                string xmll = "";
-                using (StreamReader sr = new StreamReader(Activity1.ASSETS.Open($"{name}.xml")))
-                {
-                    xmll = sr.ReadToEnd();
-                }
-                try
-                {
-                    GameScreen.BackdropName = docl["world"].Attributes["backdrop"].InnerText;
-                }
-                catch
-                {
-
-                    GameScreen.BackdropName = "art/BG";
-                }
+                GameScreen.BackdropName = Worlds[WorldName].Background;
                 return;
             }
 
-            if (load == true)
-                WorldName = name;
-
-            var Floor = new Bag<Tile>();
+            
             var Tiles = new Bag<Tile>();
             WorldPrefs p = new WorldPrefs();
 
@@ -91,20 +72,19 @@ namespace Wots.GamePlay
             }
 
             doc.LoadXml(xml);
-            GameScreen.BackdropName = doc["world"].Attributes["backdrop"].InnerText;
+            p.Background = doc["world"].Attributes["backdrop"].InnerText;
             {
                 int spawnX = int.Parse(doc["world"]["prefs"]["spawn"]["x"].InnerText) * 96;
                 int spawnY = int.Parse(doc["world"]["prefs"]["spawn"]["y"].InnerText) * 96;
                 p.Position = new Vector2(spawnX, spawnY);
                 GameScreen.Player.PlayerSprite.Position = p.Position;
-                Spawns.Add(WorldName, p.Position);
             }
             foreach (XmlNode tile in doc["world"]["tiles"])
             {
                 Tile t = default(Tile);
 
-                string type    = tile["type"].InnerText.ToLower();
-                string state   = tile["state"].InnerText;
+                string type = tile["type"].InnerText.ToLower();
+                string state = tile["state"].InnerText;
                 string texture = tile["texture"].InnerText;
 
                 int x = int.Parse(tile["position"]["x"].InnerText) * 96;
@@ -118,22 +98,90 @@ namespace Wots.GamePlay
                     case "cobble":
                         t = new Cobble();
                         break;
+                    case "water":
+                        t = new Water();
+                        break;
+                    case "door":
+                        t = new Door();
+                        break;
+                    case "ladder":
+                        t = new Ladder();
+                        break;
+                    case "bush":
+                        t = new Bush();
+                        break;
+                    case "luna":
+                        t = new LunaSoil();
+                        break;
+                    case "wall":
+                        t = new Wall();
+                        break;
+                    case "wood":
+                        t = new Wood();
+                        break;
                 }
                 t.Texture = texture;
-                t.Initialize( new Vector2(x, y), state);
+                t.Type = type;
+                t.Initialize(new Vector2(x, y), state);
                 Tiles.Add(t);
             }
+            foreach (XmlNode tile in doc["world"]["entitys"])
+            {
+                AI ai = default(AI);
 
-            p.Floor = Floor;
+                string type = tile["type"].InnerText;
+                int x = int.Parse(tile["position"]["x"].InnerText);
+                int y = int.Parse(tile["position"]["y"].InnerText);
+                Vector2 pos = new Vector2(x, y);
+                switch (type)
+                {
+                    case "woodwatcher":
+                        ai = new WoodWatcherAI(pos);
+                    break;
+                    case "slime":
+                        ai = new SlimeAI(pos);
+                        break;
+
+                    default:
+                        break;
+                }
+                if (ai != default(AI))
+                    EQue.Add(ai);
+            }
+            foreach (XmlNode tile in doc["world"]["objects"])
+            {
+                string type = tile["type"].InnerText;
+                int x = int.Parse(tile["position"]["x"].InnerText);
+                int y = int.Parse(tile["position"]["y"].InnerText);
+
+                Vector2 pos = new Vector2(x, y);
+                GameObject go = default(GameObject);
+                switch (type)
+                {
+                    case "tree":
+                        go = new TreeGO() { Position  = pos };
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (go != default(GameObject))
+                    GOQue.Add(go);
+            }
+
             p.Tiles = Tiles;
             p.GameObjects.AddRange(GOQue);
             p.Entities.AddRange(EQue);
+            GameScreen.BackdropName = p.Background;
             Worlds.Add(name, p);
 
             EQue.Clear();
             GOQue.Clear();
 
             hasWorld = true;
+            if (load == true)
+                WorldName = name;
         }
         /*
         private static Tile ProcessPrefs(Tile t)
@@ -242,24 +290,11 @@ namespace Wots.GamePlay
 
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            var Floor = Worlds[WorldName].Floor;
             var Tiles = Worlds[WorldName].Tiles;
 
             if (GameManager.DEBUG)
                 spriteBatch.Draw(black, new Rectangle(0, 0, (int)blackWorld.X, (int)blackWorld.Y), Color.Black * 0.1f);
-
-            // Loop throug them
-            for (int i = 0; i < Floor.Count; i++)
-            {
-                // Get the tile are are current on
-                Tile item = Floor[i];
-                // The center of the tile (32, 32)
-                var origin = new Vector2(96);
-                // Draw the tile
-                var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
-                if (item.BoundingBox.Intersects(rect))
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
-            }
+            
             // Loop throug them
             for (int i = 0; i < Tiles.Count; i++)
             {
@@ -269,7 +304,7 @@ namespace Wots.GamePlay
                 var origin = new Vector2(96);
                 var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
                 if (item.BoundingBox.Intersects(rect))
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Texture), new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
+                    spriteBatch.Draw(AssetManager.Textures[item.Texture], new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
             }
 
             if (!GameManager.Game.Paused)
@@ -297,8 +332,7 @@ namespace Wots.GamePlay
         {
             if (!hasWorld)
                 return new Tuple<bool, Tile>(false, new Air());
-
-            var Floor = Worlds[WorldName].Floor;
+            
             var Tiles = Worlds[WorldName].Tiles;
 
             Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);

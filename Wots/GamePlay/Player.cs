@@ -86,50 +86,6 @@ namespace Wots.GamePlay
             HealthBar = new Bar(new Vector2(10, 10));
 
             this.TargetForShaders = new RenderTarget2D(GameManager.Game.Graphics.GraphicsDevice, (int)this.PlayerSprite.Size.X, (int)this.PlayerSprite.Size.Y);
-
-
-            // Register our teleport events
-            RegisterTileEvent("door", s =>
-            {
-                string worldName = s.Split(',')[0];
-
-
-                World.LoadWorld(worldName);
-
-                try
-                {
-                    string pos = s.Split(',')[1];
-                    if (FacingDirection == Direction.Left)
-                        GameScreen.Player.PlayerSprite.Position = new Vector2((int.Parse(pos.Split('.')[0]) * 96) + 10, int.Parse(pos.Split('.')[1]) * 96);
-                    else if (FacingDirection == Direction.Right)
-                        GameScreen.Player.PlayerSprite.Position = new Vector2((int.Parse(pos.Split('.')[0]) * 96) - 10, int.Parse(pos.Split('.')[1]) * 96);
-                }
-                catch
-                {
-                    if (FacingDirection == Direction.Left)
-                    {
-                        World.Worlds[World.WorldName].Position = GameScreen.Player.PlayerSprite.Position - new Vector2(10, 0);
-                    }
-                    else if (FacingDirection == Direction.Right)
-                    {
-                        World.Worlds[World.WorldName].Position = GameScreen.Player.PlayerSprite.Position + new Vector2(10, 0);
-                    }
-                    GameScreen.Player.PlayerSprite.Position = World.Worlds[World.WorldName].Position;
-                }
-                return true;
-
-            });
-            RegisterTileEvent("tp", s =>
-            {
-                try
-                {
-                    int x = int.Parse(s.Split(',')[0]);
-                    int y = int.Parse(s.Split(',')[1]);
-                    PlayerSprite.Position = new Vector2(x * 96, y * 96);
-                    return true;
-                }
-                catch { return false; }
-            });
         }
         #region Load content
         /// <summary>
@@ -311,17 +267,28 @@ namespace Wots.GamePlay
                 // Check if we pressed jump key and if we can jump
                 if (UniversalInputManager.Manager.GetAxis("Vertical") == 1 && !canDown && canUp)
                 {
-                    if (Collitions.Left.Point2.Item2.State != "water" || Collitions.Right.Point2.Item2.State != "water")
+                    jumpBuildTime = 0;
+                    if (FacingDirection == Direction.Left)
+                    {
                         if (Collitions.Up.Point1.Item2.Prefs.usePrefJump)
                         {
                             jumping = Collitions.Up.Point1.Item2.Prefs.OnJump(this);
+
                         }
-                        else
+                        else jumping = true;
+                    }
+                    else if (FacingDirection == Direction.Right)
+                    {
+                        if (Collitions.Up.Point2.Item2.Prefs.usePrefJump)
                         {
-                            jumping = true;
+                            jumping = Collitions.Up.Point2.Item2.Prefs.OnJump(this);
+
                         }
-                    jumpBuildTime = 0;
+                        else jumping = true;
+                    }
                 }
+
+                bool oldGravity = useGravity;
                 // Code for jumping
                 if (jumping && jumpBuildTime < 0.25)
                 {
@@ -332,63 +299,43 @@ namespace Wots.GamePlay
                 }
                 else
                 {
-                    useGravity = true;
+                    useGravity = !jumping;
                     jumping = false;
                 }
 
-
-                bool oldGravityState = useGravity;
-
-                try
+                if (UniversalInputManager.Manager.GetAxis("Vertical") == 1)
                 {
-                    if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "fast4"))
+                    if (canDown)
                     {
-                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
-                        useGravity = false;
-                    }
-                    else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "fast4" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
-                    {
-                        useGravity = false;
-                        jumpBuildTime = 0;
-                        jumping = true;
-                    }
-                    else if ((UniversalInputManager.Manager.GetAxis("Vertical") == 1 && canUp && Collitions.Up.Point1.Item2.State == "water"))
-                    {
-                        this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
-                        useGravity = false;
+                        if (FacingDirection == Direction.Left)
+                        {
+                            if (Collitions.Down.Point1.Item2.Prefs.usePrefUp)
+                                useGravity = Collitions.Down.Point1.Item2.Prefs.OnUp(this);
+                        }
+                        else if (FacingDirection == Direction.Right)
+                        {
+                            if (Collitions.Down.Point2.Item2.Prefs.usePrefUp)
+                                useGravity = Collitions.Down.Point2.Item2.Prefs.OnUp(this);
+                        }
                     }
                     else
                     {
-                        useGravity = oldGravityState;
+                        if (FacingDirection == Direction.Left)
+                        {
+                            if (Collitions.Up.Point1.Item2.Prefs.usePrefUp)
+                                useGravity = Collitions.Up.Point1.Item2.Prefs.OnUp(this);
+                        }
+                        else if (FacingDirection == Direction.Right)
+                        {
+                            if (Collitions.Up.Point2.Item2.Prefs.usePrefUp)
+                                useGravity = Collitions.Up.Point2.Item2.Prefs.OnUp(this);
+                        }
                     }
                 }
-                catch { }
-                //
-                //{
-                //    
-                //}
-                //else if (Collitions.Up.Point1.Item1 && Collitions.Down.Point1.Item2.State == "water" && canUp && UniversalInputManager.Manager.GetAxis("Vertical") == 1)
-                //{
-                //    this.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 3f;
-                //    useGravity = false;
-                //}
-                //else
-                //{
-                //    useGravity = oldGravityState;
-                //}
+               
 
 
-                if (Collitions.Down != null)
-                    if (Collitions.Down.Point1.Item2.State == "fast4")
-                        GravitySpeed = 5.0f;
-                    else
-                        GravitySpeed = 10.0f;
-
-                if (Collitions.Right != null && Collitions.Right.Point1.Item2.State != null)
-                    CheckLRColliton(Collitions.Right.Point1.Item2.State);
-                else
-                if (Collitions.Left != null && Collitions.Left.Point1.Item2.State != null)
-                    CheckLRColliton(Collitions.Left.Point1.Item2.State);
+                GravitySpeed = 10.0f;
 
 
                 // our psuedo gravity
@@ -417,18 +364,6 @@ namespace Wots.GamePlay
                 }
 
             }
-        }
-        public Dictionary<string, Func<string, bool>> TileFunctions = new Dictionary<string, Func<string, bool>>();
-
-        public void RegisterTileEvent(string name, Func<string, bool> function)
-        {
-            TileFunctions.Add(name, function);
-        }
-
-        private void CheckLRColliton(string state)
-        {
-            if (TileFunctions.ContainsKey(state.Split(':')[0]))
-                TileFunctions[state.Split(':')[0]](state.Split(':')[1]);
         }
 
     }

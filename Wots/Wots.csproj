@@ -92,11 +92,18 @@
     <Compile Include="GamePlay\Physics.cs" />
     <Compile Include="GamePlay\Player.cs" />
     <Compile Include="GamePlay\Tiles\Air.cs" />
+    <Compile Include="GamePlay\Tiles\Bush.cs" />
     <Compile Include="GamePlay\Tiles\Cobble.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GamePlay\Tiles\Door.cs" />
     <Compile Include="GamePlay\Tiles\Grass.cs" />
+    <Compile Include="GamePlay\Tiles\Ladder.cs" />
+    <Compile Include="GamePlay\Tiles\LunaSoil.cs" />
     <Compile Include="GamePlay\Tiles\Tile.cs" />
+    <Compile Include="GamePlay\Tiles\Wall.cs" />
+    <Compile Include="GamePlay\Tiles\Water.cs" />
+    <Compile Include="GamePlay\Tiles\Wood.cs" />
     <Compile Include="GamePlay\World Stuff.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

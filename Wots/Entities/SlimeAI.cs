@@ -109,13 +109,15 @@ namespace Wots.Entities
             }
 
             Sprite.Update(gameTime);
+            DrawHealth(sp);
         }
         double timer = 0;
         public override void Damage(int damage, Vector2 gestureDelta)
         {
-            this.Health -= damage;
+            this.Health -= damage * 2;
 
-            GameScreen.Stats.EXPValue += 5;
+            if (GameScreen.Stats.EXP.Value < 100)
+                GameScreen.Stats.EXP.Value++;
             if (gestureDelta.X < 0)
             {
                 if (canUp)

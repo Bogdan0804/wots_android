@@ -127,8 +127,13 @@
   </object>
   <object xnb="false">
     <type>Texture</type>
-    <file>art/staires.png</file>
-    <name>staires</name>
+    <file>art/staires_0.png</file>
+    <name>staires_0</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/staires_1.png</file>
+    <name>staires_1</name>
   </object>
   <object xnb="false">
     <type>Texture</type>
@@ -172,12 +177,17 @@
   </object>
   <object xnb="false">
     <type>Texture</type>
-    <file>art/door1.png</file>
-    <name>door0</name>
+    <file>art/door_1.png</file>
+    <name>door_1</name>
   </object>
   <object xnb="false">
     <type>Texture</type>
-    <file>art/door2.png</file>
-    <name>door1</name>
+    <file>art/door_2.png</file>
+    <name>door_2</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/walls/wall_wood_0.png</file>
+    <name>wall_wood_0</name>
   </object>
 </textures>

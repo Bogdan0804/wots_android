@@ -28,7 +28,6 @@ namespace Wots.Entities
             }
         }
         public Sprite Sprite { get; set; }
-
         public AI(Vector2 size, Vector2 position)
         {
             Sprite = new Sprite(size, position - size);

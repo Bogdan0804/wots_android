@@ -34,6 +34,7 @@ namespace Wots.GamePlay.Tiles
         public Prefs Prefs = new Prefs();
         public Vector2 Position { get; set; }
         public string Texture { get; set; }
+        public string Type { get; set; }
         public string State { get; set; }
         public bool Collidable { get; set; }
 

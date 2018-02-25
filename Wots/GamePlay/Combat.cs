@@ -33,8 +33,8 @@ namespace Wots.GamePlay
                 {
                     foreach (var entity in World.Worlds[World.WorldName].Entities)
                     {
-                        if (HitArea.Intersects(entity.HitBox))
-                            entity.Damage(10, gesture.Position - gesture.Position2);
+                        if (HitArea.Intersects(entity.Sprite.GetRectangle()))
+                            entity.Damage(2, gesture.Position - gesture.Position2);
                     }
                 }
 

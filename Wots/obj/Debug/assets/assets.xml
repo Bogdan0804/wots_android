@@ -178,12 +178,12 @@
   <object xnb="false">
     <type>Texture</type>
     <file>art/door_1.png</file>
-    <name>door_0</name>
+    <name>door_1</name>
   </object>
   <object xnb="false">
     <type>Texture</type>
     <file>art/door_2.png</file>
-    <name>door_1</name>
+    <name>door_2</name>
   </object>
   <object xnb="false">
     <type>Texture</type>

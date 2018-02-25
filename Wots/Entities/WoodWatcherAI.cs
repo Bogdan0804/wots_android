@@ -129,7 +129,9 @@ namespace Wots.Entities
         {
             this.Health -= damage;
 
-            GameScreen.Stats.EXPValue += 5;
+            if (GameScreen.Stats.EXP.Value < 100)
+                GameScreen.Stats.EXP.Value += 2;
+
             if (gestureDelta.X < 0)
             {
                 if (canUp)
