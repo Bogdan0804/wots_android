@@ -38,7 +38,7 @@ namespace Wots.GamePlay.Tiles
                     {
                         var door = (Door)tile;
                         if (door.d2 == id)
-                            GameScreen.Player.PlayerSprite.Position = door.Position + new Vector2(192, -30);
+                            GameScreen.Player.PlayerSprite.Position = door.Position + new Vector2(192, -96);
                     }
                 }
                 e.useGravity = true;
@@ -53,7 +53,7 @@ namespace Wots.GamePlay.Tiles
                     {
                         var door = (Door)tile;
                         if (door.d2 == id)
-                            GameScreen.Player.PlayerSprite.Position = door.Position + new Vector2(-192, -30);
+                            GameScreen.Player.PlayerSprite.Position = door.Position + new Vector2(-192, -96);
                     }
                 }
                 e.useGravity = true;

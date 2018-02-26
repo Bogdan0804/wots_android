@@ -332,11 +332,17 @@ namespace Wots.GamePlay
                         }
                     }
                 }
-               
+
 
 
                 GravitySpeed = 10.0f;
 
+                try
+                {
+                    if (Collitions.Down.Point1.Item2.Prefs.usePrefDown)
+                        Collitions.Down.Point1.Item2.Prefs.OnDown(this);
+                }
+                catch { };
 
                 // our psuedo gravity
                 if (useGravity && canDown)

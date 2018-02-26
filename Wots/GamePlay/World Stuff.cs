@@ -46,7 +46,7 @@ namespace Wots.GamePlay
             int rem = num % 96;
             return rem >= 96 / 2 ? (num - rem + 96) : (num - rem);
         }
-        
+
         public static Bag<GameObject> GOQue = new Bag<GameObject>();
         public static Bag<AI> EQue = new Bag<AI>();
         public static Vector2 TempSpawn;
@@ -59,7 +59,7 @@ namespace Wots.GamePlay
                 return;
             }
 
-            
+
             var Tiles = new Bag<Tile>();
             WorldPrefs p = new WorldPrefs();
 
@@ -132,12 +132,12 @@ namespace Wots.GamePlay
                 string type = tile["type"].InnerText;
                 int x = int.Parse(tile["position"]["x"].InnerText);
                 int y = int.Parse(tile["position"]["y"].InnerText);
-                Vector2 pos = new Vector2(x, y);
+                Vector2 pos = new Vector2(x * 96, y * 96);
                 switch (type)
                 {
                     case "woodwatcher":
                         ai = new WoodWatcherAI(pos);
-                    break;
+                        break;
                     case "slime":
                         ai = new SlimeAI(pos);
                         break;
@@ -154,12 +154,12 @@ namespace Wots.GamePlay
                 int x = int.Parse(tile["position"]["x"].InnerText);
                 int y = int.Parse(tile["position"]["y"].InnerText);
 
-                Vector2 pos = new Vector2(x, y);
+                Vector2 pos = new Vector2(x * 96, y * 96);
                 GameObject go = default(GameObject);
                 switch (type)
                 {
                     case "tree":
-                        go = new TreeGO() { Position  = pos };
+                        go = new TreeGO() { Position = pos };
                         break;
 
                     default:
@@ -294,7 +294,7 @@ namespace Wots.GamePlay
 
             if (GameManager.DEBUG)
                 spriteBatch.Draw(black, new Rectangle(0, 0, (int)blackWorld.X, (int)blackWorld.Y), Color.Black * 0.1f);
-            
+
             // Loop throug them
             for (int i = 0; i < Tiles.Count; i++)
             {
@@ -332,7 +332,7 @@ namespace Wots.GamePlay
         {
             if (!hasWorld)
                 return new Tuple<bool, Tile>(false, new Air());
-            
+
             var Tiles = Worlds[WorldName].Tiles;
 
             Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);

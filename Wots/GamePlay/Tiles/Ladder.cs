@@ -21,6 +21,11 @@ namespace Wots.GamePlay.Tiles
             this.Collidable = false;
             this.Prefs.usePrefUp = true;
             this.Prefs.usePrefJump = true;
+            this.Prefs.usePrefDown = true;
+            this.Prefs.OnDown += new Func<Player, bool>(e => {
+                e.GravitySpeed = 5f;
+                return true;
+            });
             this.Prefs.OnJump += new Func<Player, bool>(e => {
                 e.useGravity = false;
                 return false;

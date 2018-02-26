@@ -3,7 +3,7 @@
   <prefs>
     <spawn>
       <x>0</x>
-      <y>-2</y>
+      <y>-4</y>
     </spawn>
   </prefs>
   <tiles>
@@ -1047,7 +1047,7 @@
     <object>
       <position>
         <x>1</x>
-        <y>2</y>
+        <y>1</y>
       </position>
       <type>tree</type>
     </object>
