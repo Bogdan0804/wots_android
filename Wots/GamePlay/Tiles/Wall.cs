@@ -19,6 +19,7 @@ namespace Wots.GamePlay.Tiles
         {
             this.Position = position;
             this.Collidable = false;
+            Color = new Color(Color.White, 0.9f);
         }
     }
 }

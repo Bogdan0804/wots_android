@@ -721,24 +721,6 @@
     <tile>
       <position>
         <x>15</x>
-        <y>0</y>
-      </position>
-      <state>none</state>
-      <type>wall</type>
-      <texture>wall_wood_0</texture>
-    </tile>
-    <tile>
-      <position>
-        <x>15</x>
-        <y>0</y>
-      </position>
-      <state>none</state>
-      <type>wall</type>
-      <texture>wall_wood_0</texture>
-    </tile>
-    <tile>
-      <position>
-        <x>15</x>
         <y>-1</y>
       </position>
       <state>none</state>
@@ -1033,6 +1015,15 @@
       <type>wood</type>
       <texture>wood_1</texture>
     </tile>
+    <tile>
+      <position>
+        <x>15</x>
+        <y>0</y>
+      </position>
+      <state>none</state>
+      <type>wall</type>
+      <texture>wall_wood_0</texture>
+    </tile>
   </tiles>
   <entitys>
     <entity>
@@ -1041,6 +1032,17 @@
         <y>0</y>
       </position>
       <type>slime</type>
+      <data>
+      </data>
+    </entity>
+    <entity>
+      <position>
+        <x>5</x>
+        <y>1</y>
+      </position>
+      <type>npc</type>
+      <data>
+      </data>
     </entity>
   </entitys>
   <objects>

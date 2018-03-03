@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 using Wots.UI;
 
 namespace Wots.Entities
@@ -19,6 +20,7 @@ namespace Wots.Entities
     {
         private Bar healthBar;
         public int Health = 100;
+        public string Data;
 
         public Rectangle HitBox
         {
@@ -39,11 +41,14 @@ namespace Wots.Entities
 
         public abstract void Damage(int damage, Vector2 gestureDelta);
         public abstract void Update(GameTime gameTime, SpriteBatch sp);
+        public abstract void UpdateGestures(TouchCollection touches, GestureSample gestures);
+
         public void DrawHealth(SpriteBatch spriteBatch)
         {
             healthBar.Value = Health;
             healthBar.Position = Sprite.Position;
             healthBar.Draw(null, spriteBatch);
         }
+
     }
 }

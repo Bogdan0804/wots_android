@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input.Touch;
 using Wots.GamePlay;
 using Wots.UI;
 
@@ -132,6 +133,11 @@ namespace Wots.Entities
                 if (canRight)
                     this.Sprite.Position.X -= 100;
             }
+        }
+
+        public override void UpdateGestures(TouchCollection touches, GestureSample gestures)
+        {
+
         }
     }
 }

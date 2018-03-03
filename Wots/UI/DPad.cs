@@ -12,6 +12,7 @@ using Android.Widget;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+using SwordRush.Components;
 
 namespace Wots.UI
 {
@@ -45,32 +46,22 @@ namespace Wots.UI
         }
         public override void Update(GameTime gameTime)
         {
-            
+            if (InputManager.Singleton.TouchIntersects(left))
+                UniversalInputManager.Manager.MoveVector.X = -1;
+            else if (InputManager.Singleton.TouchIntersects(right))
+                UniversalInputManager.Manager.MoveVector.X = 1;
+            else
+                UniversalInputManager.Manager.MoveVector.X = 0;
+
+
+            if (InputManager.Singleton.TouchIntersects(jump))
+                UniversalInputManager.Manager.MoveVector.Y = 1;
+            else
+                UniversalInputManager.Manager.MoveVector.Y = 0;
         }
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
-            foreach (var touch in touches)
-            {
-                if (touch.State != TouchLocationState.Moved || touch.State == TouchLocationState.Invalid)
-                {
-                    UniversalInputManager.Manager.MoveVector.X = 0;
-                    UniversalInputManager.Manager.MoveVector.Y = 0;
-                    continue;
-                }
-                
-                if (left.Contains(touch.Position))
-                    UniversalInputManager.Manager.MoveVector.X = -1;
-                else if (right.Contains(touch.Position))
-                    UniversalInputManager.Manager.MoveVector.X = 1;
-                else if (jump.Contains(touch.Position))
-                    UniversalInputManager.Manager.MoveVector.Y = 1;
-                else
-                {
-                    UniversalInputManager.Manager.MoveVector.Y = 0;
-                    UniversalInputManager.Manager.MoveVector.X = 0;
-                }
-            }
         }
     }
 }

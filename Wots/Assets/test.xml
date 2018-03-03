@@ -374,6 +374,7 @@
         <x>0</x>
         <y>0</y>
       </position>
+      <data></data>
       <type>woodwatcher</type>
     </entity>
   </entitys>

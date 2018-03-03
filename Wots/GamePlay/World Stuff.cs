@@ -130,16 +130,29 @@ namespace Wots.GamePlay
                 AI ai = default(AI);
 
                 string type = tile["type"].InnerText;
+                string data = tile["data"].InnerText;
                 int x = int.Parse(tile["position"]["x"].InnerText);
                 int y = int.Parse(tile["position"]["y"].InnerText);
                 Vector2 pos = new Vector2(x * 96, y * 96);
                 switch (type)
                 {
                     case "woodwatcher":
-                        ai = new WoodWatcherAI(pos);
+                        ai = new WoodWatcherAI(pos)
+                        {
+                            Data = data
+                        };
                         break;
                     case "slime":
-                        ai = new SlimeAI(pos);
+                        ai = new SlimeAI(pos)
+                        {
+                            Data = data
+                        };
+                        break;
+                    case "npc":
+                        ai = new NPCAI(pos)
+                        {
+                            Data = data
+                        };
                         break;
 
                     default:
@@ -183,108 +196,12 @@ namespace Wots.GamePlay
             if (load == true)
                 WorldName = name;
         }
-        /*
-        private static Tile ProcessPrefs(Tile t)
-        {
-            if (t.State.ToLower() == "fast4")
-            {
-                t.Collidable = false;
-                t.Prefs.usePrefJump = true;
-                t.Prefs.usePrefUp = true;
-
-                t.Prefs.OnJump = new Func<Player, bool>((e) =>
-                {
-                    return false;
-                });
-                t.Prefs.OnUp = new Func<Player, bool>((e) =>
-                {
-                    if (e.Collitions.Up.Point1.Item1)
-                    {
-                        e.PlayerSprite.Position.Y -= (UniversalInputManager.Manager.Speed * GameManager.GAMESPEED) / 1.5f;
-                        e.useGravity = false;
-                    }
-                    return false;
-                });
-            }
-            else if (t.State.ToLower() == "stairesleft")
-            {
-                t.Prefs.usePrefLeft = true;
-                t.Collidable = false;
-                t.Prefs.OnLeft = new Func<Player, bool>((p) =>
-                {
-                    p.PlayerSprite.Position.X -= 96;
-                    p.PlayerSprite.Position.Y -= 96;
-                    return true;
-                });
-            }
-            else if (t.State.ToLower() == "stairesright")
-            {
-                t.Prefs.usePrefRight = true;
-                t.Collidable = false;
-                t.Prefs.OnRight = new Func<Player, bool>((p) =>
-                {
-                    p.PlayerSprite.Position.X += 96;
-                    p.PlayerSprite.Position.Y -= 96;
-                    return true;
-                });
-            }
-            else if (t.State.ToLower() == "water")
-            {
-                t.Collidable = false;
-                t.Prefs.usePrefJump = true;
-                t.Prefs.OnJump = new Func<Player, bool>((e) =>
-                {
-                    return false;
-                });
-            }
-            else if (t.State.ToLower().StartsWith("go:"))
-            {
-                string type = t.State.Split(':')[1];
-                if (type == "tree")
-                {
-                    GOQue.Add(new TreeGO
-                    {
-                        Position = t.Position
-                    });
-                }
-
-                t = null;
-            }
-            else if (t.State.ToLower().StartsWith("entity:"))
-            {
-                string type = t.State.Split(':')[1];
-                if (type == "woodwatcher0")
-                {
-                    EQue.Add(new WoodWatcherAI(t.Position));
-                }
-                else if (type == "slime0")
-                {
-                    EQue.Add(new SlimeAI(t.Position));
-                }
-
-                t = null;
-            }
-            else if (t.State.ToLower() == "spawn")
-            {
-                TempSpawn = t.Position;
-                GameScreen.Player.PlayerSprite.Position = t.Position;
-                t = null;
-            }
-
-            return t;
-        }
-        */
         public static void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
-            //if (gesture.GestureType == GestureType.Tap)
-            //{
-            //    var Tiles = Worlds[WorldName].Tiles;
-            //    foreach (var tile in Tiles)
-            //    {
-            //        if (tile.BoundingBox.Contains(gesture.Position) && tile.Prefs.usePrefClick)
-            //            throw new Exception("fuccckkkk");
-            //    }
-            //}
+            //for the fraction of a second where no world is loaded
+            if (hasWorld)
+                foreach (var ent in Worlds[WorldName].Entities)
+                    ent.UpdateGestures(touches, gesture);
         }
 
 
@@ -304,7 +221,7 @@ namespace Wots.GamePlay
                 var origin = new Vector2(96);
                 var rect = new Rectangle((int)GameScreen.Camera.Position.X, (int)GameScreen.Camera.Position.Y, (int)GameManager.Game.ScreenSize.X, (int)GameManager.Game.ScreenSize.Y);
                 if (item.BoundingBox.Intersects(rect))
-                    spriteBatch.Draw(AssetManager.Textures[item.Texture], new Rectangle(item.Position.ToPoint(), origin.ToPoint()), Color.White);
+                    spriteBatch.Draw(AssetManager.Textures[item.Texture], new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
             }
 
             if (!GameManager.Game.Paused)
@@ -319,17 +236,15 @@ namespace Wots.GamePlay
                     go.Update(gameTime);
 
             foreach (var entity in Worlds[WorldName].Entities)
-            {
                 entity.Sprite.Draw(spriteBatch);
-            }
+
             foreach (var go in Worlds[WorldName].GameObjects)
-            {
                 go.Draw(gameTime, spriteBatch);
-            }
         }
 
         public static Tuple<bool, Tile> isSpaceOpen(Vector2 pos, SpriteBatch s, Vector2 size)
         {
+            // Safety for when we temporarily have no world loaded
             if (!hasWorld)
                 return new Tuple<bool, Tile>(false, new Air());
 

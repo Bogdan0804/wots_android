@@ -126,7 +126,6 @@ namespace Wots.GamePlay
 
             if (World.hasWorld)
                 Player.Draw(gameTime, spriteBatch);
-            combat.Draw(gameTime, spriteBatch);
             spriteBatch.End();
             //}
             // Draw the health, ect
@@ -149,6 +148,7 @@ namespace Wots.GamePlay
             Stats.Update(gameTime);
             ui_menu_inventory.Update(gameTime);
             pad.Update(gameTime);
+            combat.Update(gameTime);
 
 
             // Update the world
@@ -191,11 +191,10 @@ namespace Wots.GamePlay
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gestures)
         {
+            World.UpdateGestures(touches, gestures);
             ui_menu_inventory.UpdateGestures(touches, gestures);
             pad.UpdateGestures(touches, gestures);
-            combat.UpdateGestures(touches, gestures);
             Stats.UpdateGestures(touches, gestures);
-            World.UpdateGestures(touches, gestures);
         }
 
         #endregion

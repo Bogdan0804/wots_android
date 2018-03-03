@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using SwordRush.Components;
 
 namespace Wots
 {
@@ -13,7 +14,7 @@ namespace Wots
         GraphicsDeviceManager Graphics;
         public static SpriteBatch MainSpriteBatch;
         SpriteBatch UISpriteBatch;
-
+        InputManager UniManager;
 
         public Game1()
         {
@@ -35,6 +36,9 @@ namespace Wots
             TouchPanel.EnabledGestures =
            GestureType.Tap | GestureType.Flick | GestureType.DoubleTap;
             GameManager.Game.Initialize();
+
+            UniManager = new InputManager(this);
+            this.Components.Add(UniManager);
         }
         protected override void LoadContent()
         {
@@ -42,6 +46,7 @@ namespace Wots
             UISpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             Services.AddService(typeof(SpriteBatch), MainSpriteBatch);
+
             GameManager.Game.LoadContent(this.Content);
             base.LoadContent();
         }

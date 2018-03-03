@@ -75,6 +75,7 @@
     <Compile Include="BoundingBox.cs" />
     <Compile Include="Entities\AI.cs" />
     <Compile Include="Entities\GameObject.cs" />
+    <Compile Include="Entities\NPCAI.cs" />
     <Compile Include="Entities\WoodWatcherAI.cs" />
     <Compile Include="Entities\SlimeAI.cs" />
     <Compile Include="Entities\TreeGO.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="GamePlay\Tiles\Water.cs" />
     <Compile Include="GamePlay\Tiles\Wood.cs" />
     <Compile Include="GamePlay\World Stuff.cs" />
+    <Compile Include="MANAGERINPIT.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\IGameScreen.cs" />
