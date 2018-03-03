@@ -23,6 +23,7 @@ C:\Users\bogda\Desktop\Wots\Wots\obj\Release\Wots.csprojResolveAssemblyReference
 C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Release\Wots.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Release\android\assets\MonoGame.Extended.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Release\android\assets\Wots.dll.mdb
+C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Release\Wots.dll
 bin\Android\AnyCPU\Release\Mono.Android.pdb
 bin\Android\AnyCPU\Release\mscorlib.pdb
 bin\Android\AnyCPU\Release\OpenTK-1.0.pdb

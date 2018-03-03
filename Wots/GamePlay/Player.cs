@@ -12,6 +12,8 @@ namespace Wots.GamePlay
 {
     public class Player
     {
+        public Vector2 Velocity;
+
         public enum Direction
         {
             Left,
@@ -84,6 +86,7 @@ namespace Wots.GamePlay
             TextureDirection = new Vector2(-1, 0);
             PlayerSprite = new Sprite(new Vector2(100, 200), Vector2.One);
             HealthBar = new Bar(new Vector2(10, 10));
+            Velocity = new Vector2(0);
 
             this.TargetForShaders = new RenderTarget2D(GameManager.Game.Graphics.GraphicsDevice, (int)this.PlayerSprite.Size.X, (int)this.PlayerSprite.Size.Y);
         }
@@ -211,7 +214,7 @@ namespace Wots.GamePlay
                 PlayerSprite.Animate = false;
 
             PlayerSprite.Draw(spriteBatch);
-            UpdateColitions(spriteBatch);
+            //UpdateColitions(spriteBatch);
         }
 
         Vector2 oldDir = Vector2.Zero;
@@ -254,13 +257,26 @@ namespace Wots.GamePlay
         {
             jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
 
-            HandleMovements();
-            //UpdateColitions(null);
-
+            HandleMovements(gameTime);
+            UpdateColitions(null);
         }
 
-        private void HandleMovements()
+
+        private double fallingTimer = 0;
+        private void HandleMovements(GameTime gameTime)
         {
+            if (canDown)
+                fallingTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            else
+            {
+                Velocity.Y = 0;
+                fallingTimer = 0;
+            }
+            if (fallingTimer > 0.2 && Velocity.Y < 10)
+            {
+                fallingTimer = 0;
+                Velocity.Y += 0.5f;
+            }
             // Make sure that collitions are enabled.
             if (!noClip)
             {
@@ -346,7 +362,7 @@ namespace Wots.GamePlay
 
                 // our psuedo gravity
                 if (useGravity && canDown)
-                    PlayerSprite.Position.Y += GravitySpeed;
+                    PlayerSprite.Position.Y += GravitySpeed + Velocity.Y;
 
                 if ((UniversalInputManager.Manager.GetAxis("Horizontal") == -1 || GamePad.GetState(0).Triggers.Left > 100) && canLeft)
                 {
