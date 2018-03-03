@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using MonoGame.Extended.Collections;
+using SwordRush.Components;
 using Wots.GamePlay;
 
 namespace Wots.UI
@@ -63,27 +64,20 @@ namespace Wots.UI
             int x = (SelectedIndex * 64) + (int)Position.X;
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(new Point(x, (int)Position.Y), new Point(64)), Color.Gray);
         }
-        public void UpdateGestures(GestureSample gesture)
+        public void Update(GameTime gameTime)
         {
-            if (gesture.GestureType == GestureType.Tap)
+            for (int i = 0; i < HotbarItems.Count; i++)
             {
-                for (int i = 0; i < HotbarItems.Count; i++)
+                var item = HotbarItems[i];
+                
+                Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
+                if (InputManager.Singleton.TouchIntersects(itemRect))
                 {
-                    var item = HotbarItems[i];
-
-                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                    Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
-                    if (itemRect.Contains(gesture.Position))
-                    {
-                        SelectedIndex = i;
-
-                    }
-
+                    SelectedIndex = i;
                 }
             }
-
         }
-
 
     }
 
@@ -133,12 +127,11 @@ namespace Wots.UI
 
         public override void Update(GameTime gameTime)
         {
-
+            Bar.Update(gameTime);
         }
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
-            Bar.UpdateGestures(gesture);
         }
     }
 }
