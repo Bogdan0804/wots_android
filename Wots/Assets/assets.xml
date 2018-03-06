@@ -190,4 +190,9 @@
     <file>art/walls/wall_wood_0.png</file>
     <name>wall_wood_0</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/open_inv.png</file>
+    <name>open_inv</name>
+  </object>
 </textures>

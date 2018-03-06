@@ -23,5 +23,6 @@ C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\uploadflags.txt
 C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Debug\Wots.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\MonoGame.Extended.dll.mdb
 C:\Users\bogda\Desktop\Wots\Wots\obj\Debug\android\assets\Wots.dll.mdb
+C:\Users\bogda\Desktop\Wots\Wots\bin\Android\AnyCPU\Debug\Wots.dll
 obj\Debug\linksrc\Wots.dll.mdb
 obj\Debug\linksrc\MonoGame.Extended.dll.mdb

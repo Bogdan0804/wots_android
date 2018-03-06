@@ -40,7 +40,8 @@ namespace Wots.Entities
         }
 
         public abstract void Damage(int damage, Vector2 gestureDelta);
-        public abstract void Update(GameTime gameTime, SpriteBatch sp);
+        public abstract void Update(GameTime gameTime);
+        public abstract void Draw(SpriteBatch sp);
         public abstract void UpdateGestures(TouchCollection touches, GestureSample gestures);
 
         public void DrawHealth(SpriteBatch spriteBatch)

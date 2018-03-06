@@ -224,19 +224,11 @@ namespace Wots.GamePlay
                     spriteBatch.Draw(AssetManager.Textures[item.Texture], new Rectangle(item.Position.ToPoint(), origin.ToPoint()), item.Color);
             }
 
-            if (!GameManager.Game.Paused)
-                foreach (var entity in Worlds[WorldName].Entities)
-                    if (entity.Health <= 0)
-                        Worlds[WorldName].Entities.Remove(entity);
-                    else
-                        entity.Update(gameTime, spriteBatch);
-
-            if (!GameManager.Game.Paused)
-                foreach (var go in Worlds[WorldName].GameObjects)
-                    go.Update(gameTime);
-
             foreach (var entity in Worlds[WorldName].Entities)
+            {
                 entity.Sprite.Draw(spriteBatch);
+                entity.Draw(spriteBatch);
+            }
 
             foreach (var go in Worlds[WorldName].GameObjects)
                 go.Draw(gameTime, spriteBatch);
@@ -269,6 +261,20 @@ namespace Wots.GamePlay
         }
         public static void Update(GameTime gameTime)
         {
+            if (hasWorld)
+            {
+                if (!GameManager.Game.Paused)
+                    foreach (var entity in Worlds[WorldName].Entities)
+                        if (entity.Health <= 0)
+                            Worlds[WorldName].Entities.Remove(entity);
+                        else
+                            entity.Update(gameTime);
+
+                if (!GameManager.Game.Paused)
+                    foreach (var go in Worlds[WorldName].GameObjects)
+                        go.Update(gameTime);
+            }
+
         }
     }
 }

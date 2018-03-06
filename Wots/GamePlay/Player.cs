@@ -242,9 +242,7 @@ namespace Wots.GamePlay
                 PlayerSprite.Animations[PlayerSprite.CurrentAnimation].Frame = 1;
                 PlayerSprite.Animate = false;
             }
-
             this.oldDir = newDir;
-
         }
 
         bool jumping = false;
@@ -272,7 +270,7 @@ namespace Wots.GamePlay
                 Velocity.Y = 0;
                 fallingTimer = 0;
             }
-            if (fallingTimer > 0.2 && Velocity.Y < 10)
+            if (fallingTimer > 0.2 && Velocity.Y <= 10)
             {
                 fallingTimer = 0;
                 Velocity.Y += 0.5f;
@@ -348,9 +346,7 @@ namespace Wots.GamePlay
                         }
                     }
                 }
-
-
-
+                
                 GravitySpeed = 10.0f;
 
                 try

@@ -44,6 +44,7 @@ namespace Wots.GamePlay
         // More game mechanics
         Combat combat;
         public static string BackdropName = "null";
+        public static bool STOP = false;
         public GameScreen()
         {
             pad.Position = new Vector2(1, GameManager.Game.ScreenSize.Y - 265);
@@ -145,16 +146,17 @@ namespace Wots.GamePlay
 
         public override void Update(GameTime gameTime)
         {
-            Stats.Update(gameTime);
+            if (!STOP)
+            {
+                Stats.Update(gameTime);
+                pad.Update(gameTime);
+                combat.Update(gameTime);
+                // Update the world
+                World.Update(gameTime);
+                UpdatePlayerCameras(gameTime);
+            }
+
             ui_menu_inventory.Update(gameTime);
-            pad.Update(gameTime);
-            combat.Update(gameTime);
-
-
-            // Update the world
-            World.Update(gameTime);
-            UpdatePlayerCameras(gameTime);
-
         }
         void UpdatePlayerCameras(GameTime gameTime)
         {

@@ -45,13 +45,13 @@ namespace Wots.Entities
         double jumpBuildTime = 0;
         double attackTimer = 0;
         bool canDown, canUp, canLeft, canRight;
-        public override void Update(GameTime gameTime, SpriteBatch sp)
+        public override void Update(GameTime gameTime)
         {
             attackTimer += gameTime.ElapsedGameTime.TotalSeconds;
             jumpBuildTime += gameTime.ElapsedGameTime.TotalSeconds;
             timer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            coli.UpdateCollitions(Sprite, sp);
+            coli.UpdateCollitions(Sprite, null);
 
             canDown = coli.CanDown;
             canUp = coli.CanUp;
@@ -121,7 +121,6 @@ namespace Wots.Entities
             }
 
             Sprite.Update(gameTime);
-            DrawHealth(sp);
             //sp.Draw(AssetManager.LoadImage("art/mobs/monsters/woodwatcher/woodwatcher_left1"), this.Sprite.GetRectangle(), Color.Red);
 
         }
@@ -152,6 +151,11 @@ namespace Wots.Entities
         public override void UpdateGestures(TouchCollection touches, GestureSample gestures)
         {
 
+        }
+
+        public override void Draw(SpriteBatch sp)
+        {
+            DrawHealth(sp);
         }
     }
 }

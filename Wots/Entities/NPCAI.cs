@@ -36,14 +36,14 @@ namespace Wots.Entities
 
         }
         string name = "Joe";
-        public override void Update(GameTime gameTime, SpriteBatch sp)
+        public override void Update(GameTime gameTime)
         {
             if (this.Sprite.Position.X > GameScreen.Player.PlayerSprite.Position.X)
                 this.Sprite.CurrentAnimation = "left";
             else if (this.Sprite.Position.X < GameScreen.Player.PlayerSprite.Position.X)
                 this.Sprite.CurrentAnimation = "right";
 
-            sp.DrawString(AssetManager.GetFont("24"), name, this.Sprite.Position - new Vector2(0, AssetManager.GetFont("12").MeasureString("I").Y + 10), Color.White);
+            
         }
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gestures)
@@ -52,6 +52,12 @@ namespace Wots.Entities
             {
                 //if (this.Sprite.GetRectangle().Contains(GameScreen.Camera.ScreenToWorld(touch.Position)))
             }
+        }
+        
+
+        public override void Draw(SpriteBatch sp)
+        {
+            sp.DrawString(AssetManager.GetFont("24"), name, this.Sprite.Position - new Vector2(0, AssetManager.GetFont("12").MeasureString("I").Y + 10), Color.White);
         }
     }
 }

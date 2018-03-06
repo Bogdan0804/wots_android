@@ -31,56 +31,121 @@ namespace Wots.UI
 
     public class InventoryUI
     {
+        Inventory_MENU menu = new Inventory_MENU();
         public int SelectedIndex = 0;
         public Vector2 Position = Vector2.Zero;
         public Bag<Item> HotbarItems = new Bag<Item>(7);
-       // public Rectangle UseArea;
+        // public Rectangle UseArea;
 
         public InventoryUI()
         {
-           // UseArea = new Rectangle((int)GameManager.Game.ScreenSize.X / 2, 64, (int)GameManager.Game.ScreenSize.X / 2, (int)GameManager.Game.ScreenSize.Y - 296);
+            menu.init();
+            // UseArea = new Rectangle((int)GameManager.Game.ScreenSize.X / 2, 64, (int)GameManager.Game.ScreenSize.X / 2, (int)GameManager.Game.ScreenSize.Y - 296);
             Position = new Vector2(GameManager.Game.ScreenSize.X / 2 - AssetManager.GetTexture("inv_gui_items").Width / 2, 10);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(GameScreen.textureBlank, UseArea, new Color(Color.Black, 20));
-            for (int i = 0; i < HotbarItems.Count; i++)
-            {
-                var item = HotbarItems[i];
-                if (item.ItemType == Type.Weapon)
+            if (!isInvOpen)
+                //spriteBatch.Draw(GameScreen.textureBlank, UseArea, new Color(Color.Black, 20));
+                for (int i = 0; i < HotbarItems.Count; i++)
                 {
-                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y + 5);
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
+                    if (i == 7)
+                        continue;
+
+                    var item = HotbarItems[i];
+                    if (item.ItemType == Type.Weapon)
+                    {
+                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y + 5);
+                        spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
+                    }
+                    else
+                    {
+                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                        spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
+                        spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
+                    }
+
                 }
-                else
-                {
-                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                    spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
-                    spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
-                }
-            }
+            else
+                menu.Draw(spriteBatch);
+
             spriteBatch.Draw(AssetManager.GetTexture("inv_gui_items"), new Rectangle(Position.ToPoint(), new Point(AssetManager.GetTexture("inv_gui_items").Width * 2, AssetManager.GetTexture("inv_gui_items").Height * 2)), Color.White);
             int x = (SelectedIndex * 64) + (int)Position.X;
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(new Point(x, (int)Position.Y), new Point(64)), Color.Gray);
+            // Draw open btn
+            {
+                Vector2 tempPos = new Vector2(Position.X + (64 * 7), Position.Y);
+                spriteBatch.Draw(AssetManager.GetTexture("open_inv"), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
+            }
         }
+
+        public static bool isInvOpen = false;
         public void Update(GameTime gameTime)
         {
-            for (int i = 0; i < HotbarItems.Count; i++)
+            //updare open btn
             {
-                var item = HotbarItems[i];
-                
-                Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                Vector2 tempPos = new Vector2(Position.X + (64 * 7), Position.Y);
                 Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
                 if (InputManager.Singleton.TouchIntersects(itemRect))
                 {
-                    SelectedIndex = i;
+                    isInvOpen = true;
                 }
             }
+
+            GameScreen.STOP = isInvOpen;
+
+            if (!isInvOpen)
+                for (int i = 0; i < HotbarItems.Count; i++)
+                {
+                    if (i == 7)
+                        continue;
+
+                    var item = HotbarItems[i];
+
+                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                    Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
+                    if (InputManager.Singleton.TouchIntersects(itemRect))
+                    {
+                        SelectedIndex = i;
+                    }
+
+                }
+            else
+                menu.Update(gameTime);
         }
 
     }
 
+    public class Inventory_MENU
+    {
+        Texture2D menu_bg;
+        Vector2 Size, Position;
+
+        internal void init()
+        {
+            menu_bg = AssetManager.LoadImage("art/ui/gameui/open_inv_menu");
+        }
+
+        internal void Draw(SpriteBatch spriteBatch)
+        {            
+            spriteBatch.Draw(menu_bg, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.White);
+        }
+
+        internal void Update(GameTime gameTime)
+        {
+            Size = new Vector2(menu_bg.Width * 6f, menu_bg.Height * 6);
+            Position = new Vector2(250, 100);
+
+            var rect = new Rectangle(Position.ToPoint(), Size.ToPoint());
+            var closeBtnRect = new Rectangle((int)(rect.X - 66 + Size.X), rect.Y, 66, 66);
+
+            if (InputManager.Singleton.TouchIntersects(closeBtnRect))
+            {
+                InventoryUI.isInvOpen = false;
+            }
+        }
+    }
 
     public class UI_Inventory_Menu : UIComponent
     {
