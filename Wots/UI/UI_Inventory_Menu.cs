@@ -115,58 +115,99 @@ namespace Wots.UI
                 menu.Update(gameTime);
         }
 
+        internal void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            menu.UpdateGestures(touches, gesture);
+        }
     }
-    
+
     public class Inventory_MENU
     {
-        public Bag<Item> Items;
+        public Item[,] Items;
+
+        public Button useButton;
 
         public Vector2 SelectedSlot = new Vector2(0);
         Texture2D menu_bg;
         Vector2 Size, Position;
+        private bool hasSelectedItem;
 
         internal void init()
         {
             menu_bg = AssetManager.LoadImage("art/ui/gameui/open_inv_menu");
-            Items = new Bag<Item>(100);
-            for (int i = 0; i < 100; i++)
+
+            Size = new Vector2(menu_bg.Width * 6f, menu_bg.Height * 6);
+            Position = new Vector2(250, 100);
+
+            Items = new Item[5, 4];
+            useButton = new Button(AssetManager.GetTexture("button_1"), new Vector2(Position.X + 550, Position.Y + Size.Y - 150), new Vector2(175,95));
+            useButton.Text = "Use";
+            useButton.RenderText = true;
+            useButton.Pressed += UseButton_Pressed;
+
+            Items[0, 0] = new Item { Amount = 2, ItemType = Type.Item, Name = "peice of grass", OnUse = new Func<int>(() => { GameScreen.Stats.HealthValue = 10;  return 0; }), Type = "grass" };
+        }
+
+        private void UseButton_Pressed(object sender)
+        {
+            try
             {
-                Items[i] = new Item { Amount = 2, ItemType = Type.Item, Name = "test", OnUse = new Func<int>(() => { return 1; }), Type = "grass" };
+                var item = Items[(int)SelectedSlot.X, (int)SelectedSlot.Y];
+                if (item.OnUse() <= 0)
+                    Items[(int)SelectedSlot.X, (int)SelectedSlot.Y] = null;
             }
+            catch { };
         }
 
         internal void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(menu_bg, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.White);
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 5; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < 4; y++)
                 {
-                    Vector2 TempPosition = Position + new Vector2(100) + new Vector2(x * 64, y * 64);
-                    Vector2 Size = new Vector2(64);
+                    Vector2 TempPosition = Position + new Vector2(100, 125) + new Vector2(x * 128, y * 128);
+                    Vector2 Size = new Vector2(128);
                     Vector2 Margin = new Vector2(2);
-
-                    if (TempPosition == SelectedSlot)
+                    
+                    if (y == SelectedSlot.Y && x == SelectedSlot.X)
                     {
-                        spriteBatch.Draw(AssetManager.GetTexture(Items[10 * x + y].Type), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.LightGray);
+                        try
+                        {
+                            spriteBatch.Draw(AssetManager.GetTexture(Items[x, y].Type), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.LightGray);
+                        }
+                        catch { };
 
                         spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.Gray);
                     }
                     else
                     {
-                        spriteBatch.Draw(AssetManager.GetTexture(Items[10 * x + y].Type), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.White);
-
+                        try
+                        {
+                            spriteBatch.Draw(AssetManager.GetTexture(Items[x, y].Type), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.White);
+                        }
+                        catch { };
                         spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint()), Color.White);
                     }
                 }
             }
+            
+            try
+            {
+                var item = Items[(int)SelectedSlot.X, (int)SelectedSlot.Y];
+
+                spriteBatch.DrawString(AssetManager.GetFont("24"), item.Name, new Vector2(Position.X + 100, Position.Y + Size.Y - 200), Color.Black);
+                useButton.Draw(null, spriteBatch);
+                hasSelectedItem = true;
+            }
+            catch { hasSelectedItem = false; };
+            
+            
+            DrawEquipables(spriteBatch);
         }
 
         internal void Update(GameTime gameTime)
         {
-            Size = new Vector2(menu_bg.Width * 6f, menu_bg.Height * 6);
-            Position = new Vector2(250, 100);
-
             var rect = new Rectangle(Position.ToPoint(), Size.ToPoint());
             var closeBtnRect = new Rectangle((int)(rect.X - 66 + Size.X), rect.Y, 66, 66);
 
@@ -175,19 +216,46 @@ namespace Wots.UI
                 InventoryUI.isInvOpen = false;
             }
 
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 5; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < 4; y++)
                 {
-                    Vector2 TempPosition = Position + new Vector2(100) + new Vector2(x * 64, y * 64);
-                    Vector2 Size = new Vector2(64);
+                    Vector2 TempPosition = Position + new Vector2(100, 125) + new Vector2(x * 128, y * 128);
+                    Vector2 Size = new Vector2(128);
                     Vector2 Margin = new Vector2(2);
 
                     Rectangle tempRectangle = new Rectangle((TempPosition + Margin).ToPoint(), (Size - Margin).ToPoint());
                     if (SwordRush.Components.InputManager.Singleton.TouchIntersects(tempRectangle))
-                        this.SelectedSlot = TempPosition;
+                        this.SelectedSlot = new Vector2(x, y);
                 }
             }
+            
+            UpdateEquipables(gameTime);
+        }
+
+        private void DrawEquipables(SpriteBatch spriteBatch)
+        {
+            int X = (int)Position.X + 775;
+            int margin = 32;
+
+            spriteBatch.Draw(AssetManager.GetTexture("placeholder_helmet"), new Rectangle(X, 275, 128, 128), Color.White);
+            spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275, 128, 128), Color.White);
+
+            spriteBatch.Draw(AssetManager.GetTexture("placeholder_chestplate"), new Rectangle(X, 275 + 128, 128, 128), Color.White);
+            spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275 + 128, 128, 128), Color.White);
+
+            spriteBatch.Draw(AssetManager.GetTexture("placeholder_pants"), new Rectangle(X, 275 + 256, 128, 128), Color.White);
+            spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275 + 256, 128, 128), Color.White);
+        }
+        private void UpdateEquipables(GameTime gameTime)
+        {
+
+        }
+
+        internal void UpdateGestures(TouchCollection touches, GestureSample gesture)
+        {
+            if (hasSelectedItem)
+                useButton.UpdateGestures(touches, gesture);
         }
     }
 
@@ -241,6 +309,7 @@ namespace Wots.UI
 
         public override void UpdateGestures(TouchCollection touches, GestureSample gesture)
         {
+            Bar.UpdateGestures(touches, gesture);
         }
     }
 }

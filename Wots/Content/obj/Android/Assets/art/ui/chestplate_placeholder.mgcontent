@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/gameui/open_inv_menu.png</SourceFile>
-  <SourceTime>2018-03-17T10:53:46.1656321-06:00</SourceTime>
-  <DestFile>C:/Users/bogda/Desktop/Wots/Wots/Content/bin/Android/Assets/art/ui/gameui/open_inv_menu.xnb</DestFile>
-  <DestTime>2018-03-17T10:53:59.2474794-06:00</DestTime>
+  <SourceFile>C:/Users/bogda/Desktop/Wots/Wots/Content/Assets/art/ui/chestplate_placeholder.png</SourceFile>
+  <SourceTime>2018-03-17T10:01:09.5523561-06:00</SourceTime>
+  <DestFile>C:/Users/bogda/Desktop/Wots/Wots/Content/bin/Android/Assets/art/ui/chestplate_placeholder.xnb</DestFile>
+  <DestTime>2018-03-17T10:04:45.0765338-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T09:05:36-06:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

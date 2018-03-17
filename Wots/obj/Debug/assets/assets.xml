@@ -195,4 +195,19 @@
     <file>art/ui/open_inv.png</file>
     <name>open_inv</name>
   </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/pants_placeholder.png</file>
+    <name>placeholder_pants</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/chestplate_placeholder.png</file>
+    <name>placeholder_chestplate</name>
+  </object>
+  <object xnb="false">
+    <type>Texture</type>
+    <file>art/ui/helmet_placeholder.png</file>
+    <name>placeholder_helmet</name>
+  </object>
 </textures>
