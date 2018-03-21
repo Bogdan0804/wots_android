@@ -9,6 +9,8 @@ using Wots.GamePlay;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Devices.Sensors;
 using Android.App;
+using Android.Gms.Games.Achievement;
+using Android.Gms.Common.Apis;
 
 namespace Wots.Screens
 {
@@ -124,8 +126,7 @@ namespace Wots.Screens
         }
         public override void LoadContent(ContentManager content)
         {
-
-           // click_select = content.Load<SoundEffect>("audio/click2");
+            // click_select = content.Load<SoundEffect>("audio/click2");
             //  this.glow = content.Load<Effect>("glow");
             background = AssetManager.LoadImage("art/bg1");
             Slide1 = AssetManager.LoadImage("art/slides/1");
@@ -165,6 +166,7 @@ namespace Wots.Screens
         public override void Intialize()
         {
             cloudPos = new Vector2(-2100, 10);
+            
         }
 
         public override void Unload()

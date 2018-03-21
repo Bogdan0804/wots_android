@@ -1,8 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Paths>
-  <Jars />
+  <Jars>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\10\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\11\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\12\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\13\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\14\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\4\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\5\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\6\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\7\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\8\jl\classes.jar</Jar>
+    <Jar>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\9\jl\classes.jar</Jar>
+  </Jars>
   <ResolvedResourceDirectories>
     <ResolvedResourceDirectory>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\1\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\10\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\12\jl\res</ResolvedResourceDirectory>
   </ResolvedResourceDirectories>
   <ResolvedAssetDirectories>
     <ResolvedAssetDirectory>obj\Release\lp\1\jl\assets</ResolvedAssetDirectory>
@@ -10,5 +24,7 @@
   <ResolvedEnvironmentFiles />
   <ResolvedResourceDirectoryStamps>
     <ResolvedResourceDirectoryStamp>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\1.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\10.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\bogda\Desktop\Wots\Wots\obj\Release\lp\12.stamp</ResolvedResourceDirectoryStamp>
   </ResolvedResourceDirectoryStamps>
 </Paths>

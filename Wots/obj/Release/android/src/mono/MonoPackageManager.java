@@ -110,6 +110,17 @@ class MonoPackageManager_Resources {
 		"MonoGame.Extended.dll",
 		"MonoGame.Framework.dll",
 		"Newtonsoft.Json.dll",
+		"Xamarin.Android.Support.Compat.dll",
+		"Xamarin.Android.Support.Core.UI.dll",
+		"Xamarin.Android.Support.Core.Utils.dll",
+		"Xamarin.Android.Support.Media.Compat.dll",
+		"Xamarin.Android.Support.Fragment.dll",
+		"Xamarin.Android.Support.v4.dll",
+		"Xamarin.GooglePlayServices.Basement.dll",
+		"Xamarin.GooglePlayServices.Tasks.dll",
+		"Xamarin.GooglePlayServices.Base.dll",
+		"Xamarin.GooglePlayServices.Drive.dll",
+		"Xamarin.GooglePlayServices.Games.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
