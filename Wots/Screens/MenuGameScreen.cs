@@ -11,6 +11,7 @@ using Microsoft.Devices.Sensors;
 using Android.App;
 using Android.Gms.Games.Achievement;
 using Android.Gms.Common.Apis;
+using System.Reflection;
 
 namespace Wots.Screens
 {
@@ -38,8 +39,7 @@ namespace Wots.Screens
 
             
             // This ofset is a asmall value that can be added to a objects posotion to give it mouse feedback
-            Vector2 offset = new Vector2(0);
-            offset = new Vector2(UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Y * 50, UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Z * 25);
+            var offset = new Vector2(UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Y * 50, UniversalInputManager.Manager.Accelerometer.CurrentValue.Acceleration.Z * 25);
             // Draw the background and the first slide
             {
                 Rectangle sky = new Rectangle((int)offset.X - 30, (int)offset.Y - 30, (int)GameManager.Game.ScreenSize.X * 20, (int)GameManager.Game.ScreenSize.Y + 120);
@@ -48,23 +48,22 @@ namespace Wots.Screens
                 //spriteBatch.Draw(cloud, new Rectangle(cloudPos.ToPoint(), new Point(5000, 400)), Color.White);
 
                 // Draw the mountains witha darrkness
-                Color desaturatedGreen = Color.Lerp(Color.White, Color.Black, moutainsDarkness / 10);
-                spriteBatch.Draw(Slide1, new Rectangle((int)slide1X, 175, (int)GameManager.Game.ScreenSize.X * 15, (int)GameManager.Game.ScreenSize.Y - 150), desaturatedGreen);
+                Color desaturatedColor= Color.Lerp(Color.White, Color.Black, moutainsDarkness / 10);
+                spriteBatch.Draw(Slide1, new Rectangle((int)slide1X, 175, (int)GameManager.Game.ScreenSize.X * 15, (int)GameManager.Game.ScreenSize.Y - 150), desaturatedColor);
             }
             // Draw the title
             {
-
                 // Create a dynamicly chaging position for our title, using our ofset variable
                 Vector2 position = new Vector2(((GameManager.Game.ScreenSize.X / 2) - size.X / 2) + offset.X , -offset.Y + 50);
 
                 // Draw it
-                //glow.Parameters["ScreenTexture"].SetValue(titleTexture);
-                //glow.Parameters["intensity"].SetValue(0.1f);
-                // glow.CurrentTechnique.Passes[0].Apply();
                 spriteBatch.Draw(titleTexture, new Rectangle(position.ToPoint(), (size).ToPoint()), Color.White * 0.8f);
             }
 
-            string copyText = "Copyright 2017 Bogz, Tim & Aidan";
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            string buildNo = String.Format("V{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+
+            string copyText = "Copyright 2018 Bogz, Tim & Aidan\n" + buildNo + " (Public Beta)";
             spriteBatch.DrawString(AssetManager.GetFont("24"), copyText, GameManager.Game.ScreenSize - AssetManager.GetFont("24").MeasureString(copyText) - new Vector2(1), Color.White);
             // End the spritebatch (sends all date to the graphics card to be rendered).
             spriteBatch.End();

@@ -23,7 +23,7 @@ namespace Wots.Entities
         private bool useGravity = true;
 
         public WoodWatcherAI(Vector2 pos)
-            : base(new Vector2(96 * 2, 96 * 4), pos)
+            : base(new Vector2(96 * 3, 96 * 5), pos)
         {
             Sprite.Animations.Add("moveLeft", new Animation(
                 new Frame(AssetManager.LoadImage("art/mobs/monsters/woodwatcher/woodwatcher_left1")),

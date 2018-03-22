@@ -1,11 +1,11 @@
-Wots.Activity1, Wots;md5add17aa9da3a764bb9bca010f3691abb.Activity1
-Wots.Activity1, Wots, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5add17aa9da3a764bb9bca010f3691abb.Activity1
-Wots.Activity1;md5add17aa9da3a764bb9bca010f3691abb.Activity1
-wots.Activity1;md5add17aa9da3a764bb9bca010f3691abb.Activity1
-Wots.GameHelper, Wots;md5add17aa9da3a764bb9bca010f3691abb.GameHelper
-Wots.GameHelper, Wots, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5add17aa9da3a764bb9bca010f3691abb.GameHelper
-Wots.GameHelper;md5add17aa9da3a764bb9bca010f3691abb.GameHelper
-wots.GameHelper;md5add17aa9da3a764bb9bca010f3691abb.GameHelper
+Wots.Activity1, Wots;md5bfb560a022e72d2ee6bf8cea0a2668dc.Activity1
+Wots.Activity1, Wots, Version=1.0.6655.22716, Culture=neutral, PublicKeyToken=null;md5bfb560a022e72d2ee6bf8cea0a2668dc.Activity1
+Wots.Activity1;md5bfb560a022e72d2ee6bf8cea0a2668dc.Activity1
+wots.Activity1;md5bfb560a022e72d2ee6bf8cea0a2668dc.Activity1
+Wots.GameHelper, Wots;md5bfb560a022e72d2ee6bf8cea0a2668dc.GameHelper
+Wots.GameHelper, Wots, Version=1.0.6655.22716, Culture=neutral, PublicKeyToken=null;md5bfb560a022e72d2ee6bf8cea0a2668dc.GameHelper
+Wots.GameHelper;md5bfb560a022e72d2ee6bf8cea0a2668dc.GameHelper
+wots.GameHelper;md5bfb560a022e72d2ee6bf8cea0a2668dc.GameHelper
 Microsoft.Xna.Framework.AndroidGameActivity, MonoGame.Framework;md59e336b20c5f59a4196ec0611a339f132.AndroidGameActivity
 Microsoft.Xna.Framework.AndroidGameActivity, MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, PublicKeyToken=null;md59e336b20c5f59a4196ec0611a339f132.AndroidGameActivity
 Microsoft.Xna.Framework.AndroidGameActivity;md59e336b20c5f59a4196ec0611a339f132.AndroidGameActivity

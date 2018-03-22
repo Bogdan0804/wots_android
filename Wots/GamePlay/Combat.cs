@@ -33,7 +33,7 @@ namespace Wots.GamePlay
 
             foreach (var entity in World.Worlds[World.WorldName].Entities)
             {
-                if (GameScreen.ui_menu_inventory.Bar.HotbarItems[GameScreen.ui_menu_inventory.Bar.SelectedIndex].ItemType == UI.Type.Weapon)
+                if (GameScreen.ui_menu_inventory.Bar.menu.Items[GameScreen.ui_menu_inventory.Bar.SelectedIndex,0].ItemType == UI.Type.Weapon)
                 {
                     if (InputManager.Singleton.TouchIntersects(entity.Sprite.GetScreenRectangle(), 100))
                     {

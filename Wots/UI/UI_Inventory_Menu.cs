@@ -31,10 +31,9 @@ namespace Wots.UI
 
     public class InventoryUI
     {
-        Inventory_MENU menu = new Inventory_MENU();
+        public Inventory_MENU menu = new Inventory_MENU();
         public int SelectedIndex = 0;
         public Vector2 Position = Vector2.Zero;
-        public Bag<Item> HotbarItems = new Bag<Item>(7);
         // public Rectangle UseArea;
 
         public InventoryUI()
@@ -48,23 +47,27 @@ namespace Wots.UI
         {
             if (!isInvOpen)
                 //spriteBatch.Draw(GameScreen.textureBlank, UseArea, new Color(Color.Black, 20));
-                for (int i = 0; i < HotbarItems.Count; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    if (i == 7)
+                    if (i >= 6)
                         continue;
 
-                    var item = HotbarItems[i];
-                    if (item.ItemType == Type.Weapon)
+                    try
                     {
-                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y + 5);
-                        spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
+                        var item = menu.Items[i, 0];
+                        if (item.ItemType == Type.Weapon)
+                        {
+                            Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y + 5);
+                            spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(55, 90)), Color.White);
+                        }
+                        else
+                        {
+                            Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                            spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
+                            spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
+                        }
                     }
-                    else
-                    {
-                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                        spriteBatch.Draw(AssetManager.GetTexture(item.Type), new Rectangle(tempPos.ToPoint(), new Point(64)), Color.White);
-                        spriteBatch.DrawString(AssetManager.GetFont("12"), item.Amount.ToString(), tempPos + new Vector2(64) - AssetManager.GetFont("12").MeasureString(item.Amount.ToString()) - new Vector2(5, 7), Color.Black);
-                    }
+                    catch { /* We didnt have an item in that slot */ }
 
                 }
             else
@@ -96,19 +99,23 @@ namespace Wots.UI
             GameScreen.STOP = isInvOpen;
 
             if (!isInvOpen)
-                for (int i = 0; i < HotbarItems.Count; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    if (i == 7)
+                    if (i >= 6)
                         continue;
 
-                    var item = HotbarItems[i];
-
-                    Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
-                    Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
-                    if (InputManager.Singleton.TouchIntersects(itemRect))
+                    try
                     {
-                        SelectedIndex = i;
+                        var item = menu.Items[i, 0];
+
+                        Vector2 tempPos = new Vector2(Position.X + (64 * i), Position.Y);
+                        Rectangle itemRect = new Rectangle(tempPos.ToPoint(), new Point(64));
+                        if (InputManager.Singleton.TouchIntersects(itemRect))
+                        {
+                            SelectedIndex = i;
+                        }
                     }
+                    catch { /* We didnt have an item in that slot */ };
 
                 }
             else
@@ -140,12 +147,12 @@ namespace Wots.UI
             Position = new Vector2(250, 100);
 
             Items = new Item[5, 4];
-            useButton = new Button(AssetManager.GetTexture("button_1"), new Vector2(Position.X + 550, Position.Y + Size.Y - 150), new Vector2(175,95));
+            useButton = new Button(AssetManager.GetTexture("button_1"), new Vector2(Position.X + 550, Position.Y + Size.Y - 150), new Vector2(175, 95));
             useButton.Text = "Use";
             useButton.RenderText = true;
             useButton.Pressed += UseButton_Pressed;
 
-            Items[0, 0] = new Item { Amount = 2, ItemType = Type.Item, Name = "peice of grass", OnUse = new Func<int>(() => { GameScreen.Stats.HealthValue = 10;  return 0; }), Type = "grass" };
+            Items[0, 0] = new Item { Amount = 2, ItemType = Type.Item, Name = "peice of grass", OnUse = new Func<int>(() => { GameScreen.Stats.HealthValue = 10; return 0; }), Type = "grass" };
         }
 
         private void UseButton_Pressed(object sender)
@@ -169,7 +176,7 @@ namespace Wots.UI
                     Vector2 TempPosition = Position + new Vector2(100, 125) + new Vector2(x * 128, y * 128);
                     Vector2 Size = new Vector2(128);
                     Vector2 Margin = new Vector2(2);
-                    
+
                     if (y == SelectedSlot.Y && x == SelectedSlot.X)
                     {
                         try
@@ -191,7 +198,7 @@ namespace Wots.UI
                     }
                 }
             }
-            
+
             try
             {
                 var item = Items[(int)SelectedSlot.X, (int)SelectedSlot.Y];
@@ -201,8 +208,8 @@ namespace Wots.UI
                 hasSelectedItem = true;
             }
             catch { hasSelectedItem = false; };
-            
-            
+
+
             DrawEquipables(spriteBatch);
         }
 
@@ -229,7 +236,7 @@ namespace Wots.UI
                         this.SelectedSlot = new Vector2(x, y);
                 }
             }
-            
+
             UpdateEquipables(gameTime);
         }
 
@@ -238,13 +245,13 @@ namespace Wots.UI
             int X = (int)Position.X + 775;
             int margin = 32;
 
-            spriteBatch.Draw(AssetManager.GetTexture("placeholder_helmet"), new Rectangle(X, 275, 128, 128), Color.White);
+            //spriteBatch.Draw(AssetManager.GetTexture("placeholder_helmet"), new Rectangle(X, 275, 128, 128), Color.White);
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275, 128, 128), Color.White);
 
-            spriteBatch.Draw(AssetManager.GetTexture("placeholder_chestplate"), new Rectangle(X, 275 + 128, 128, 128), Color.White);
+            //spriteBatch.Draw(AssetManager.GetTexture("placeholder_chestplate"), new Rectangle(X, 275 + 128, 128, 128), Color.White);
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275 + 128, 128, 128), Color.White);
 
-            spriteBatch.Draw(AssetManager.GetTexture("placeholder_pants"), new Rectangle(X, 275 + 256, 128, 128), Color.White);
+            //spriteBatch.Draw(AssetManager.GetTexture("placeholder_pants"), new Rectangle(X, 275 + 256, 128, 128), Color.White);
             spriteBatch.Draw(AssetManager.GetTexture("selected_ui_inv"), new Rectangle(X, 275 + 256, 128, 128), Color.White);
         }
         private void UpdateEquipables(GameTime gameTime)
@@ -266,35 +273,6 @@ namespace Wots.UI
 
         public UI_Inventory_Menu()
         {
-            Bar.HotbarItems.Add(new Item
-            {
-                Amount = 10,
-                Name = "Grass",
-                Type = "grass",
-                OnUse = new Func<int>(() =>
-                {
-                    return r.Next();
-                })
-            });
-            Bar.HotbarItems.Add(new Item
-            {
-                Amount = 12,
-                Name = "Grass",
-                Type = "grass"
-            });
-            Bar.HotbarItems.Add(new Item
-            {
-                Amount = 14,
-                Name = "Grass",
-                Type = "grass"
-            });
-            Bar.HotbarItems.Add(new Item
-            {
-                Amount = 14,
-                Name = "Sword",
-                Type = "wooden_sword1",
-                ItemType = Type.Weapon
-            });
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch uiSpriteBatch)

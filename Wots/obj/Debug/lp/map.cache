@@ -1,0 +1,15 @@
+MonoGame.Extended
+MonoGame.Framework
+Newtonsoft.Json
+System.Runtime
+Xamarin.Android.Support.Compat
+Xamarin.Android.Support.Core.UI
+Xamarin.Android.Support.Core.Utils
+Xamarin.Android.Support.Media.Compat
+Xamarin.Android.Support.Fragment
+Xamarin.Android.Support.v4
+Xamarin.GooglePlayServices.Basement
+Xamarin.GooglePlayServices.Tasks
+Xamarin.GooglePlayServices.Base
+Xamarin.GooglePlayServices.Drive
+Xamarin.GooglePlayServices.Games

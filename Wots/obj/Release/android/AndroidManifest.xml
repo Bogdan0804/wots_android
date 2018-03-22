@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bogz.rpengine_Wots" android:versionCode="1" android:versionName="0.1" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bogz.rpengine_Wots" android:versionName="0.1.2" android:installLocation="preferExternal" android:versionCode="3">
   <!--suppress UsesMinSdkAttributes-->
   <uses-sdk android:minSdkVersion="21" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -7,7 +7,7 @@
   <application android:label="Wots" android:icon="@drawable/icon" android:name="android.app.Application" android:allowBackup="true">
     <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="348200509402" />
     <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-    <activity android:alwaysRetainTaskState="true" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:icon="@drawable/icon" android:label="Wots" android:launchMode="singleInstance" android:screenOrientation="landscape" android:theme="@style/Theme.Splash" android:name="md5add17aa9da3a764bb9bca010f3691abb.Activity1">
+    <activity android:alwaysRetainTaskState="true" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:icon="@drawable/icon" android:label="Wots" android:launchMode="singleInstance" android:screenOrientation="landscape" android:theme="@style/Theme.Splash" android:name="md5bfb560a022e72d2ee6bf8cea0a2668dc.Activity1">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
